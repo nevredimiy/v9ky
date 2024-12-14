@@ -1187,7 +1187,7 @@ if (isset($params['id'])) {
         <?php $int = 0; ?>
         <?php foreach($topGravetc as $key => $player): ?>
         <tr>
-          <td><?=$int + 1?></td>
+          <td><?= $player['rank'] ?></td>
           <td><img src="<?=$player_face_path?>/<?= $player['player_photo'] ?>" alt="team-logo"></td>
           <td><img src="<?=$team_logo_path?>/<?= $player['team_photo'] ?>" alt="team-logo"></td>
           <td class="name-cell"><?= $player['last_name'] ?> <?= $player['first_name'] ?></td>
@@ -1237,7 +1237,7 @@ if (isset($params['id'])) {
         <?php $int = 0; ?>
         <?php foreach($topGolkiper as $player): ?>
         <tr>
-          <td><?=$int + 1?></td>
+          <td><?= $player['rank'] ?></td>
           <td><img src="<?=$player_face_path?>/<?= $player['player_photo'] ?>" alt="team-logo"></td>
           <td><img src="<?=$team_logo_path?>/<?= $player['team_photo'] ?>" alt="team-logo"></td>
           <td class="name-cell"><?= $player['last_name'] ?> <?= $player['first_name'] ?></td>
@@ -1287,7 +1287,7 @@ if (isset($params['id'])) {
         <?php $int = 0; ?>
         <?php foreach($topBombardi as $player): ?>
         <tr>
-          <td><?=$int + 1?></td>
+          <td><?= $player['rank'] ?></td>
           <td><img src="<?=$player_face_path?>/<?= $player['player_photo'] ?>" alt="team-logo"></td>
           <td><img src="<?=$team_logo_path?>/<?= $player['team_photo'] ?>" alt="team-logo"></td>
           <td class="name-cell"><?= $player['last_name'] ?> <?= $player['first_name'] ?></td>
@@ -1337,7 +1337,7 @@ if (isset($params['id'])) {
         <?php $int = 0; ?>
         <?php foreach($topAsists as $player): ?>
         <tr>
-          <td><?=$int + 1?></td>
+          <td><?= $player['rank'] ?></td>
           <td><img src="<?=$player_face_path?>/<?= $player['player_photo'] ?>" alt="team-logo"></td>
           <td><img src="<?=$team_logo_path?>/<?= $player['team_photo'] ?>" alt="team-logo"></td>
           <td class="name-cell"><?= $player['last_name'] ?> <?= $player['first_name'] ?></td>
@@ -1387,7 +1387,7 @@ if (isset($params['id'])) {
         <?php $int = 0; ?>
         <?php foreach($topZhusnuk as $player): ?>
         <tr>
-          <td><?=$int + 1?></td>
+          <td><?= $player['rank'] ?></td>
           <td><img src="<?=$player_face_path?>/<?= $player['player_photo'] ?>" alt="team-logo"></td>
           <td><img src="<?=$team_logo_path?>/<?= $player['team_photo'] ?>" alt="team-logo"></td>
           <td class="name-cell"><?= $player['last_name'] ?> <?= $player['first_name'] ?></td>
@@ -1438,7 +1438,7 @@ if (isset($params['id'])) {
         <?php $int = 0; ?>        
         <?php foreach($topDribling as $player): ?>
         <tr>
-          <td><?=$int + 1?></td>
+          <td><?= $player['rank'] ?></td>
           <td><img src="<?=$player_face_path?>/<?= $player['player_photo'] ?>" alt="team-logo"></td>
           <td><img src="<?=$team_logo_path?>/<?= $player['team_photo'] ?>" alt="team-logo"></td>
           <td class="name-cell"><?= $player['last_name'] ?> <?= $player['first_name'] ?></td>
@@ -1489,7 +1489,7 @@ if (isset($params['id'])) {
         <?php $int = 0; ?>        
         <?php foreach($topUdar as $player): ?>
         <tr>
-          <td><?=$int + 1?></td>
+          <td><?= $player['rank'] ?></td>
           <td><img src="<?=$player_face_path?>/<?= $player['player_photo'] ?>" alt="team-logo"></td>
           <td><img src="<?=$team_logo_path?>/<?= $player['team_photo'] ?>" alt="team-logo"></td>
           <td class="name-cell"><?= $player['last_name'] ?> <?= $player['first_name'] ?></td>
@@ -1542,7 +1542,7 @@ if (isset($params['id'])) {
         <?php $int = 0; ?>        
         <?php foreach($topPas as $player): ?>
         <tr>
-          <td><?=$int + 1?></td>
+          <td><?= $player['rank'] ?></td>
           <td><img src="<?=$player_face_path?>/<?= $player['player_photo'] ?>" alt="team-logo"></td>
           <td><img src="<?=$team_logo_path?>/<?= $player['team_photo'] ?>" alt="team-logo"></td>
           <td  class="name-cell"><?= $player['last_name'] ?> <?= $player['first_name'] ?></td>

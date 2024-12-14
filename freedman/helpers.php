@@ -69,7 +69,6 @@ function getTopPlayers($allStaticPlayers, $dataAllPlayers, $keySort, $lastTur = 
   foreach ($allStaticPlayers as $playerId => $matches) {
       $matchCount = count($matches); // Количество матчей
       $totalKeySort = calculateArrayByColumn($keySort, $matches); // Сумма всех значений по ключу $keySort
-      $addCustomColumns = getCustomColumn($keySort);
       $countGoals = array_sum(array_column($matches, 'count_goals'));
       $countAsists = array_sum(array_column($matches, 'count_asists'));
       $countGolevoypas = array_sum(array_column($matches, 'golevoypas'));
@@ -88,15 +87,13 @@ function getTopPlayers($allStaticPlayers, $dataAllPlayers, $keySort, $lastTur = 
             'match_count' => $matchCount,
             'total_key' => $totalKeySort,
             'key_per_match' => round($keySortPerMatch, 2), // Округляем до 2 знаков
-            'topTitle' => $addCustomColumns['top_title'],
-            'icon' => $addCustomColumns['icon'],
-  
-            'last_name' => $dataAllPlayers[$playerId]['last_name'],
-            'first_name' => $dataAllPlayers[$playerId]['first_name'],
-            'player_photo' => $dataAllPlayers[$playerId]['player_photo'],
-            'team_photo' => $dataAllPlayers[$playerId]['team_photo'],
-            'team_name' => $dataAllPlayers[$playerId]['team_name'],
-            'team_id' => $dataAllPlayers[$playerId]['team_id'],
+ 
+            'last_name' => isset($dataAllPlayers[$playerId]['last_name']) ? $dataAllPlayers[$playerId]['last_name'] : '',
+            'first_name' => isset($dataAllPlayers[$playerId]['first_name']) ? $dataAllPlayers[$playerId]['first_name'] : '',
+            'player_photo' => isset($dataAllPlayers[$playerId]['player_photo']) ? $dataAllPlayers[$playerId]['player_photo'] : '',
+            'team_photo' => isset($dataAllPlayers[$playerId]['team_photo']) ? $dataAllPlayers[$playerId]['team_photo'] : '',
+            'team_name' => isset($dataAllPlayers[$playerId]['team_name']) ? $dataAllPlayers[$playerId]['team_name'] : '',
+            'team_id' => isset($dataAllPlayers[$playerId]['team_id']) ? $dataAllPlayers[$playerId]['team_id'] : '',
 
             'count_goals' => $countGoals,
             'count_asists' => $countAsists,
@@ -117,24 +114,23 @@ function getTopPlayers($allStaticPlayers, $dataAllPlayers, $keySort, $lastTur = 
           'match_count' => $matchCount,
           'total_key' => $totalKeySort['total_value'],
           'key_per_match' => round($keySortPerMatch, 2), // Округляем до 2 знаков
-          'topTitle' => $addCustomColumns['top_title'],
-          'icon' => $addCustomColumns['icon'],
           'obvodkaplus' => $totalKeySort['obvodka_plus'],
           'obvodkaminus' => $totalKeySort['obvodka_minus'],
-          'team_id' => $dataAllPlayers[$playerId]['team_id'],
 
-          'last_name' => $dataAllPlayers[$playerId]['last_name'],
-          'first_name' => $dataAllPlayers[$playerId]['first_name'],
-          'player_photo' => $dataAllPlayers[$playerId]['player_photo'],
-          'team_photo' => $dataAllPlayers[$playerId]['team_photo'],
-          'team_name' => $dataAllPlayers[$playerId]['team_name'],
+          'last_name' => isset($dataAllPlayers[$playerId]['last_name']) ? $dataAllPlayers[$playerId]['last_name'] : '',
+          'first_name' => isset($dataAllPlayers[$playerId]['first_name']) ? $dataAllPlayers[$playerId]['first_name'] : '',
+          'player_photo' => isset($dataAllPlayers[$playerId]['player_photo']) ? $dataAllPlayers[$playerId]['player_photo'] : '',
+          'team_photo' => isset($dataAllPlayers[$playerId]['team_photo']) ? $dataAllPlayers[$playerId]['team_photo'] : '',
+          'team_name' => isset($dataAllPlayers[$playerId]['team_name']) ? $dataAllPlayers[$playerId]['team_name'] : '',
+          'team_id' => isset($dataAllPlayers[$playerId]['team_id']) ? $dataAllPlayers[$playerId]['team_id'] : '',
         ];
 
         // Добавляем значение для каждого матча
-        $i = 1;
         foreach ($matches as $matchId => $stats) {
+          if(isset($stats[ 'tur' ])) {
             $row["match_{$stats[ 'tur' ]}_key"] = $stats[ 'obvodkaplus' ] - $stats[ 'obvodkaminus' ];
-            $i++;
+          }
+
         }
         
       }
@@ -148,24 +144,22 @@ function getTopPlayers($allStaticPlayers, $dataAllPlayers, $keySort, $lastTur = 
           'match_count' => $matchCount,
           'total_key' => $totalKeySort['total_value'],
           'key_per_match' => round($keySortPerMatch, 2), // Округляем до 2 знаков
-          'topTitle' => $addCustomColumns['top_title'],
-          'icon' => $addCustomColumns['icon'],
           'udarplus' => $totalKeySort['udar_plus'],
           'udarminus' => $totalKeySort['udar_minus'],
-          'team_id' => $dataAllPlayers[$playerId]['team_id'],
 
-          'last_name' => $dataAllPlayers[$playerId]['last_name'],
-          'first_name' => $dataAllPlayers[$playerId]['first_name'],
-          'player_photo' => $dataAllPlayers[$playerId]['player_photo'],
-          'team_photo' => $dataAllPlayers[$playerId]['team_photo'],
-          'team_name' => $dataAllPlayers[$playerId]['team_name'],
+          'last_name' => isset($dataAllPlayers[$playerId]['last_name']) ? $dataAllPlayers[$playerId]['last_name'] : '',
+          'first_name' => isset($dataAllPlayers[$playerId]['first_name']) ? $dataAllPlayers[$playerId]['first_name'] : '',
+          'player_photo' => isset($dataAllPlayers[$playerId]['player_photo']) ? $dataAllPlayers[$playerId]['player_photo'] : '',
+          'team_photo' => isset($dataAllPlayers[$playerId]['team_photo']) ? $dataAllPlayers[$playerId]['team_photo'] : '',
+          'team_name' => isset($dataAllPlayers[$playerId]['team_name']) ? $dataAllPlayers[$playerId]['team_name'] : '',
+          'team_id' => isset($dataAllPlayers[$playerId]['team_id']) ? $dataAllPlayers[$playerId]['team_id'] : '',
         ];
 
         // Добавляем значение для каждого матча
-        $i = 1;
         foreach ($matches as $matchId => $stats) {
+          if( isset( $stats[ 'tur' ] ) ) {
             $row["match_{$stats[ 'tur' ]}_key"] = $stats[ 'vstvor' ] - $stats[ 'mimo' ];
-            $i++;
+          }
         }
         
       }
@@ -179,28 +173,25 @@ function getTopPlayers($allStaticPlayers, $dataAllPlayers, $keySort, $lastTur = 
           'match_count' => $matchCount,
           'total_key' => $totalKeySort['total_value'],
           'key_per_match' => round($keySortPerMatch, 2), // Округляем до 2 знаков
-          'topTitle' => $addCustomColumns['top_title'],
-          'icon' => $addCustomColumns['icon'],
-          'obvodkaplus' => $totalKeySort['obvodka_plus'],
-          'obvodkaminus' => $totalKeySort['obvodka_minus'],
-          'team_id' => $dataAllPlayers[$playerId]['team_id'],
-          'zagostrennia' => $totalKeySort['zagostrennia'],
-          'pasplus' => $totalKeySort['pasplus'],
-          'pasminus' => $totalKeySort['pasminus'],
+          'obvodkaplus' => isset($totalKeySort['obvodka_plus']) ? $totalKeySort['obvodka_plus'] : 0,
+          'obvodkaminus' => isset($totalKeySort['obvodka_minus']) ? $totalKeySort['obvodka_minus'] : 0,
+          'zagostrennia' => isset($totalKeySort['zagostrennia']) ? $totalKeySort['zagostrennia'] : 0,
+          'pasplus' => isset($totalKeySort['pasplus']) ? $totalKeySort['pasplus'] : 0,
+          'pasminus' => isset($totalKeySort['pasminus']) ? $totalKeySort['pasminus'] : 0,
 
-
-          'last_name' => $dataAllPlayers[$playerId]['last_name'],
-          'first_name' => $dataAllPlayers[$playerId]['first_name'],
-          'player_photo' => $dataAllPlayers[$playerId]['player_photo'],
-          'team_photo' => $dataAllPlayers[$playerId]['team_photo'],
-          'team_name' => $dataAllPlayers[$playerId]['team_name'],
+          'last_name' => isset($dataAllPlayers[$playerId]['last_name']) ? $dataAllPlayers[$playerId]['last_name'] : '',
+          'first_name' => isset($dataAllPlayers[$playerId]['first_name']) ? $dataAllPlayers[$playerId]['first_name'] : '',
+          'player_photo' => isset($dataAllPlayers[$playerId]['player_photo']) ? $dataAllPlayers[$playerId]['player_photo'] : '',
+          'team_photo' => isset($dataAllPlayers[$playerId]['team_photo']) ? $dataAllPlayers[$playerId]['team_photo'] : '',
+          'team_name' => isset($dataAllPlayers[$playerId]['team_name']) ? $dataAllPlayers[$playerId]['team_name'] : '',
+          'team_id' => isset($dataAllPlayers[$playerId]['team_id']) ? $dataAllPlayers[$playerId]['team_id'] : '',
         ];
         
         // Добавляем значение для каждого матча
-        $i = 1;
         foreach ($matches as $matchId => $stats) {
+          if(isset($stats[ 'tur' ])){
             $row["match_{$stats[ 'tur' ]}_key"] = ($stats[ 'zagostrennia' ] * 5 + $stats[ 'pasplus' ]) - $stats[ 'pasminus' ] * 3;
-            $i++;
+          }
         }
         
       }
@@ -214,24 +205,29 @@ function getTopPlayers($allStaticPlayers, $dataAllPlayers, $keySort, $lastTur = 
           'match_count' => $matchCount,
           'total_key' => $totalKeySort['total_value'],
           'key_per_match' => round($keySortPerMatch, 2), // Округляем до 2 знаков
-          'topTitle' => $addCustomColumns['top_title'],
-          'icon' => $addCustomColumns['icon'],
           'seyv' => $totalKeySort['seyv'],
           'seyvmin' => $totalKeySort['seyvmin'],
-          'team_id' => $dataAllPlayers[$playerId]['team_id'],
+          'team_id' => isset($dataAllPlayers[$playerId]['team_id']) ? $dataAllPlayers[$playerId]['team_id'] : '',
 
-          'last_name' => $dataAllPlayers[$playerId]['last_name'],
-          'first_name' => $dataAllPlayers[$playerId]['first_name'],
-          'player_photo' => $dataAllPlayers[$playerId]['player_photo'],
-          'team_photo' => $dataAllPlayers[$playerId]['team_photo'],
-          'team_name' => $dataAllPlayers[$playerId]['team_name'],
+          'last_name' => isset($dataAllPlayers[$playerId]['last_name']) ? $dataAllPlayers[$playerId]['last_name'] : '',
+          'first_name' => isset($dataAllPlayers[$playerId]['first_name']) ? $dataAllPlayers[$playerId]['first_name'] : '',
+          'player_photo' => isset($dataAllPlayers[$playerId]['player_photo']) ? $dataAllPlayers[$playerId]['player_photo'] : '',
+          'team_photo' => isset($dataAllPlayers[$playerId]['team_photo']) ? $dataAllPlayers[$playerId]['team_photo'] : '',
+          'team_name' => isset($dataAllPlayers[$playerId]['team_name']) ? $dataAllPlayers[$playerId]['team_name'] : '',
         ];
 
         // Добавляем значение для каждого матча
-        $i = 1;
+        
         foreach ($matches as $matchId => $stats) {
-            $row["match_{$stats[ 'tur' ]}_key"] = $stats[ 'seyv' ] + $stats[ 'seyvmin' ] == 0 ? 0 : round(( 100 / $stats[ 'seyv' ] + $stats[ 'seyvmin' ] ) * $stats[ 'pasminus' ], 1);
-            $i++;
+          $seyv = isset($stats['seyv']) ? $stats['seyv'] : 0;
+          $seyvmin = isset($stats['seyvmin']) ? $stats['seyvmin'] : 0;
+          $denominator = $seyv + $seyvmin; // Знаменатель
+          
+          if(isset($stats[ 'tur' ])) {
+            $row["match_{$stats[ 'tur' ]}_key"] = $denominator == 0 
+              ? 0 
+              : round(( 100 / $denominator ) * $stats[ 'pasminus' ], 1);
+          }
         }
         
       }
@@ -239,10 +235,10 @@ function getTopPlayers($allStaticPlayers, $dataAllPlayers, $keySort, $lastTur = 
       if( $keySort == 'count_goals' || $keySort == 'golevoypas' || $keySort == 'count_asists'){
         
         // Добавляем значение для каждого матча
-        $i = 1;
         foreach ($matches as $matchId => $stats) {
+          if(isset($stats[ 'tur' ] )) {
             $row["match_{$stats[ 'tur' ]}_key"] = $stats[ $keySort ];         
-            $i++;
+          }
         }
 
       }
@@ -250,10 +246,10 @@ function getTopPlayers($allStaticPlayers, $dataAllPlayers, $keySort, $lastTur = 
       if( $keySort == 'zahusnuk') {
 
         // Добавляем значение для каждого матча
-        $i = 1;
         foreach ($matches as $matchId => $stats) {
+          if(isset($stats[ 'tur' ] )) {
             $row["match_{$stats[ 'tur' ]}_key"] = $stats[ 'otbor' ] + $stats[ 'blok' ];
-            $i++;
+          }
         }
 
       }
@@ -264,11 +260,13 @@ function getTopPlayers($allStaticPlayers, $dataAllPlayers, $keySort, $lastTur = 
         // Добавляем значение для каждого матча
         $i = 1;
         foreach ($matches as $matchId => $stats) {
+          if(isset($stats['tur'])){
             $row["match_{$stats[ 'tur' ]}_key"] = $stats['count_goals'] * 15 + $stats['golevoypas'] * 10 +  $stats['zagostrennia'] * 10 +
             + $stats['pasplus'] * 3 - $stats['pasminus'] * 3 - $stats['vtrata'] * 3 +
             + $stats['vstvor'] * 7 - $stats['mimo'] * 4 +  $stats['obvodkaplus'] * 5 -
             + $stats['obvodkaminus'] * 3 + $stats['otbor'] * 8 -  $stats['otbormin'] * 5 +
             + $stats['blok'] * 4 + $stats['seyv'] * 15 - $stats['seyvmin'] * 7;
+          }
 
             $i++;
         }
@@ -279,13 +277,13 @@ function getTopPlayers($allStaticPlayers, $dataAllPlayers, $keySort, $lastTur = 
 
         $row = [
           'player_id' => $playerId,
-          'last_name' => $dataAllPlayers[$playerId]['last_name'],
-          'first_name' => $dataAllPlayers[$playerId]['first_name'],
-          'player_photo' => $dataAllPlayers[$playerId]['player_photo'],
-          'team_photo' => $dataAllPlayers[$playerId]['team_photo'],
-          'team_name' => $dataAllPlayers[$playerId]['team_name'],
-          'team_id' => $dataAllPlayers[$playerId]['team_id'],
-          'amplua' => $dataAllPlayers[$playerId]['amplua'],
+          'last_name' => isset($dataAllPlayers[$playerId]['last_name']) ? $dataAllPlayers[$playerId]['last_name'] : '',
+          'first_name' => isset($dataAllPlayers[$playerId]['first_name']) ? $dataAllPlayers[$playerId]['first_name'] : '',
+          'player_photo' => isset($dataAllPlayers[$playerId]['player_photo']) ? $dataAllPlayers[$playerId]['player_photo'] : '',
+          'team_photo' => isset($dataAllPlayers[$playerId]['team_photo']) ? $dataAllPlayers[$playerId]['team_photo'] : '',
+          'team_name' => isset($dataAllPlayers[$playerId]['team_name']) ? $dataAllPlayers[$playerId]['team_name'] : '',
+          'team_id' => isset($dataAllPlayers[$playerId]['team_id']) ? $dataAllPlayers[$playerId]['team_id'] : '',
+          'amplua' => isset($dataAllPlayers[$playerId]['amplua']) ? $dataAllPlayers[$playerId]['amplua'] : '',
         ];
 
       }
@@ -293,27 +291,61 @@ function getTopPlayers($allStaticPlayers, $dataAllPlayers, $keySort, $lastTur = 
       $topPlayers[] = $row;
   }
 
-  // Сортировка массива по убыванию
-  uasort($topPlayers, function ($a, $b) {
-    // Сортируем по total_key (убывание)
-    if ($a['total_key'] == $b['total_key']) {
-        // Если total_key равны, сортируем по match_count (возрастание)
-        if ($a['match_count'] < $b['match_count']) {
-            return -1; // a меньше b
-        } elseif ($a['match_count'] > $b['match_count']) {
-            return 1; // a больше b
-        } else {
-            return 0; // a равен b
+
+  // Проверка для Тренера
+  
+    // Сортируем игроков
+    usort($topPlayers, function ($a, $b) use ($lastTur) {
+      // 1. Сортировка по (total_key)
+      if ($a['total_key'] !== $b['total_key']) {
+          return $b['total_key'] - $a['total_key']; // По убыванию
+      }
+
+      // 2. Сортировка по «Матчів» (count_matches)
+      if ($a['match_count'] !== $b['match_count']) {
+          return $b['match_count'] - $a['match_count']; // По убыванию
+      }
+      // 3. Сортировка по последнему сыгранному матчу (total_3_match)
+      if(isset($a["match_{$lastTur}_key"]) && isset($b["match_{$lastTur}_key"])) {
+
+        if ($a["match_{$lastTur}_key"] !== $b["match_{$lastTur}_key"]) {
+            return $b["match_{$lastTur}_key"] - $a["match_{$lastTur}_key"]; // По убыванию
         }
-    }    
-    // Сортируем по total_key (убывание)
-    if ($a['total_key'] < $b['total_key']) {
-        return 1; // a меньше b
-    } elseif ($a['total_key'] > $b['total_key']) {
-        return -1; // a больше b
+
+      }
+
+      // Если все значения равны, оставить текущий порядок
+      return 0;
+    });
+
+  
+
+  if($keySort != 'trainer') {
+
+    // Присваиваем позиции
+    $rank = 1; // Начальный порядковый номер
+    foreach ($topPlayers as $index => &$player) {
+
+      // если в последнем туре не играли оба савниваемых игрока
+      if( isset( $topPlayers[$index - 1]["match_{$lastTur}_key"] ) && isset( $player["match_{$lastTur}_key"] ) ) {
+       
+        // Если это не первый игрок и текущий игрок имеет те же значения, что и предыдущий
+        if (
+            $index > 0 &&
+            $topPlayers[$index - 1]['total_key'] === $player['total_key'] &&
+            $topPlayers[$index - 1]['match_count'] === $player['match_count'] &&
+            $topPlayers[$index - 1]["match_{$lastTur}_key"] === $player["match_{$lastTur}_key"]
+        ) {
+            $player['rank'] = isset( $topPlayers[$index - 1]['rank'] ) ? $topPlayers[$index - 1]['rank'] : $rank; // Присваиваем тот же ранг
+        } else {
+            $player['rank'] = $rank; // Новый ранг
+        }
+
+      }
+        $rank++; // Увеличиваем счетчик
     }
-    return 0; // a равен b
-  });
+
+  }
 
   return $topPlayers;
 }
@@ -397,30 +429,6 @@ function calculateArrayByColumn($column, $array) {
   
   return $totalValue;
 }
-
-
-/**
- * создана для функции getTopPlayers(), для добавления в массив нужной информации
- * @param string
- * @return array
- */
-function getCustomColumn($keySort) {
-  switch ($keySort) {
-    
-    case 'count_goals':
-      return ['top_title' => 'Топ-Бомбардир', 'icon' => 'football-icon.png'];
-    
-    case 'golevoypas':
-      return ['top_title' => 'Топ-Асистент', 'icon' => 'boots-icon.svg'];
-
-    
-
-    
-    default:
-    return ['top_title' => ''];
-  }
-}
-
 
 /**
  * Находит сумму статистики всех игроков в команде по одному показателю. Например, сума забитых голов в команде.
@@ -643,6 +651,7 @@ function getIndStaticPlayer($allStaticPlayers, $player_id){
  * @param string
  * @return string
  */
+
 function checkingCurrentTur( $indexIteration, $lastTur=0, $totalValue=0, $sufix='' ){
   // если матч состоялся
   if($indexIteration <= $lastTur) {

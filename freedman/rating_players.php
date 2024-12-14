@@ -71,7 +71,6 @@ $queryLastTur = $db->Execute(
 // Последний тур в турнире (в лиге).
 $lastTur = intval($queryLastTur->fields[0]);
 
-
 // Массив для cтастистики игроков учавствуюих в текущей лиге
 $allStaticPlayers = array(); 
 
@@ -88,9 +87,6 @@ while(!$queryStaticPlayers->EOF){
 }
 
 
-// Массив для статистики забитых голов у игроков. Сумма мячей со всех матчей
-$playerGoals = array();
-
 // Массив для статистики забитых голов в каждом матче отдельно
 $playerMatchesGoals = array();
 
@@ -102,14 +98,6 @@ while(!$queryGoals->EOF){
   // Создаем ассоциативный массив $playerMatchesGoals - [ [$player_id] => [$match_id => (int) $count_goals] ]
   foreach ( $queryGoals as $key => $value ) {                
                     
-    $playerId = $value['player'];
-
-    if( isset($playerGoals[$playerId]) ){                
-      $playerGoals[$playerId]++;                
-    } else {                
-      $playerGoals[$playerId] = 1;                
-    }
-    
     // Начало записи массива $playerMatchesGoals
     // Получаем player и matc
     $player = $value['player'];
@@ -277,11 +265,15 @@ while(!$queryAllPlayersData->EOF){
   $queryAllPlayersData->MoveNext();
 }
 
+// dump_arr_first($dataAllPlayers);
+
 // Отсортированный массив по рубрике Топ-Гравець
-$trainer = getTopPlayers( $allStaticPlayers, $dataAllPlayers, 'trainer', $lastTur );
+// $trainer = getTopPlayers( $allStaticPlayers, $dataAllPlayers, 'trainer', $lastTur );
 
 // Отсортированный массив по рубрике Топ-Гравець
 $topGravetc = getTopPlayers($allStaticPlayers, $dataAllPlayers, 'topgravetc', $lastTur);
+
+// dump_arr($topGravetc);
 
 // Отсортированный массив по рубрике Топ-Голкипер
 $topGolkiper = getTopPlayers($allStaticPlayers, $dataAllPlayers, 'golkiper', $lastTur);
@@ -331,30 +323,30 @@ $topTopPas = reset($topPas);
 
 
 
-// Получаем идентификатор команды из адресной строки
-if (isset($params['id'])) {
-  $teamId = $params['id'];
-}
+// // Получаем идентификатор команды из адресной строки
+// if (isset($params['id'])) {
+//   $teamId = $params['id'];
+// }
 
-// Сумма статистики команды
-$totalGoalsByTeam = getTotalStaticByTeam($topBombardi, $teamId);
-$totalAsistByTeam = getTotalStaticByTeam($topAsists, $teamId);
-$totalMatchesByTeam = getTotalStaticByTeam($topAsists, $teamId, 'match_count');
-$totalYellowByTeam = getTotalStaticByTeam($topAsists, $teamId, 'yellow_cards');
-$totalYellowRedByTeam = getTotalStaticByTeam($topAsists, $teamId, 'yellow_red_cards');
-$totalRedByTeam = getTotalStaticByTeam($topAsists, $teamId, 'red_cards');
+// // Сумма статистики команды
+// $totalGoalsByTeam = getTotalStaticByTeam($topBombardi, $teamId);
+// $totalAsistByTeam = getTotalStaticByTeam($topAsists, $teamId);
+// $totalMatchesByTeam = getTotalStaticByTeam($topAsists, $teamId, 'match_count');
+// $totalYellowByTeam = getTotalStaticByTeam($topAsists, $teamId, 'yellow_cards');
+// $totalYellowRedByTeam = getTotalStaticByTeam($topAsists, $teamId, 'yellow_red_cards');
+// $totalRedByTeam = getTotalStaticByTeam($topAsists, $teamId, 'red_cards');
 
-// Лучшие показатели в команде 
-$bestGravetc = getBestPlayer($topGravetc, $teamId);
-$bestGolkiper = getBestPlayer($topGolkiper, $teamId);
-$bestBombardi = getBestPlayer($topBombardi, $teamId);
-$bestAssist = getBestPlayer($topAsists, $teamId);
-$bestZhusnuk = getBestPlayer($topZhusnuk, $teamId);
-$bestDribling = getBestPlayer($topDribling, $teamId);
-$bestUdar = getBestPlayer($topUdar, $teamId);
-$bestPas = getBestPlayer($topPas, $teamId);
+// // Лучшие показатели в команде 
+// $bestGravetc = getBestPlayer($topGravetc, $teamId);
+// $bestGolkiper = getBestPlayer($topGolkiper, $teamId);
+// $bestBombardi = getBestPlayer($topBombardi, $teamId);
+// $bestAssist = getBestPlayer($topAsists, $teamId);
+// $bestZhusnuk = getBestPlayer($topZhusnuk, $teamId);
+// $bestDribling = getBestPlayer($topDribling, $teamId);
+// $bestUdar = getBestPlayer($topUdar, $teamId);
+// $bestPas = getBestPlayer($topPas, $teamId);
 
-?>
+// ?>
 
 <section class="ratings">
     <h2 class="title">Рейтинги гравців ліги</h2>
@@ -371,9 +363,9 @@ $bestPas = getBestPlayer($topPas, $teamId);
                   <span><?= $topTopGravetc['total_key']?></span>
                 </div>
     
-                <img class="player-card__right-icon" src="<?=$team_logo_path?>/<?= $topTopGravetc['team_photo']?>" alt="sparta">
+                <img class="player-card__right-icon" src="<?= $team_logo_path; ?>/<?= $topTopGravetc['team_photo']; ?>" alt="Логотип команди">
     
-                <img class="player-card__photo" src="<?=$player_face_path?>/<?= $topTopGravetc['player_photo']?>" alt="yarmol">
+                <img class="player-card__photo" src="<?= $player_face_path; ?>/<?= $topTopGravetc['player_photo']; ?>" alt="yarmol">
               </div>
     
               <div class="player-card__role">Топ-гравець</div>
