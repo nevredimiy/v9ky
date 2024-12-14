@@ -1,0 +1,30 @@
+@import url(./style/normalize.css);
+@import url(./style/typography.style.css);
+@import url(./style/variables.style.css);
+@import url(./style/z-index.style.css);
+/* @import url(./style/slider.style.css); */
+
+@import url(./components/main/main.style.css);
+@import url(./components/header/header.style.css);
+@import url(./components/footer/footer.style.css);
+
+@import url(./components/commercial/commercial.style.css);
+@import url(./components/navigation/navigation.style.css);
+@import url(./components/leagues/leagues.style.css);
+@import url(./components/ratings/ratngs.style.css);
+@import url(./components/table-league/table-league.style.css);
+@import url(./components/calendar-of-matches/calendar-of-matches.css);
+@import url(./components/green-zone/green-zone.style.css);
+@import url(./components/controls/controls.style.css);
+@import url(./components/disqualification/disqualification.style.css);
+
+@import url(./components/match-zone/match-zone.style.css);
+@import url(./components/transfer/transfer.style.css);
+@import url(./components/statistic/statistic.style.css);
+@import url(./components/team-page/team-page.style.css);
+@import url(./components/stadiums/stadiums.style.css);
+@import url(./components/spons/spons.style.css);
+/* @import url(./components/description/description.style.css); */
+
+@import url(./components/match/match.style.css);
+@import url(./components/match-review/match-review.style.css);
