@@ -55,3 +55,46 @@ shortenNames();
 // Отслеживаем изменения
 window.matchMedia('(max-width: 800px)').addEventListener('change', shortenNames);
 
+
+// Код для драга в десктопе
+// Находим контейнер
+const container = document.querySelector('.draggable-container');
+
+console.log(container);
+
+
+let isDragging = false; // Флаг для отслеживания состояния "перетаскивания"
+let startX, startY; // Начальная позиция мыши
+let scrollLeft, scrollTop; // Текущая прокрутка контейнера
+
+// Событие начала перетаскивания
+container?.addEventListener('mousedown', (e) => {
+    isDragging = true; // Активируем режим перетаскивания
+    startX = e.pageX - container.offsetLeft; // Позиция мыши относительно контейнера
+    startY = e.pageY - container.offsetTop;
+    scrollLeft = container.scrollLeft; // Текущая горизонтальная прокрутка
+    scrollTop = container.scrollTop; // Текущая вертикальная прокрутка
+    container.classList.add('active'); // Добавляем эффект
+});
+
+// Событие движения мыши
+container?.addEventListener('mousemove', (e) => {
+    if (!isDragging) return; // Если не активен режим перетаскивания, выходим
+    e.preventDefault();
+    const x = e.pageX - container.offsetLeft; // Текущая позиция мыши
+    const y = e.pageY - container.offsetTop;
+    const walkX = (x - startX) * 2; // Скорость перемещения по горизонтали
+    const walkY = (y - startY) * 2; // Скорость перемещения по вертикали
+    container.scrollLeft = scrollLeft - walkX; // Обновляем горизонтальную прокрутку
+    container.scrollTop = scrollTop - walkY; // Обновляем вертикальную прокрутку
+});
+
+// Событие завершения перетаскивания
+container?.addEventListener('mouseup', () => {
+    isDragging = false; // Деактивируем режим перетаскивания
+});
+
+// Событие выхода мыши за пределы контейнера
+container?.addEventListener('mouseleave', () => {
+    isDragging = false; // Деактивируем режим перетаскивания
+});

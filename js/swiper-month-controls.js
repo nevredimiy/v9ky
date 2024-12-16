@@ -1,22 +1,21 @@
 const swiperMonthControls = document.querySelectorAll('.swiper-month-controls');
 
-if (swiperMonthControls.length > 0) {
-  const GAP_MONTH_CONTROLS = 5;
+const GAP_MONTH_CONTROLS = 5;
 
-  console.log(swiperMonthControls);
+if (swiperMonthControls && swiperMonthControls.length > 0){
 
-  swiperMonthControls?.forEach(el => {
+  swiperMonthControls.forEach(el => {
     const slidesMatchZoneControls = el.querySelectorAll('.swiper-slide-month-controls');
     let totalWidthMatchZoneControls = 0;
-    
+
     for (let i = 0; i < slidesMatchZoneControls.length; i++) {
       const slide = slidesMatchZoneControls[i];
-    
+
       // console.log(i, slide.offsetWidth, slide);
-      
+
       totalWidthMatchZoneControls += slide.offsetWidth;
     }
-    
+
     totalWidthMatchZoneControls += slidesMatchZoneControls.length * GAP_MONTH_CONTROLS;
 
     console.log('totalWidthMatchZoneControls = ', totalWidthMatchZoneControls);
@@ -27,7 +26,7 @@ if (swiperMonthControls.length > 0) {
     console.log('swiper = ', swiperWrapper.clientWidth < totalWidthMatchZoneControls);
 
     if (swiperWrapper.offsetWidth >= totalWidthMatchZoneControls) {
-      console.log('style'); 
+      console.log('style');
       swiperWrapper.style.display = 'flex';
       swiperWrapper.style.justifyContent = 'center';
       swiperWrapper.style.alignItems = 'center';
@@ -54,5 +53,6 @@ if (swiperMonthControls.length > 0) {
     });
   });
 
-}
+// console.log(window.innerWidth, 'totalWidthMatchZoneControls = ', totalWidthMatchZoneControls);
 
+}

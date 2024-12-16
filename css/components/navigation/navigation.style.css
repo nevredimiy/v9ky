@@ -2,6 +2,7 @@
 
 .navigation {
   background-color: #fff;
+  height: 60px;
 }
 
 .navigation__wrap {
@@ -9,6 +10,7 @@
   overflow-x: auto;
   gap: 15px;
   cursor: grab;
+  padding-bottom: 5px;
 }
 
 @media screen and (min-width: 700px) {

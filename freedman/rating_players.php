@@ -7,12 +7,17 @@ include_once('freedman/helpers.php');
   
 // Получаем данные из БД. Статискика всех игроков учавствуюих в текущей лиге. Статистика вся, кроме забитых голов
 $queryStaticPlayers = $db->Execute( 
-  "SELECT m.tur,s.player,s.matc,s.seyv, s.seyvmin, s.vstvor, s.mimo, s.pasplus, s.pasminus, s.otbor, s.otbormin, s.obvodkaplus, s.obvodkaminus, s.golevoypas, s.zagostrennia, s.vkid, s.vkidmin, s.blok, s.vtrata
+  "SELECT p.team,m.tur,s.player,s.matc,s.seyv, s.seyvmin, s.vstvor, s.mimo, s.pasplus, s.pasminus, s.otbor, s.otbormin, s.obvodkaplus, s.obvodkaminus, s.golevoypas, s.zagostrennia, s.vkid, s.vkidmin, s.blok, s.vtrata
   FROM `v9ky_sostav` s 
   LEFT JOIN `v9ky_match` m ON m.id = s.matc 
+  LEFT JOIN `v9ky_player` p ON p.id = s.player
   WHERE `player` IN 
     (SELECT `id` FROM `v9ky_player` WHERE `team` IN 
     (SELECT `id` FROM `v9ky_team` WHERE `turnir` = $turnir ))"
+);
+
+$queryBestPlayerOfMatch = $db->Execute(
+  "SELECT `best_player`, id, tur FROM `v9ky_match` WHERE `turnir`=523 and `best_player`>0 ORDER by tur"
 );
           
   
@@ -70,6 +75,24 @@ $queryLastTur = $db->Execute(
 
 // Последний тур в турнире (в лиге).
 $lastTur = intval($queryLastTur->fields[0]);
+
+// Массив для лучшего игрока матча (иконка ведочка)
+$nominationPlayerOfMatch = [];
+
+// Заполняем массив лучшего игрока матча
+while(!$queryBestPlayerOfMatch->EOF){
+
+  foreach($queryBestPlayerOfMatch as $value){
+
+    $player = $value['best_player'];
+    $match = $value['id'];    
+    
+    // Заполняем массив. Проверки не нужно. Так как в одном матче лучший игрок может быть только один.
+    $nominationPlayerOfMatch[$player][$match]['count_best_player_of_match'] = 1;
+    
+  }
+  $queryBestPlayerOfMatch->MoveNext();
+}
 
 // Массив для cтастистики игроков учавствуюих в текущей лиге
 $allStaticPlayers = array(); 
@@ -217,6 +240,9 @@ $allStaticPlayers = megreTwoMainArrays($allStaticPlayers, $yellowRedCards, 'yell
 // Получаем общий массив. Добавляем в массив с основной статистикой, статистику  красных карточек
 $allStaticPlayers = megreTwoMainArrays($allStaticPlayers, $queryRedCards, 'red_cards');
 
+// Получаем общий массив. Добавляем в основной массив статистику лучший игрок матча.
+$allStaticPlayers = megreTwoMainArrays($allStaticPlayers, $nominationPlayerOfMatch, 'count_best_player_of_match');
+
 // Массив только идентификаторов игроков
 $allPlayersId = array_keys($allStaticPlayers);
 
@@ -323,28 +349,41 @@ $topTopPas = reset($topPas);
 
 
 
-// // Получаем идентификатор команды из адресной строки
-// if (isset($params['id'])) {
-//   $teamId = $params['id'];
-// }
+// Получаем идентификатор команды из адресной строки
+if (isset($params['id'])) {
+  $teamId = $params['id'];
+}
 
-// // Сумма статистики команды
-// $totalGoalsByTeam = getTotalStaticByTeam($topBombardi, $teamId);
-// $totalAsistByTeam = getTotalStaticByTeam($topAsists, $teamId);
-// $totalMatchesByTeam = getTotalStaticByTeam($topAsists, $teamId, 'match_count');
-// $totalYellowByTeam = getTotalStaticByTeam($topAsists, $teamId, 'yellow_cards');
-// $totalYellowRedByTeam = getTotalStaticByTeam($topAsists, $teamId, 'yellow_red_cards');
-// $totalRedByTeam = getTotalStaticByTeam($topAsists, $teamId, 'red_cards');
+// Сумма статистики команды
+$totalGoalsByTeam = getTotalStaticByTeam($topBombardi, $teamId);
+$totalAsistByTeam = getTotalStaticByTeam($topAsists, $teamId);
+$totalMatchesByTeam = getTotalStaticByTeam($topAsists, $teamId, 'match_count');
+$totalYellowByTeam = getTotalStaticByTeam($topAsists, $teamId, 'yellow_cards');
+$totalYellowRedByTeam = getTotalStaticByTeam($topAsists, $teamId, 'yellow_red_cards');
+$totalRedByTeam = getTotalStaticByTeam($topAsists, $teamId, 'red_cards');
+$totalBestPlayerByTeam = getTotalStaticByTeam($topAsists, $teamId, 'count_best_player_of_match');
 
-// // Лучшие показатели в команде 
-// $bestGravetc = getBestPlayer($topGravetc, $teamId);
-// $bestGolkiper = getBestPlayer($topGolkiper, $teamId);
-// $bestBombardi = getBestPlayer($topBombardi, $teamId);
-// $bestAssist = getBestPlayer($topAsists, $teamId);
-// $bestZhusnuk = getBestPlayer($topZhusnuk, $teamId);
-// $bestDribling = getBestPlayer($topDribling, $teamId);
-// $bestUdar = getBestPlayer($topUdar, $teamId);
-// $bestPas = getBestPlayer($topPas, $teamId);
+// Лучшие показатели в команде 
+$bestGravetc = getBestPlayer($topGravetc, $teamId);
+$bestGolkiper = getBestPlayer($topGolkiper, $teamId);
+$bestBombardi = getBestPlayer($topBombardi, $teamId);
+$bestAssist = getBestPlayer($topAsists, $teamId);
+$bestZhusnuk = getBestPlayer($topZhusnuk, $teamId);
+$bestDribling = getBestPlayer($topDribling, $teamId);
+$bestUdar = getBestPlayer($topUdar, $teamId);
+$bestPas = getBestPlayer($topPas, $teamId);
+
+$requestUri = $_SERVER['REQUEST_URI'];
+
+// Разделение пути по "/"
+$partsUri = explode('/', $requestUri);
+
+// Извлечение нужной части адресной строки
+// $season = isset($parts[1]) ? $parts[1] : null;
+
+// echo $teamId;
+// $rreess = getBestPlayerOfTur($allStaticPlayers, $lastTur, $teamId);
+// dump_arr($rreess);
 
 // ?>
 
@@ -372,7 +411,7 @@ $topTopPas = reset($topPas);
               <div class="player-card__club"><?= $topTopGravetc['team_name']?></div>
               <div class="player-card__name"><?= $topTopGravetc['first_name']?> <?= $topTopGravetc['last_name']?></div>
     
-              <a href="#top-gravetc" class="player-card__link scroll-link">
+              <a href="<?= $site_url ?>/<?= $partsUri[1] ?>/top_gravetc" class="player-card__link scroll-link">
                 <span>Таблиця</span>
                 <img src="/css/components/player-card/assets/images/arrow-icon.svg" alt="arrow">
               </a>
@@ -396,7 +435,7 @@ $topTopPas = reset($topPas);
               <div class="player-card__club"><?= $topTopGolkiper['team_name']?></div>
               <div class="player-card__name"><?= $topTopGolkiper['first_name']?> <?= $topTopGolkiper['last_name']?></div>
     
-              <a href="#top-golkiper" class="player-card__link scroll-link">
+              <a href="<?= $site_url ?>/<?= $partsUri[1] ?>/top_golkiper" class="player-card__link scroll-link">
                 <span>Таблиця</span>
                 <img src="/css/components/player-card/assets/images/arrow-icon.svg" alt="arrow">
               </a>
@@ -420,7 +459,7 @@ $topTopPas = reset($topPas);
               <div class="player-card__club"><?= $topTopBombardi['team_name']?></div>
               <div class="player-card__name"><?= $topTopBombardi['first_name']?> <?= $topTopBombardi['last_name']?> </div>
     
-              <a href="#top-bombardir" class="player-card__link scroll-link">
+              <a href="<?= $site_url ?>/<?= $partsUri[1] ?>/top_bombardir" class="player-card__link scroll-link">
                 <span>Таблиця</span>
                 <img src="/css/components/player-card/assets/images/arrow-icon.svg" alt="arrow">
               </a>
@@ -444,7 +483,7 @@ $topTopPas = reset($topPas);
               <div class="player-card__club"><?= $topTopAsists['team_name']?></div>
               <div class="player-card__name"><?= $topTopAsists['first_name']?> <?= $topTopAsists['last_name']?> </div>
     
-              <a href="#top-asistent" class="player-card__link scroll-link">
+              <a href="<?= $site_url ?>/<?= $partsUri[1] ?>/top_asist" class="player-card__link scroll-link">
                 <span>Таблиця</span>
                 <img src="/css/components/player-card/assets/images/arrow-icon.svg" alt="arrow">
               </a>
@@ -468,7 +507,7 @@ $topTopPas = reset($topPas);
               <div class="player-card__club"><?= $topTopZhusnuk['team_name'] ?></div>
               <div class="player-card__name"><?= $topTopZhusnuk['first_name'] ?> <?= $topTopZhusnuk['last_name'] ?></div>
     
-              <a href="#top-zahustnuk" class="player-card__link scroll-link">
+              <a href="<?= $site_url ?>/<?= $partsUri[1] ?>/top_zahusnuk" class="player-card__link scroll-link">
                 <span>Таблиця</span>
                 <img src="/css/components/player-card/assets/images/arrow-icon.svg" alt="arrow">
               </a>
@@ -492,7 +531,7 @@ $topTopPas = reset($topPas);
               <div class="player-card__club"><?= $topTopDribling['team_name'] ?></div>
               <div class="player-card__name"><?= $topTopDribling['first_name'] ?> <?= $topTopDribling['last_name'] ?></div>
     
-              <a href="#top-dribling" class="player-card__link scroll-link">
+              <a href="<?= $site_url ?>/<?= $partsUri[1] ?>/top_dribling" class="player-card__link scroll-link">
                 <span>Таблиця</span>
                 <img src="/css/components/player-card/assets/images/arrow-icon.svg" alt="arrow">
               </a>
@@ -516,7 +555,7 @@ $topTopPas = reset($topPas);
               <div class="player-card__club"><?= $topTopUdar['team_name'] ?></div>
               <div class="player-card__name"><?= $topTopUdar['first_name'] ?> <?= $topTopUdar['last_name'] ?></div>
     
-              <a href="#top-udar" class="player-card__link scroll-link">
+              <a href="<?= $site_url ?>/<?= $partsUri[1] ?>/top_udar" class="player-card__link scroll-link">
                 <span>Таблиця</span>
                 <img src="/css/components/player-card/assets/images/arrow-icon.svg" alt="arrow">
               </a>
@@ -540,7 +579,7 @@ $topTopPas = reset($topPas);
               <div class="player-card__club"><?= $topTopPas['team_name'] ?></div>
               <div class="player-card__name"><?= $topTopPas['first_name'] ?> <?= $topTopPas['last_name'] ?></div>
     
-              <a href="#top-pas" class="player-card__link scroll-link">
+              <a href="<?= $site_url ?>/<?= $partsUri[1] ?>/top_pas" class="player-card__link scroll-link">
                 <span>Таблиця</span>
                 <img src="/css/components/player-card/assets/images/arrow-icon.svg" alt="arrow">
               </a>

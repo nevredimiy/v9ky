@@ -1,23 +1,37 @@
-/* @import url(./swiper-league.style.css); */
+@import url(./swiper-league.style.css);
 
 .leagues {
   background-color: transparent;
+  width: 100%;
 }
 
 .leagues__container {
   max-width: 1440px;
-  overflow-x: auto;
   margin: 0 auto;
-
+  /* overflow-x: scroll; */
 }
 
-.leagues__wrap {
+/* .leagues__container::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+.leagues__container::-webkit-scrollbar-thumb {
+  background-color: gray;
+  border-radius: 6px;
+}
+
+.leagues__container::-webkit-scrollbar-track {
+  background: transparent;
+} */
+
+/* .leagues__wrap {
   margin: 10px 0;
   display: flex;
   flex-wrap: nowrap;
   gap: 5px;
   justify-content: flex-start;
-}
+} */
 
 
 
@@ -80,10 +94,17 @@
   opacity: 0.5;
 }
 
+@media screen and (min-width: 580px) {
+  .leagues__container {
+    overflow-x: auto;
+  }
+}
+
 @media screen and (min-width: 680px) {
   .leagues__wrap {
     justify-content: center;
   }
+
 }
 
 @media screen and (min-width: 1260px) {

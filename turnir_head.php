@@ -8,9 +8,7 @@ include_once "menu.php";
 include_once "run_line.php";
 include_once "ligi.php";
 
-if(isset($_GET['foo'])){
-    include_once "rating_players.php";
-}
+
 
 
 // $cachefile = 'jeka_cashe/head_tables/cached-'.$tournament.'.html';

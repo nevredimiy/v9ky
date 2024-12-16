@@ -30,6 +30,7 @@
 
 .card-player-full__photo img:first-child {
   height: 100%;
+  width: 100%;
 }
 
 .card-player-full__photo img:nth-child(2) {
@@ -50,10 +51,11 @@
 
 .card-player-full__photo img:nth-child(4) {
   position: absolute;
-  top: 45px;
-  left: 18px;
-  width: 25px;
-  height: 25px;
+  rotate: -45deg;
+  bottom: 20%;
+  left: 10%;
+  width: 145px;
+  opacity: 0.6;
 }
 
   .card-player-full__name {

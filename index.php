@@ -147,7 +147,15 @@ switch($tournament) {
 			
 			case "bombardir": $title="Бомбардири ліги"; require_once("bombardir.php"); break;
 
+			case "top_gravetc": $title="Топ-Бомбардири ліги"; require_once("top_players/top_gravetc.php"); break;
 			case "top_bombardir": $title="Топ-Бомбардири ліги"; require_once("top_players/top_bombardir.php"); break;
+			case "top_golkiper": $title="Топ-Голкіпер ліги"; require_once("top_players/top_golkiper.php"); break;
+			case "top_asist": $title="Топ-Асистент ліги"; require_once("top_players/top_asist.php"); break;
+			case "top_zahusnuk": $title="Топ-Захисник ліги"; require_once("top_players/top_zahusnuk.php"); break;
+			case "top_dribling": $title="Топ-Захисник ліги"; require_once("top_players/top_dribling.php"); break;
+			case "top_udar": $title="Топ-Захисник ліги"; require_once("top_players/top_udar.php"); break;
+			case "top_pas": $title="Топ-Захисник ліги"; require_once("top_players/top_pas.php"); break;
+			case "team_tur": $title="Збірна туру"; require_once("freedman/team_tur.php"); break;
 			
 			case "violators": $title="Порушники ліги"; require_once("violators.php"); break;
             case "violators_new": $title="Порушники ліги"; require_once("violators_new.php"); break;

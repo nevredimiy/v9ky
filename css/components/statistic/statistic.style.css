@@ -20,6 +20,11 @@
   overflow-x: auto;
   white-space: nowrap;
   border-collapse: collapse;
+  cursor: grab;
+}
+
+.statistic table:active {
+  cursor: grabbing;
 }
 
 @media screen and (min-width: 580px) {
@@ -150,10 +155,9 @@
 /* ------------------ ---------------*/
 
 .statistic th.th_s {
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
   text-align: center;
   padding: 10px;
+  /* writing-mode: vertical-rl;  */
 }
 
 .statistic td,
@@ -176,6 +180,8 @@
 
   .statistic table tr td img {
     max-width: 50px;
+    aspect-ratio: 1/1;
+    max-height: 60px;
   }
 }
 
@@ -203,8 +209,6 @@
     display: table;
   }
 }
-
-
 
 @media screen and (min-width: 1260px) {
 

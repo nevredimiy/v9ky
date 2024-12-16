@@ -1,7 +1,7 @@
 const swiperMatches = document.querySelectorAll('.swiper-matches');
 
-if (swiperMatches) {
-  
+if(swiperMatches.length > 0) {
+
   swiperMatches.forEach(el => new Swiper(el, {
     enabled: Boolean(window.innerWidth < breakpointSlider),
     slidesPerView: 'auto',
@@ -20,10 +20,5 @@ if (swiperMatches) {
       },
     },
   })); 
-
-} else {
-
-  console.error('class .swiper-matches is not found');
   
 }
-

@@ -3,26 +3,15 @@ if (!defined('READFILE'))
   {exit('Wrong way to file');} 
 ?>
 
-<!-- ////////// Note 29.11.2024 //////////// -->
-<?php if( isset($_GET['foo'])): ?>
+
 </main>
-<?php endif ?>
-<!-- /////////// END Note 29.11.2024 /////////// -->
 
 <footer class="footer">
 	<div class="foot-line box-widht">
 
-    <?php if (!isset($_GET['foo'])): ?>
-
-		<p id="scroll-up" class="scroll-up"><img src="/img/scroll-up.png" alt=""></p>
-    
-    <?php else : ?>
-    
     <button id="scroll-up" class="footer__top-arrow" style="display: none;">
       <img src="/css/components/footer/assets/images/top-arrow.svg" alt="top-link">
     </button>
-
-    <?php endif ?>
 
 		<p class="copyright">V9KY.IN.UA since © 2014</p>
 		<!--<a href="<?=$site_url?>/rules/">Правила футзалу</a>
@@ -32,54 +21,15 @@ if (!defined('READFILE'))
     
 <?php
 
-#------ файл end.php
-
-
 $time = microtime(true) - $start;
 printf("Страница сгенерирована за %f секунд",$time);
-
 
     $recordt["page"] = $module;
 	$recordt["period"] = $time;
 
-	//$db->AutoExecute('test1',$recordt,'INSERT');
-
 ?>
 	</div>
 </footer>
-
-<?php if (!isset($_GET['foo'])): ?>
-
-<script src="/js/html2canvas.min.js"></script>
-  
-<script src="/libs/jquery/jquery-3.2.1.min.js"></script>
-<script type="text/javascript" src="/libs/html5gallery/html5gallery.js"></script>
-<script src="/libs/jquery-mousewheel/jquery.mousewheel.min.js"></script>
-<script src="/libs/scrollto/jquery.scrollTo.min.js"></script>
-<script src="/libs/owl-carousel/owl.carousel.js"></script>
-<script src="/js/jquery00.js"></script>
-<script src="/libs/slick/slick.min.js"></script>
-
-
-<script src="/js/common.js"></script>
-
-<script>
-  $(document).ready(function() {
-    // Обработчик клика по кнопке
-    $('#scroll-up').click(function() {
-      // Плавная прокрутка к верху страницы
-      $('html, body').animate({
-        scrollTop: 0
-      }, 500);  // 500 - это время анимации в миллисекундах
-    });
-  });
-</script>
-
-
-
-<?php else : ?>
-
-<!-- Note 28.11.2024 -->
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
@@ -117,8 +67,6 @@ printf("Страница сгенерирована за %f секунд",$time)
     });
   });
 </script>
-
-<?php endif ?>
 
 <!-- Google analytics -->
 	<script>

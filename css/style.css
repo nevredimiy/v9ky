@@ -2,7 +2,7 @@
 @import url(./style/typography.style.css);
 @import url(./style/variables.style.css);
 @import url(./style/z-index.style.css);
-/* @import url(./style/slider.style.css); */
+@import url(./style/slider.style.css);
 
 @import url(./components/main/main.style.css);
 @import url(./components/header/header.style.css);
@@ -24,6 +24,8 @@
 @import url(./components/team-page/team-page.style.css);
 @import url(./components/stadiums/stadiums.style.css);
 @import url(./components/spons/spons.style.css);
+@import url(./components/month-controls/month-controls.css);
+@import url(./components/month-controls/swiper-month-controls.style.css);
 /* @import url(./components/description/description.style.css); */
 
 @import url(./components/match/match.style.css);

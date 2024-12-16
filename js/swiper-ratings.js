@@ -138,18 +138,18 @@ function updateSongInfo() {
   song.addEventListener("loadeddata", function () {});
 }
 
-song.addEventListener("loadedmetadata", function () {
+song?.addEventListener("loadedmetadata", function () {
   progress.max = song.duration;
   progress.value = song.currentTime;
 });
 
-song.addEventListener("ended", function () {
+song?.addEventListener("ended", function () {
   currentSongIndex = (currentSongIndex + 1) % songs.length;
   updateSongInfo();
   playPause();
 });
 
-song.addEventListener("timeupdate", function () {
+song?.addEventListener("timeupdate", function () {
   if (!song.paused) {
     progress.value = song.currentTime;
   }
@@ -169,32 +169,32 @@ function playPause() {
   }
 }
 
-playPauseButton.addEventListener("click", playPause);
+playPauseButton?.addEventListener("click", playPause);
 
-progress.addEventListener("input", function () {
+progress?.addEventListener("input", function () {
   song.currentTime = progress.value;
 });
 
-progress.addEventListener("change", function () {
+progress?.addEventListener("change", function () {
   song.play();
   controlIcon.classList.add("fa-pause");
   controlIcon.classList.remove("fa-play");
   startRotation();
 });
 
-forwardButton.addEventListener("click", function () {
+forwardButton?.addEventListener("click", function () {
   currentSongIndex = (currentSongIndex + 1) % songs.length;
   updateSongInfo();
   playPause();
 });
 
-backwardButton.addEventListener("click", function () {
+backwardButton?.addEventListener("click", function () {
   currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
   updateSongInfo();
   playPause();
 });
 
-updateSongInfo();
+// updateSongInfo();
 
 var swiper = new Swiper(".swiper", {
   effect: "coverflow",

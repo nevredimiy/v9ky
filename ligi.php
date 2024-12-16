@@ -1,7 +1,34 @@
 <!-- TODO: freedman -->
+<?php if (!isset($_GET['foo'])): ?>
+
+<div class="tabs-header box-widht">
+
+	<?
+	$recligi = $db->CacheExecute(1000, "select * from v9ky_turnir where city=(select city from v9ky_turnir where id='".$turnir."') and season=(select season from v9ky_turnir where id='".$turnir."') ORDER BY priority ASC");
+
+	$i=0;
+	while (!$recligi->EOF) {
+	$i=$i+1;
+	$strligi = ""; $strligi2 = '';
+	if ($recligi->fields['id']==$turnir){ $strligi = " active-tab";  $strligi2 = ' class="active-tabs"';}
+	?>
+			
+		<div class="tabs<?=$strligi?>">
+			<a href="<?=$site_url?>/<?=$recligi->fields['name']?>/city_news">
+				<label for="tab-<?=$i?>"><?=$recligi->fields['ru']?></label>
+			</a>
+			<span<?=$strligi2?>></span>
+		</div>
+			
+	<?  $recligi->MoveNext();}?>
+
+</div>
+
+<?php else: ?>
+
 <section class="leagues">
-	<div class="leagues__container swiper-leagues">
-		<div class="leagues__wrap swiper-wrapper">
+<div class="swiper-leagues">
+	<div class="swiper-wrapper">
 			<?
 			$recligi = $db->CacheExecute(1000, "select * from v9ky_turnir where city=(select city from v9ky_turnir where id='".$turnir."') and season=(select season from v9ky_turnir where id='".$turnir."') ORDER BY priority ASC");
 
@@ -26,6 +53,10 @@
 		
 			<?  $recligi->MoveNext();}?>
 		</div>
-		<div class="swiper-scrollbar-leagues"></div>
 	</div>
+	<div class="swiper-scrollbar-bar"></div>
+	
+	
 </section>
+
+<?php endif ?>
