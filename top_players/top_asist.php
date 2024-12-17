@@ -1,11 +1,4 @@
 <?php
-// Увімкнення відображення помилок
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-
-// Встановлення рівня звітності помилок
-error_reporting(E_ALL);
-
 
 include_once "dates.php";
 include_once "freedman/head.php";

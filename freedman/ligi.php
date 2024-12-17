@@ -1,3 +1,7 @@
+<?php 
+	// Получаем последний сегмент пути.
+	$lastSegment = basename(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
+?>
 <!-- TODO: freedman -->
 <section class="leagues">
 	<div class="leagues__container swiper-leagues">
@@ -14,7 +18,7 @@
 
 			<div class="swiper-slide">
 				<div class="leagues__item<?=$strligi?>">
-				<a href="<?=$site_url?>/<?=$recligi->fields['name']?>/city_news">
+				<a href="<?=$site_url?>/<?=$recligi->fields['name']?>/<?= $lastSegment ?>">
 					<span class="leagues__item-title"><?=$recligi->fields['ru']?></span>
 					<div class="leagues__item-location">
 						<img src="/css/components/leagues/assets/images/location-icon.svg" alt="location">

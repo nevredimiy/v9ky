@@ -5,7 +5,9 @@ include_once "dates.php";
 include_once "head.php";
 include_once "slider_spons.php";
 include_once "menu.php";
-include_once "run_line.php";
+if(!isset($_GET['foo'])){
+    include_once "run_line.php";
+}
 include_once "ligi.php";
 
 

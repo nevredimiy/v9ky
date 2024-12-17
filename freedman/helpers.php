@@ -715,14 +715,14 @@ function checkingCurrentTur( $indexIteration, $lastTur=0, $totalValue=0, $sufix=
  
   if($arrK != 1000) {
     return $playerOfTur[$arrK];
-  }
-  
+  }  
 
   return $playerOfTur;
 
  }
 
  /**
+  * Переводит месяц и день недели с англ на укр
   * 
   */
   function date_translate($date){
@@ -742,35 +742,41 @@ function checkingCurrentTur( $indexIteration, $lastTur=0, $totalValue=0, $sufix=
       "Sat" => "Сб",
       "Sunday" => "Неділя",
       "Sun" => "Нд",
-      "January" => "Січня",
+      "January" => "Січень",
       "Jan" => "Січ",
-      "February" => "Лютого",
+      "February" => "Лютий",
       "Feb" => "Лют",
-      "March" => "Березня",
+      "March" => "Березень",
       "Mar" => "Бер",
-      "April" => "Квітня",
+      "April" => "Квітень",
       "Apr" => "Кві",
-      "May" => "Травня",
-      "May" => "Травня",
-      "June" => "Червня",
+      "May" => "Травень",
+      "June" => "Червень",
       "Jun" => "Чер",
-      "July" => "Липня",
+      "July" => "Липень",
       "Jul" => "Лип",
-      "August" => "Серпня",
+      "August" => "Серпень",
       "Aug" => "Сер",
-      "September" => "Вересня",
+      "September" => "Вересень",
       "Sep" => "Вер",
-      "October" => "Жовтня",
+      "October" => "Жовтень",
       "Oct" => "Жов",
-      "November" => "Листопада",
+      "November" => "Листопад",
       "Nov" => "Лис",
-      "December" => "Грудня",
+      "December" => "Грудень",
       "Dec" => "Гру",
       "st" => "ое",
       "nd" => "ое",
       "rd" => "е",
       "th" => "ое"
       );
+
+    // Проверяем, есть ли месяц или день недели в массиве
+    if (array_key_exists($date, $translate)) {
+        return $translate[$date];
+    } else {
+        return "Месяц не найден"; // Если месяц не найден
+    }
 
   }
 
@@ -790,4 +796,321 @@ function checkingCurrentTur( $indexIteration, $lastTur=0, $totalValue=0, $sufix=
       }
     }
     return $countMatches;
+  }
+
+  /**
+   * Определяет "сборную тура" по номеру тура
+   */
+  function getPlayersOfTur( $allStaticPlayers, $tur ){
+    
+    //  Массив игроков текущего тура
+    $playerOfTur = [];
+
+    // Массив для лучших игроков тура
+    $bestPlayer = [];
+    
+    // --- Основной массив ---
+    // Находим игроков текущего тура и записываем в массив с который будем фильтровать для 8 рубрик
+    foreach( $allStaticPlayers as $matches ){
+      foreach ( $matches as $staticMatch ) {
+        if( $staticMatch['tur'] == $tur ){
+          $playerOfTur[] = $staticMatch;
+        }        
+      }
+    }
+
+    // --- Топ Игрок ---
+    // Получаем массив лучших 
+    $topgravetcs = getBestPlayers($playerOfTur, 'topgravetc');
+
+    // Результат записываем в основной массив
+    foreach ($topgravetcs as $topgravetc) {
+      $bestPlayer[] = $topgravetc;
+    }
+
+    // --- Бомбардир ---
+    // Находим максимальное значение count_goals. 
+    $maxGoals = max(array_column($playerOfTur, 'count_goals'));
+
+    // Отбираем все элементы с максимальным значением count_goals
+    $bombardirs = array_filter($playerOfTur, function ($item) use ($maxGoals) {
+        return $item['count_goals'] == $maxGoals;
+    });
+
+    // --- Голкипер ---
+    // Получаем массив лучших 
+    $golkipers = getBestPlayers($playerOfTur, 'golkiper');
+
+    // Результат записываем в основной массив
+    foreach ($golkipers as $golkiper) {
+      $bestPlayer[] = $golkiper;
+    }
+
+    // --- Бомбардир ---
+    // Находим максимальное значение count_goals. 
+    $maxGoals = max(array_column($playerOfTur, 'count_goals'));
+
+    // Отбираем все элементы с максимальным значением count_goals
+    $bombardirs = array_filter($playerOfTur, function ($item) use ($maxGoals) {
+        return $item['count_goals'] == $maxGoals;
+    });
+
+    // Добавляем игроку ключ что он лучший в туре бомбардир
+    foreach($bombardirs as $key => $res){
+      $bombardirs[$key]['best_player'] = 'bombardir';
+      $bombardirs[$key]['count_points'] = $res['count_goals'];
+    }
+    
+    // Результат записываем в основной массив
+    foreach ($bombardirs as $bombardir) {
+      $bestPlayer[] = $bombardir;
+    }    
+
+    // --- Асистент ---
+    // Находим максимальное значение count_asists. 
+    $maxAsist = max(array_column($playerOfTur, 'count_asists'));
+
+    // Отбираем все элементы с максимальным значением count_goals
+    $asists = array_filter($playerOfTur, function ($item) use ($maxAsist) {
+        return $item['count_asists'] == $maxAsist;
+    });
+
+    // Добавляем игроку ключ что он лучший в туре бомбардир
+    foreach($asists as $key => $res){
+      $asists[$key]['best_player'] = 'asistent';
+      $asists[$key]['count_points'] = $res['count_asists'];
+    }
+
+    // Результат записываем в основной массив
+    foreach ($asists as $asist) {
+      $bestPlayer[] = $asist;
+    }
+
+    // --- Захисник ---
+    // Получаем массив лучших защитников
+    $zahusnuks = getBestPlayers($playerOfTur, 'zahusnuk');
+
+    // Результат записываем в основной массив
+    foreach ($zahusnuks as $zahusnuk) {
+      $bestPlayer[] = $zahusnuk;
+    }
+
+    // --- Дриблинг ---
+    // Получаем массив лучших 
+    $driblings = getBestPlayers($playerOfTur, 'dribling');
+
+    // Результат записываем в основной массив
+    foreach ($driblings as $dribling) {
+      $bestPlayer[] = $dribling;
+    }
+
+    // --- Удар ---
+    // Получаем массив лучших 
+    $udars = getBestPlayers($playerOfTur, 'udar');
+
+    // Результат записываем в основной массив
+    foreach ($udars as $udar) {
+      $bestPlayer[] = $udar;
+    }
+
+    // --- Пас ---
+    // Получаем массив лучших 
+    $pases = getBestPlayers($playerOfTur, 'pas');
+
+    // Результат записываем в основной массив
+    foreach ($pases as $pas) {
+      $bestPlayer[] = $pas;
+    }
+
+
+
+
+    return $bestPlayer;
+  
+  }
+
+  /**
+   * Соединяет массив статистики с данными игрока. Данные это ФИО, фото, навание команды и т. д.
+   * @param array - массив статистики
+   * @param array - массив данных
+   * @return array - объединенный массив
+   */
+  function mergeStaticAndData($playersOfTur, $dataPlayer){
+    $bestBombardir = [];
+
+    foreach($playersOfTur as $playerStats) {
+      $playerId = $playerStats['player'];
+      if(isset($dataPlayer[$playerId])) {
+        $bestBombardir[] = array_merge($playerStats, $dataPlayer[$playerId]);
+      } else {
+        $bestBombardir[] = $playerStats;
+      }
+    }
+
+    return $bestBombardir;
+  }
+
+
+  /**
+   * Находим лучших защитников
+   * @param array - все игроки тура
+   * @param string - например zahusnuk, dribling, udar
+   * @return array - массив лучших игроков тура по рубрике Захисник
+   */
+  function getBestPlayers($playerOfTur, $playerRole){
+    // Массив для хранения сумм
+    $total = [];
+
+    $result = [];
+
+    if($playerRole == 'topgravetc') {
+      
+      // Шаг 1: Вычисляем тотал для каждого элемента
+      foreach ($playerOfTur as $key => $item) {
+          $total[$key] = $item['count_goals'] * 15 + $item['count_asists'] * 10 +  $item['zagostrennia'] * 10 +
+          + $item['pasplus'] * 3 - $item['pasminus'] * 3 - $item['vtrata'] * 3 +
+          + $item['vstvor'] * 7 - $item['mimo'] * 4 +  $item['obvodkaplus'] * 5 -
+          + $item['obvodkaminus'] * 3 + $item['otbor'] * 8 -  $item['otbormin'] * 5 +
+          + $item['blok'] * 4 + $item['seyv'] * 15 - $item['seyvmin'] * 7;
+      }
+  
+      // Шаг 2: Находим максимальное значение тотала
+      $maxTotal = max($total);
+  
+      // Шаг 3: Отбираем все элементы, у которых сумма равна максимальной
+      $result = array_filter($playerOfTur, function ($item) use ($maxTotal) {
+          return ( $item['count_goals'] * 15 + $item['count_asists'] * 10 +  $item['zagostrennia'] * 10 +
+          + $item['pasplus'] * 3 - $item['pasminus'] * 3 - $item['vtrata'] * 3 +
+          + $item['vstvor'] * 7 - $item['mimo'] * 4 +  $item['obvodkaplus'] * 5 -
+          + $item['obvodkaminus'] * 3 + $item['otbor'] * 8 -  $item['otbormin'] * 5 +
+          + $item['blok'] * 4 + $item['seyv'] * 15 - $item['seyvmin'] * 7 ) == $maxTotal;
+      });
+  
+      // Добавляем игроку ключ что он лучший в туре
+      foreach($result as $key => $res){
+        $result[$key]['best_player'] = 'topgravetc';
+        $result[$key]['count_points'] = $maxTotal;
+      }
+
+    }
+
+    if($playerRole == 'golkiper') {
+      
+      // Шаг 1: Вычисляем тотал для каждого элемента
+      foreach ($playerOfTur as $key => $item) {
+          $total[$key] = $item['seyv'] + $item['seyvmin'] == 0 ? 0 : ( 100 / ( $item['seyv'] + $item['seyvmin'] ) ) * $item['seyv'];
+      }
+  
+      // Шаг 2: Находим максимальное значение тотала
+      $maxTotal = max($total);
+  
+      // Шаг 3: Отбираем все элементы, у которых сумма равна максимальной
+      $result = array_filter($playerOfTur, function ($item) use ($maxTotal) {
+          return ( $item['seyv'] + $item['seyvmin'] == 0 ? 0 : ( 100 / ( $item['seyv'] + $item['seyvmin'] ) ) * $item['seyv'] ) == $maxTotal;
+      });
+  
+      // Добавляем игроку ключ что он лучший в туре
+      foreach($result as $key => $res){
+        $result[$key]['best_player'] = 'golkiper';
+        $result[$key]['count_points'] = round($maxTotal, 0);
+      }
+
+    }
+
+
+
+    if($playerRole == 'zahusnuk') {
+      
+      // Шаг 1: Вычисляем сумму otbor + blok для каждого элемента
+      foreach ($playerOfTur as $key => $item) {
+          $total[$key] = $item['otbor'] + $item['blok'];
+      }
+  
+      // Шаг 2: Находим максимальное значение суммы
+      $maxTotal = max($total);
+  
+      // Шаг 3: Отбираем все элементы, у которых сумма равна максимальной
+      $result = array_filter($playerOfTur, function ($item) use ($maxTotal) {
+          return ($item['otbor'] + $item['blok']) == $maxTotal;
+      });
+  
+      // Добавляем игроку ключ что он лучший в туре
+      foreach($result as $key => $res){
+        $result[$key]['best_player'] = 'zahusnuk';
+        $result[$key]['count_points'] = $maxTotal;
+      }
+
+    }
+
+    if($playerRole == 'dribling') {
+      
+      // Шаг 1: Вычисляем тотал для каждого элемента
+      foreach ($playerOfTur as $key => $item) {
+          $total[$key] = $item['otbor'] - $item['otbormin'];
+      }
+  
+      // Шаг 2: Находим максимальное значение тотала
+      $maxTotal = max($total);
+  
+      // Шаг 3: Отбираем все элементы, у которых сумма равна максимальной
+      $result = array_filter($playerOfTur, function ($item) use ($maxTotal) {
+          return ($item['otbor'] - $item['otbormin']) == $maxTotal;
+      });
+  
+      // Добавляем игроку ключ что он лучший в туре
+      foreach($result as $key => $res){
+        $result[$key]['best_player'] = 'dribling';
+        $result[$key]['count_points'] = $maxTotal;
+      }
+
+    }
+
+    if($playerRole == 'udar') {
+      
+      // Шаг 1: Вычисляем тотал для каждого элемента
+      foreach ($playerOfTur as $key => $item) {
+          $total[$key] = $item['vstvor'] - $item['mimo'];
+      }
+  
+      // Шаг 2: Находим максимальное значение тотала
+      $maxTotal = max($total);
+  
+      // Шаг 3: Отбираем все элементы, у которых сумма равна максимальной
+      $result = array_filter($playerOfTur, function ($item) use ($maxTotal) {
+          return ($item['vstvor'] - $item['mimo']) == $maxTotal;
+      });
+  
+      // Добавляем игроку ключ что он лучший в туре
+      foreach($result as $key => $res){
+        $result[$key]['best_player'] = 'udar';
+        $result[$key]['count_points'] = $maxTotal;
+      }
+
+    }
+
+    if($playerRole == 'pas') {
+      
+      // Шаг 1: Вычисляем тотал для каждого элемента
+      foreach ($playerOfTur as $key => $item) {
+          $total[$key] = ( $item['zagostrennia']*5 + $item['pasplus'] ) - $item['pasminus']*3;
+      }
+  
+      // Шаг 2: Находим максимальное значение тотала
+      $maxTotal = max($total);
+  
+      // Шаг 3: Отбираем все элементы, у которых сумма равна максимальной
+      $result = array_filter($playerOfTur, function ($item) use ($maxTotal) {
+          return ( ( $item['zagostrennia']*5 + $item['pasplus'] ) - $item['pasminus']*3 ) == $maxTotal;
+      });
+  
+      // Добавляем игроку ключ что он лучший в туре
+      foreach($result as $key => $res){
+        $result[$key]['best_player'] = 'pas';
+        $result[$key]['count_points'] = $maxTotal;
+      }
+
+    }
+
+
+    return $result;
   }

@@ -796,93 +796,93 @@ if (isset($params['id'])) {
         <img class="team-page__logo" src="<?= $team_logo_path . $teampict ?>" alt="Team logo">
 
         <div class="team-page__stars">
-          <img src="/css/components/team-page/assets/images/golden-star-icon.svg" alt="star">
-          <img src="/css/components/team-page/assets/images/golden-star-icon.svg" alt="star">
-          <img src="/css/components/team-page/assets/images/golden-star-icon.svg" alt="star">
-          <img src="/css/components/team-page/assets/images/golden-star-icon.svg" alt="star">
-          <img src="/css/components/team-page/assets/images/golden-star-icon.svg" alt="star">
+          <img src="/css/components/team-page/assets/images/golden-star-icon.png" alt="star">
+          <img src="/css/components/team-page/assets/images/golden-star-icon.png" alt="star">
+          <img src="/css/components/team-page/assets/images/golden-star-icon.png" alt="star">
+          <img src="/css/components/team-page/assets/images/golden-star-icon.png" alt="star">
+          <img src="/css/components/team-page/assets/images/golden-star-icon.png" alt="star">
         </div>
 
         <div class="team-page__skills">
           <div class="team-page__skills-container">
             <div class="team-page__skills-item">
-              <img src="/css/components/team-page/assets/images/star-icon.png" alt="skills-icon">
+              <img style="width: 100%" width="19" height="19" src="/css/components/team-page/assets/images/star-icon.png" alt="skills-icon">
               <span><?= $bestGravetc ?></span>
             </div>
 
             <div class="team-page__skills-item">
-              <img src="/css/components/team-page/assets/images/gloves-icon.png" alt="skills-icon">
+              <img style="width: 100%" width="19" height="19" src="/css/components/team-page/assets/images/gloves-icon.png" alt="skills-icon">
               <span><?= $bestGolkiper ?></span>
             </div>
 
             <div class="team-page__skills-item">
-              <img src="/css/components/team-page/assets/images/football-icon.png" alt="skills-icon">
+              <img style="width: 100%" width="19" height="19" src="/css/components/team-page/assets/images/football-icon.png" alt="skills-icon">
               <span><?= $bestBombardi ?></span>
             </div>
 
             <div class="team-page__skills-item">
-              <img src="/css/components/team-page/assets/images/boots-icon.svg" alt="skills-icon">
+              <img style="width: 100%" width="19" height="19" src="/css/components/team-page/assets/images/boots-icon.png" alt="skills-icon">
               <span><?= $bestAssist ?></span>
             </div>
 
             <div class="team-page__skills-item">
-              <img src="/css/components/team-page/assets/images/pitt-icon.svg" alt="skills-icon">
+              <img style="width: 100%" width="19" height="19" src="/css/components/team-page/assets/images/pitt-icon.png" alt="skills-icon">
               <span><?= $bestZhusnuk ?></span>
             </div>
 
             <div class="team-page__skills-item">
-              <img src="/css/components/team-page/assets/images/player-icon.svg" alt="skills-icon">
+              <img style="width: 100%" width="19" height="19" src="/css/components/team-page/assets/images/player-icon.png" alt="skills-icon">
               <span><?= $bestDribling ?></span>
             </div>
 
             <div class="team-page__skills-item">
-              <img src="/css/components/team-page/assets/images/rocket-ball-icon.png" alt="skills-icon">
+              <img style="width: 100%" width="19" height="19" src="/css/components/team-page/assets/images/rocket-ball-icon.png" alt="skills-icon">
               <span><?= $bestUdar ?></span>
             </div>
 
             <div class="team-page__skills-item">
-              <img src="/css/components/team-page/assets/images/ball-icon.png" alt="skills-icon">
+              <img style="width: 100%" width="19" height="19" src="/css/components/team-page/assets/images/ball-icon.png" alt="skills-icon">
               <span><?= $bestPas ?></span>
             </div>
           </div>
           <div class="team-page__skills-container">
             <div class="team-page__skills-item">
-              <img src="/css/components/card-player-full/assets/images/football-icon.png" alt="Загальна кількість забитих м'ячів" title="Загальна кількість забитих м'ячів">
+              <img style="width: 100%" width="19" height="19" src="/css/components/card-player-full/assets/images/football-icon.png" alt="Загальна кількість забитих м'ячів" title="Загальна кількість забитих м'ячів">
               <span><?= $totalGoalsByTeam ?></span>
             </div>
 
             <div class="team-page__skills-item">
-              <img src="/css/components/card-player-full/assets/images/boots-icon.svg" alt="Загальна кількість гольових пасів" title="Загальна кількість гольових пасів">
+              <img style="width: 100%" width="19" height="19" src="/css/components/card-player-full/assets/images/boots-icon.png" alt="Загальна кількість гольових пасів" title="Загальна кількість гольових пасів">
               <span><?= $totalAsistByTeam ?></span>
             </div>
 
             <div class="team-page__skills-item">
-              <img src="/css/components/card-player-full/assets/images/yellow-shirt.svg" alt="">
+              <img style="width: 100%" width="19" height="19" src="/css/components/card-player-full/assets/images/yellow-shirt.png" alt="">
               <span>234</span>
             </div>
 
             <div class="team-page__skills-item">
-              <img src="/css/components/card-player-full/assets/images/golden-star-icon.svg" alt="Загальна кількість гравець матчу" title="Загальна кількість гкравець матчу">
+              <img style="width: 100%" width="19" height="19" src="/css/components/card-player-full/assets/images/golden-star-icon.png" alt="Загальна кількість гравець матчу" title="Загальна кількість гкравець матчу">
               <span><?= $totalBestPlayerByTeam ?></span>
             </div>
 
             <div class="team-page__skills-item">
-              <img src="/css/components/card-player-full/assets/images/green-field-icon.svg" alt="">
+              <img style="width: 100%" width="19" height="19" src="/css/components/card-player-full/assets/images/green-field-icon.png" alt="">
               <span><?= $totalMatchesByTeam ?></span>
             </div>
 
             <div class="team-page__skills-item">
-              <img src="/css/components/card-player-full/assets/images/yellow-card-icon.svg" alt="">
+              <img style="width: 100%" width="19" height="19" src="/css/components/card-player-full/assets/images/yellow-card-icon.png" alt="">
               <span><?= $totalYellowByTeam; ?></span>
             </div>
 
             <div class="team-page__skills-item">
-              <img src="/css/components/card-player-full/assets/images/yellow-red-icon.svg" alt="">
+              <img style="width: 100%" width="19" height="19" src="/css/components/card-player-full/assets/images/yellow-red-icon.png" alt="">
               <span><?= $totalYellowRedByTeam; ?></span>
             </div>
 
             <div class="team-page__skills-item">
-              <img src="/css/components/card-player-full/assets/images/red-card-icon.svg" alt="">
+              <img style="width: 100%" width="19" height="19" src="/css/components/card-player-full/assets/images/red-card-icon.png" alt="">
               <span><?= $totalRedByTeam ?></span>
             </div>
           </div>
@@ -900,7 +900,7 @@ if (isset($params['id'])) {
 
     <?php 
       if ($kep) $active=""; else $active="and active='1'";
-      $recordSet = $db->Execute("select * from v9ky_player a where team='".$id."' ".$active." ORDER BY active desc, id=(select capitan from v9ky_team where id='".$id."') desc, (select count(*) as kol from v9ky_gol where player=a.id and team='".$id."') desc, (select count(*) from v9ky_sostav where player=a.id) desc, (select name1 from v9ky_man where id=a.man)");
+      $recordSet = $db->Execute("select * from v9ky_player a where team='".$id."' ".$active." ORDER BY active desc, vibuv, id=(select capitan from v9ky_team where id='".$id."') desc, (select count(*) as kol from v9ky_gol where player=a.id and team='".$id."') desc, (select count(*) from v9ky_sostav where player=a.id) desc, (select name1 from v9ky_man where id=a.man)");
       $recordSet1 = $db->Execute("select capitan, tel1 from v9ky_team where id='".$id."'");          
       $recordface = $db->Execute("select * from v9ky_man_face where man='".$recordSet->fields[man]."' ORDER BY data desc LIMIT 1");          
       if ($recordface->fields[pict]) $face = $recordface->fields[pict]; else $face = "avatar1.jpg";
@@ -972,7 +972,7 @@ if (isset($params['id'])) {
         >
         <img 
           class="team-page__manager-logo"  
-          src="/css/components/team-page/assets/images/coach-icon.svg"
+          src="/css/components/team-page/assets/images/coach-icon.png"
           alt="manager"
         >
         <img
@@ -1033,9 +1033,9 @@ if (isset($params['id'])) {
             <td><?=rus_date("d F", strtotime($recordmatch1->fields[date]))?></td>
             <td><?=rus_date("H:i", strtotime($recordmatch1->fields[date]))?></td>
             <td><?=$recordmatch1->fields[field_ru]?></td>
-            <td  style="text-align: right"><?=$recordmatch1->fields[team_1];?><img style="margin-left: 10px" src="<?=$team_logo_path?><?=$recordmatch1->fields[pict_1]?>" alt="" width=30></td>
+            <td  style="text-align: right"><span class="team_name"><?=$recordmatch1->fields[team_1];?></span><img style="margin-left: 10px" src="<?=$team_logo_path?><?=$recordmatch1->fields[pict_1]?>" alt="" width=30></td>
             <td><a href="<?=$site_url?>/<?=$tournament?>/teams_match_stat/match/<?=$recordmatch1->fields[id];?>"><?=$gols?></a></td>
-            <td style="text-align: left"><img style="margin-right: 10px" src="<?=$team_logo_path?><?=$recordmatch1->fields[pict_2]?>" alt="" width=30><?=$recordmatch1->fields[team_2]?></td>
+            <td style="text-align: left"><img style="margin-right: 10px" src="<?=$team_logo_path?><?=$recordmatch1->fields[pict_2]?>" alt="" width=30><span class="team_name"><?=$recordmatch1->fields[team_2]?></span></td>
           </tr>
         <? $recordmatch1->MoveNext(); }?>
       </tbody>
@@ -1131,6 +1131,7 @@ if (isset($params['id'])) {
       <div id="playerCard<?= $idx ?>" class="card-player-full content-image">
 
           <?php 
+            // Место в рейтинге
             $bestGravetc   = getBestPlayer($topGravetc, $recordSet->fields['id'], 'player_id');
             $bestGolkiper  = getBestPlayer($topGolkiper, $recordSet->fields['id'], 'player_id');
             $bestBombardi  = getBestPlayer($topBombardi, $recordSet->fields['id'], 'player_id');
@@ -1140,6 +1141,7 @@ if (isset($params['id'])) {
             $bestUdar      = getBestPlayer($topUdar, $recordSet->fields['id'], 'player_id');
             $bestPas       = getBestPlayer($topPas, $recordSet->fields['id'], 'player_id');
 
+            // Определения значка в карточке игрока (верхний правый угол) - находим то, в чем игрок лучший.
             if($recordSet->fields['amplua'] != 1) {
               $arrayCPB = [$bestGravetc, $bestGolkiper, $bestBombardi, $bestAsists, $bestZhusnuk, $bestDribling, $bestUdar, $bestPas];
               $minValueCPB = min($arrayCPB);          
@@ -1150,12 +1152,10 @@ if (isset($params['id'])) {
               $indexCPB = array_search($minValueCPB, $arrayCPB); 
               $indexCPB ++; 
             }
-      
-      
 
             // 0 - star-icon.png, 1 - gloves-icon.png, 2 - football-icon.png, 3 - boots-icon.svg, 4 - pitt-icon.svg, 5 - player-icon.svg
             // 6 - rocket-ball-icon.png, 7 - ball-icon.png
-            $arrayCategoryPlayers = ['star-icon.png', 'gloves-icon.png', 'football-icon.png', 'boots-icon.svg', 'pitt-icon.svg', 'player-icon.svg', 'rocket-ball-icon.png', 'ball-icon.png'];
+            $arrayCategoryPlayers = ['star-icon.png', 'gloves-icon.png', 'football-icon.png', 'boots-icon.png', 'pitt-icon.png', 'player-icon.png', 'rocket-ball-icon.png', 'ball-icon.png'];
             
             $categoryBestPlayers = $arrayCategoryPlayers[$indexCPB];
           ?>
@@ -1169,11 +1169,11 @@ if (isset($params['id'])) {
           <img src="<?=$team_logo_path?><?=$teampict?>" alt="Team Logo">
           
           <?php if ($recordSet->fields['v9ky']):?>
-            <img src="/css/components/team-page/assets/images/player-v9ku.svg" alt="В9КУ">
+            <img src="/css/components/team-page/assets/images/player-v9ku.png" alt="В9КУ">
             <?php elseif ($recordSet->fields['dubler']): ?>
-            <img src="/css/components/team-page/assets/images/dubler-icon.svg" alt="Дублер">
+            <img src="/css/components/team-page/assets/images/dubler-icon.png" alt="Дублер">
             <?php elseif ($recordSet->fields['vibuv']): ?>
-            <img src="/css/components/team-page/assets/images/vibuv.svg" alt="Вибув">
+            <img class="vibuv" src="/css/components/team-page/assets/images/vibuv.png" alt="Вибув">
           <?php endif ?>
             
           
@@ -1208,37 +1208,37 @@ if (isset($params['id'])) {
             </li>
 
             <li>
-              <img src="/css/components/card-player-full/assets/images/golden-star-icon.svg" alt="">
+              <img src="/css/components/card-player-full/assets/images/golden-star-icon.png" alt="">
               <p><?= $indStaticPlayer['count_best_player_of_match'] ?></p>
             </li>   
             
             <li>
-              <img src="/css/components/card-player-full/assets/images/yellow-shirt.svg" alt="">
+              <img src="/css/components/card-player-full/assets/images/yellow-shirt.png" alt="">
               <p><?= $indStaticPlayer['count_in_tour'] ?></p>
             </li>
           
             <li>
-              <img src="/css/components/card-player-full/assets/images/boots-icon.svg" alt="">
+              <img src="/css/components/card-player-full/assets/images/boots-icon.png" alt="">
               <p><?= $indStaticPlayer['count_asists'] ?></p>
             </li>
           
             <li>
-              <img src="/css/components/card-player-full/assets/images/green-field-icon.svg" alt="">
+              <img src="/css/components/card-player-full/assets/images/green-field-icon.png" alt="">
               <p><?= $indStaticPlayer['count_matches'] ?></p>
             </li>
           
             <li>
-              <img src="/css/components/card-player-full/assets/images/yellow-card-icon.svg" alt="">
+              <img src="/css/components/card-player-full/assets/images/yellow-card-icon.png" alt="">
               <p><?= $indStaticPlayer['yellow_cards'] ?></p>
             </li>
 
             <li>
-              <img src="/css/components/card-player-full/assets/images/yellow-red-icon.svg" alt="">
+              <img src="/css/components/card-player-full/assets/images/yellow-red-icon.png" alt="">
               <p><?= $indStaticPlayer['yellow_red_cards'] ?></p>
             </li>
           
             <li>
-              <img src="/css/components/card-player-full/assets/images/red-card-icon.svg" alt="">
+              <img src="/css/components/card-player-full/assets/images/red-card-icon.png" alt="">
               <p><?= $indStaticPlayer['red_cards'] ?></p>
             </li>
 
@@ -1271,7 +1271,7 @@ if (isset($params['id'])) {
           </li>
         </ul>
 
-        <h4>Місце в рейтинзі ліги</h4>
+        <h4>Місце в рейтингу ліги</h4>
 
 
         <ul class="card-player-full__skills">
@@ -1297,17 +1297,17 @@ if (isset($params['id'])) {
           </li>
 
           <li>
-            <img src="/css/components/card-player-full/assets/images/boots-icon.svg" alt="skills-icon" title="Топ-Асист">
+            <img src="/css/components/card-player-full/assets/images/boots-icon.png" alt="skills-icon" title="Топ-Асист">
             <span><?= $bestAsists ?></span>
           </li>
 
           <li>
-            <img src="/css/components/card-player-full/assets/images/pitt-icon.svg" alt="skills-icon" title="Топ-Захист">
+            <img src="/css/components/card-player-full/assets/images/pitt-icon.png" alt="skills-icon" title="Топ-Захист">
             <span><?= $bestZhusnuk ?></span>
           </li>
 
           <li>
-            <img src="/css/components/card-player-full/assets/images/player-icon.svg" alt="skills-icon" title="Топ-Дріблінг">
+            <img src="/css/components/card-player-full/assets/images/player-icon.png" alt="skills-icon" title="Топ-Дріблінг">
             <span><?= $bestDribling ?></span>
           </li>
 
@@ -1392,17 +1392,17 @@ if (isset($params['id'])) {
         </li>
 
         <li>
-          <img src="/css/components/team-page/assets/images/boots-icon.svg" alt="">
+          <img src="/css/components/team-page/assets/images/boots-icon.png" alt="">
           <p>Асисти</p>
         </li>
 
         <li>
-          <img src="/css/components/team-page/assets/images/pitt-icon.svg" alt="">
+          <img src="/css/components/team-page/assets/images/pitt-icon.png" alt="">
           <p>Захист</p>
         </li>
 
         <li>
-          <img src="/css/components/team-page/assets/images/player-icon.svg" alt="">
+          <img src="/css/components/team-page/assets/images/player-icon.png" alt="">
           <p>Дріблінг</p>
         </li>
 
@@ -1417,12 +1417,12 @@ if (isset($params['id'])) {
         </li>
 
         <li>
-          <img src="/css/components/team-page/assets/images/manager-icon.svg" alt="">
+          <img src="/css/components/team-page/assets/images/manager-icon.png" alt="">
           <p>Президент команди</p>
         </li>
 
         <li>
-          <img src="/css/components/team-page/assets/images/coach-icon.svg" alt="">
+          <img src="/css/components/team-page/assets/images/coach-icon.png" alt="">
           <p>Тренер</p>
         </li>
 
@@ -1454,7 +1454,7 @@ if (isset($params['id'])) {
 
         <li>
           <div>
-            <img src="/css/components/team-page/assets/images/boots-icon.svg" alt="">
+            <img src="/css/components/team-page/assets/images/boots-icon.png" alt="">
             <span>1</span>
           </div>
           <p>Кількість гольових пасів за сезон</p>
@@ -1462,7 +1462,7 @@ if (isset($params['id'])) {
 
         <li>
           <div>
-            <img src="/css/components/team-page/assets/images/dubler-icon.svg" alt="">
+            <img src="/css/components/team-page/assets/images/dubler-icon.png" alt="">
             <span></span>
           </div>
           <p>Дублери</p>
@@ -1470,7 +1470,7 @@ if (isset($params['id'])) {
 
         <li>
           <div>
-            <img src="/css/components/team-page/assets/images/player-v9ku.svg" alt="">
+            <img src="/css/components/team-page/assets/images/player-v9ku.png" alt="">
             <span></span>
           </div>
           <p>Гравець «В9КУ» (орендований гравець)</p>
@@ -1478,7 +1478,7 @@ if (isset($params['id'])) {
 
         <li>
           <div>
-            <img src="/css/components/team-page/assets/images/red-card-icon.svg" alt="">
+            <img class="team-page__card-icon" src="/css/components/team-page/assets/images/red-card-icon.png" alt="">
             <span>1</span>
           </div>
           <p>Кількість червоних карток за сезон</p>
@@ -1486,7 +1486,7 @@ if (isset($params['id'])) {
 
         <li>
           <div>
-            <img src="/css/components/team-page/assets/images/green-field-icon.svg" alt="">
+            <img src="/css/components/team-page/assets/images/green-field-icon.png" alt="">
             <span>1</span>
           </div>
           <p>Кількість проведених матчів за сезон</p>
@@ -1494,7 +1494,7 @@ if (isset($params['id'])) {
 
         <li>
           <div>
-            <img src="/css/components/team-page/assets/images/yellow-card-icon.svg" alt="">
+            <img class="team-page__card-icon" src="/css/components/team-page/assets/images/yellow-card-icon.png" alt="">
             <span>1</span>
           </div>
           <p>Кількість жовтих карток за сезон</p>
@@ -1502,7 +1502,7 @@ if (isset($params['id'])) {
 
         <li>
           <div>
-            <img src="/css/components/team-page/assets/images/golden-star-icon.svg" alt="">
+            <img src="/css/components/team-page/assets/images/golden-star-icon.png" alt="">
             <span>1</span>
           </div>
           <p>Кількість отриманих номінацій «Гравець Матчу»</p>
@@ -1510,7 +1510,7 @@ if (isset($params['id'])) {
 
         <li>
           <div>
-            <img src="/css/components/team-page/assets/images/yellow-shirt.svg" alt="">
+            <img src="/css/components/team-page/assets/images/yellow-shirt.png" alt="">
             <span>1</span>
           </div>
           <p>Кількість потраплянь в збірну туру за сезон</p>

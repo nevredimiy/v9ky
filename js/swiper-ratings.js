@@ -1,74 +1,3 @@
-// const swiperRatings = document.querySelector('.swiper-ratings');
-
-
-// if(swiperRatings) {
-//    console.log('swiper-ratings');
-
-// //   const slidesRatings = swiperRatings.querySelectorAll('.swiper-slide-ratings');
-// //   let totalWidthRatings = 0;
-  
-// //   for (let i = 0; i < slidesRatings.length; i++) {
-// //     const slide = slidesRatings[i];
-// //     // console.log(i, slide.offsetWidth, slide);
-// //     totalWidthRatings += slide.offsetWidth;
-// //   }
-  
-// //   totalWidthRatings += slidesRatings.length * 10;
-  
-// //   // console.log(window.innerWidth, 'totalWidthRatings = ', totalWidthRatings);
-  
-//   // const swiperRatings = new Swiper( '.swiper-ratings', {
-//   //   // Optional parameters
-//   // direction: 'vertical',
-//   // loop: true,
-//   // });
-  
-  
-// //   if (window.innerWidth >= totalWidthRatings) {
-// //     // console.log('style');
-// //     const swiperWrapper = swiperRatings.querySelector('.swiper-wrapper');
-// //     swiperRatings.style.display = 'flex';
-// //     swiperRatings.style.justifyContent = 'center';
-// //     swiperRatings.style.alignItems = 'center';
-// //     swiperWrapper.style.maxWidth = '1440px';
-// //     swiperWrapper.style.width = 'fit-content';
-// //     // swiperWrapper.style.backgroundColor = 'red';
-// //   }
-// }
-
-
-
-const containers = document.querySelectorAll(".containers");
-
-containers.forEach((container) => {
-  let isDragging = false;
-  let startX;
-  let scrollLeft;
-
-  container.addEventListener("mousedown", (e) => {
-    isDragging = true;
-    startX = e.pageX - container.offsetLeft;
-    scrollLeft = container.scrollLeft;
-  });
-
-  container.addEventListener("mousemove", (e) => {
-    if (!isDragging) return;
-    e.preventDefault();
-
-    const x = e.pageX - container.offsetLeft;
-    const step = (x - startX) * 0.6;
-    container.scrollLeft = scrollLeft - step;
-  });
-
-  container.addEventListener("mouseup", () => {
-    isDragging = false;
-  });
-
-  container.addEventListener("mouseleave", () => {
-    isDragging = false;
-  });
-});
-
 const progress = document.getElementById("progress");
 const song = document.getElementById("song");
 const controlIcon = document.getElementById("controlIcon");
@@ -196,26 +125,26 @@ backwardButton?.addEventListener("click", function () {
 
 // updateSongInfo();
 
-var swiper = new Swiper(".swiper", {
-  effect: "coverflow",
-  grabCursor: true,
-  centeredSlides: true,
-  loop: true,
-  speed: 600,
-  slidesPerView: "auto",
-  coverflowEffect: {
-    rotate: 10,
-    stretch: 120,
-    depth: 200,
-    modifier: 1,
-    slideShadows: false,
-  },
-   on: {
-    click(event) {
-      swiper.slideTo(this.clickedIndex);
-    },
-  },
-  pagination: {
-    el: ".swiper-pagination",
-  },
-});
+// var swiper = new Swiper(".swiper", {
+//   effect: "coverflow",
+//   grabCursor: true,
+//   centeredSlides: true,
+//   loop: true,
+//   speed: 600,
+//   slidesPerView: "auto",
+//   coverflowEffect: {
+//     rotate: 10,
+//     stretch: 120,
+//     depth: 200,
+//     modifier: 1,
+//     slideShadows: false,
+//   },
+//    on: {
+//     click(event) {
+//       swiper.slideTo(this.clickedIndex);
+//     },
+//   },
+//   pagination: {
+//     el: ".swiper-pagination",
+//   },
+// });

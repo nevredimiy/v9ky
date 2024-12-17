@@ -6,5 +6,4 @@ swipersLeagues = new Swiper(".swiper-leagues", {
     hide: false,
     draggable: true,
   },
-
 });
