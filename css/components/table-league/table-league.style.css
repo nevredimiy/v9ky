@@ -1,0 +1,226 @@
+@import url(./swiper-table.style.css);
+
+.table-league__title {
+  padding: 12px;
+  border-radius: var(--border-radius-m);
+  background-color: #000;
+  margin: 0 10px 15px;
+}
+
+.table-league__title>span:last-child {
+  white-space: nowrap;
+}
+
+.table-league__table {
+  border-spacing: 0 5px;
+  min-width: 100%;
+}
+
+.table-league__table tr {
+  background-color: #fff;
+  height: 28px;
+  border-radius: var(--border-radius-m);
+  /* display: flex; */
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.table-league__table tr:first-child {
+  background-color: #E8E8E8;
+}
+
+.table-league__table tr th:has(.cell--score),
+.table-league__table tr td:has(.cell--score) {
+  order: +1;
+}
+
+.table-league__table tr:nth-child(2n + 3) {
+  background-color: #E8E8E8;
+}
+
+.table-league__table tr th,
+.table-league__table tr td {
+  padding: 5px;
+  min-width: 20px;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--font-size-s);
+  line-height: 14px;
+  /* display: flex; */
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #0B0B0B;
+}
+
+.cell {
+  width: 18px;
+  height: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: var(--border-radius-s)px;
+}
+
+.cell--gold {
+  background-color: #FDBE11;
+  width: 13px;
+}
+
+.cell--silver {
+  background: linear-gradient(180deg, #B9B9B9 0%, #E2E2E2 100%);
+  width: 13px;
+}
+
+.cell--bronze {
+  background-color: #C79417;
+  width: 13px;
+}
+
+.cell--outsider {
+  background-color: #FF3B3B;
+  width: 13px;
+}
+
+.cell--own {
+  background-color: #C9C9C9;
+  height: 15px;
+  width: 15px;
+  border-radius: var(--border-radius-s);
+}
+
+.table-league__table tr th:has(.cell--team-logo),
+.table-league__table tr td:has(.cell--team-logo) {
+  display: none;
+}
+
+
+.cell--team {
+  text-align: left;
+  justify-content: start;
+  margin-right: 50px;
+}
+
+.cell--games {}
+
+.cell--win {
+  color: #59C65D;
+  background: rgba(89, 198, 93, 0.1);
+  border: 0.583333px solid rgba(66, 133, 244, 0.2);
+}
+
+.cell--draw {
+  color: #4285F4;
+  background: rgba(66, 133, 244, 0.1);
+  border: 0.583333px solid rgba(66, 133, 244, 0.2);
+}
+
+.cell--defeat {
+  color: #FF3B3B;
+  background: rgba(255, 60, 60, 0.1);
+  border: 0.583333px solid rgba(255, 59, 59, 0.2);
+}
+
+.cell--total {
+  background: #292929;
+  color: #fff;
+}
+
+@media screen and (min-width: 1260px) {
+  .table-league {
+    margin: 0 50px;
+    box-shadow: 0px 2.02612px 11.6502px rgba(8, 20, 33, 0.04);
+    max-width: 1260px;
+  }
+
+  .table-league .container>* {
+    box-shadow: 0px 4px 23px rgba(8, 20, 33, 0.04);
+  }
+
+  .table-league__title {
+    border-radius: var(--border-radius-l) var(--border-radius-l) 0px 0px;
+    line-height: 52px;
+    margin: 0;
+  }
+
+  .table-league__table {
+    border-spacing: 0 0;
+    border-radius: var(--border-radius-l);
+  }
+
+  .table-league__table tr {
+    height: 76.02px;
+    border-radius: 0;
+    margin-bottom: 0;
+    padding: 0 20px;
+  }
+
+  .table-league__table tr:last-child {
+    border-radius: 0 0 var(--border-radius-l) var(--border-radius-l);
+  }
+
+  .table-league__table tr th:first-child,
+  .table-league__table tr td:first-child {
+    border-radius: 0;
+  }
+
+  .table-league__table tr th:has(.cell--score),
+  .table-league__table tr td:has(.cell--score) {
+    order: inherit;
+  }
+
+  .table-league__table tr:nth-child(2n + 3) {
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .table-league__table tr th,
+  .table-league__table tr td {
+    min-width: 26px;
+    font-size: var(--font-size-l);
+    line-height: 36px;
+  }
+
+  .cell {
+    width: 26px;
+    height: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: var(--border-radius-m);
+  }
+
+  .cell--team-logo {
+    min-width: 36px;
+  }
+
+  .table-league__table tr th:has(.cell--team-logo),
+  .table-league__table tr td:has(.cell--team-logo) {
+    display: inherit;
+  }
+
+  .cell--own {
+    height: 26px;
+    width: 26px;
+    border-radius: var(--border-radius-m);
+  }
+
+  .cell--games {
+    background: rgba(11, 11, 11, 0.05);
+    border: 0.583333px solid rgba(89, 198, 93, 0.2);
+  }
+
+  .cell--games {
+    background: rgba(11, 11, 11, 0.05);
+    border: 1px solid rgba(32, 32, 32, 0.2);
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .table-league {
+    margin: 0 auto;
+    max-width: 1440px;
+  }
+}

@@ -31,7 +31,6 @@ if (!$result) {
     die('Ошибка выполнения запроса: ' . $mysqli->error);
 }
 
-
 $matches = [];
 $teams = [];
 
@@ -70,24 +69,32 @@ foreach ($teams as $team_id => $team_data) {
 // Подсчет статистики
 foreach ($matches as $team1_id => $opponents) {
     foreach ($opponents as $team2_id => $score) {
-        list($goals1, $goals2) = explode(':', $score);
+        // Проверяем, чтобы не было двойного подсчета
+        if (!isset($processed_matches["$team1_id-$team2_id"]) && !isset($processed_matches["$team2_id-$team1_id"])) {
+            list($goals1, $goals2) = explode(':', $score);
 
-        $stats[$team1_id]['games']++;
-        $stats[$team2_id]['games']++;
+            // Увеличиваем количество игр
+            $stats[$team1_id]['games']++;
+            $stats[$team2_id]['games']++;
 
-        if ($goals1 > $goals2) {
-            $stats[$team1_id]['wins']++;
-            $stats[$team2_id]['losses']++;
-            $stats[$team1_id]['points'] += 3;
-        } elseif ($goals1 < $goals2) {
-            $stats[$team2_id]['wins']++;
-            $stats[$team1_id]['losses']++;
-            $stats[$team2_id]['points'] += 3;
-        } else {
-            $stats[$team1_id]['draws']++;
-            $stats[$team2_id]['draws']++;
-            $stats[$team1_id]['points'] += 1;
-            $stats[$team2_id]['points'] += 1;
+            // Обновляем статистику побед, ничьих, поражений и очков
+            if ($goals1 > $goals2) {
+                $stats[$team1_id]['wins']++;
+                $stats[$team2_id]['losses']++;
+                $stats[$team1_id]['points'] += 3;
+            } elseif ($goals1 < $goals2) {
+                $stats[$team2_id]['wins']++;
+                $stats[$team1_id]['losses']++;
+                $stats[$team2_id]['points'] += 3;
+            } else {
+                $stats[$team1_id]['draws']++;
+                $stats[$team2_id]['draws']++;
+                $stats[$team1_id]['points'] += 1;
+                $stats[$team2_id]['points'] += 1;
+            }
+
+            // Отмечаем матч как обработанный
+            $processed_matches["$team1_id-$team2_id"] = true;
         }
     }
 }
@@ -97,54 +104,64 @@ uasort($stats, function ($a, $b) {
     return $b['points'] - $a['points'];
 });
 
-// Отображение таблицы
-echo '<table class="table-league__table"><tbody>';
 
-// Заголовок таблицы
-echo '<tr>';
-echo '<th><span>М</span></th>';
-echo '<th><span class="cell--team-logo"></span></th>';
-echo '<th><span class="cell--team">Команда</span></th>';
-$ii = 1;
-foreach ($teams as $team_id => $team_data) {
-    echo '<th><span class="cell--score">' . $ii . $team_data['name']  . '</span></th>';
-    $ii++;
-}
-echo '<th><span class="cell cell--games">І</span></th>';
-echo '<th><span class="cell cell--win">В</span></th>';
-echo '<th><span class="cell cell--draw">Н</span></th>';
-echo '<th><span class="cell cell--defeat">П</span></th>';
-echo '<th><span class="cell cell--total">О</span></th>';
-echo '</tr>';
-
-// Строки таблицы
-$position = 1;
-foreach ($stats as $team_id => $data) {
-    $position_class = $position == 1 ? 'cell--gold' : ($position == 2 ? 'cell--silver' : ($position == 3 ? 'cell--bronze' : ($position > count($stats) - 2 ? 'cell--outsider' : '')));
-
-    echo '<tr>';
-    echo '<td><span class="cell ' . $position_class . '">' . $position . '</span></td>';
-    echo '<td><img class="cell--team-logo" src="' . htmlspecialchars($data['logo']) . '"></td>';
-    echo '<td><span class="cell--team">' . htmlspecialchars($data['name']) . '</span></td>';
-
-    foreach ($teams as $opponent_id => $opponent_data) {
-        if ($team_id === $opponent_id) {
-            echo '<td><span class="cell--score cell--own"></span></td>';
-        } else {
-            $score = isset($matches[$team_id][$opponent_id]) ? $matches[$team_id][$opponent_id] : '-';
-            echo '<td><span class="cell--score">' . $score . '</span></td>';
-        }
-    }
-
-    echo '<td><span class="cell cell--games">' . $data['games'] . '</span></td>';
-    echo '<td><span class="cell cell--win">' . $data['wins'] . '</span></td>';
-    echo '<td><span class="cell cell--draw">' . $data['draws'] . '</span></td>';
-    echo '<td><span class="cell cell--defeat">' . $data['losses'] . '</span></td>';
-    echo '<td><span class="cell cell--total">' . $data['points'] . '</span></td>';
-    echo '</tr>';
-
-    $position++;
-}
-
-echo '</tbody></table>';
 ?>
+
+<section class="table-league">
+      <h2 class="table-league__title title title--inverse ">
+        <span>Турнірна таблиця</span>
+        <span>Прем’єр-ліги</span>
+      </h2>
+
+      <div class="swiper swiper-table swiper-initialized swiper-horizontal swiper-backface-hidden">
+        <div class="swiper-wrapper" id="swiper-wrapper-fc59b90f88ba8bbe" aria-live="polite" style="transform: translate3d(0px, 0px, 0px);">
+          <div class="swiper-slide swiper-slide--table swiper-slide-active" role="group" aria-label="1 / 1" style="margin-right: 5px;">
+            <table class="table-league__table">
+                <tbody>
+                    <tr>
+                        <th><span>М</span></th>
+                        <th><span class="cell--team-logo"></span></th>
+                        <th><span class="cell--team">Команда</span></th>
+                        <?php for( $i = 1; $i <= count($stats); $i++ ): ?>
+                            <th><span class="cell--score"><?= $i ?></span></th>
+                        <?php endfor ?>
+                        <th><span class="cell cell--games">І</span></th>
+                        <th><span class="cell cell--win">В</span></th>
+                        <th><span class="cell cell--draw">Н</span></th>
+                        <th><span class="cell cell--defeat">П</span></th>
+                        <th><span class="cell cell--total">О</span></th>
+                    </tr>
+                    <?php $position = 1; ?>
+                    <?php foreach($stats as $team_id => $stat): ?>
+                        <tr>
+                            <td><span class="cell cell--gold"><?= $position?></span></td>
+                            <td><img width="15" height="15" class="cell--team-logo" src="<?= $team_logo_path ?>/<?= $stat['logo']?>"></td>
+                            <td><span class="cell--team"><?= $stat['name']?></span></td>
+                            <!-- <td><span class="cell--score cell--own"></span></td> -->
+
+                            <?php foreach ($stats as $key => $value) : ?>
+                                
+                                    <?php if($key === $team_id) :?>  
+                                        <td><span class="cell--score cell--own"></span></td> 
+                                    <?php else :?>
+                                        
+                                        <td><span class="cell--score"><?= isset($matches[$team_id][$key]) ? $matches[$team_id][$key] : '-' ?></span></td>
+                                    <?php endif ?>
+                                
+                            <?php endforeach ?>
+                            <td><span class="cell cell--games"><?= $stat['games']?></span></td>
+                            <td><span class="cell cell--win"><?= $stat['wins']?></span></td>
+                            <td><span class="cell cell--draw"><?= $stat['draws']?></span></td>
+                            <td><span class="cell cell--defeat"><?= $stat['losses']?></span></td>
+                            <td><span class="cell cell--total"><?= $stat['points']?></span></td>
+                        </tr>
+                    <?php $position++ ?>
+                    <?php endforeach ?>
+                </tbody>
+            </table>
+          </div>
+        </div>
+        
+        <div class="swiper-scrollbar swiper-scrollbar-horizontal swiper-scrollbar-lock" style="display: none;"><div class="swiper-scrollbar-drag" style="transform: translate3d(0px, 0px, 0px); width: 70px;"></div></div>
+      <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span></div>
+    </section>
