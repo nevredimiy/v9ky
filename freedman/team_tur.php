@@ -1,19 +1,4 @@
 <?php
-// Увімкнення відображення помилок
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-
-// Встановлення рівня звітності помилок
-error_reporting(E_ALL);
-
-
-
-include_once "dates.php";
-include_once "freedman/head.php";
-include_once "slider_spons.php";
-include_once "freedman/menu.php";
-include_once "run_line.php";
-include_once "freedman/ligi.php";
 
 include_once "freedman/helpers.php";
 
@@ -125,18 +110,19 @@ $queryStaticPlayers = $db->Execute(
       }
     }
     $queryAllPlayersData->MoveNext();
-  }
-
-  
+  }  
   
   // Берем даты проведения туров.
   $queryDateTurs = $db->Execute("SELECT 
     tur, 
     MIN(date) AS min_date, 
     MAX(date) AS max_date,
-    MONTHNAME(MIN(date)) AS month_name,
+    MONTHNAME(MIN(date)) AS month_min_name,
+    MONTHNAME(MAX(date)) AS month_max_name,
     DATE_FORMAT(MIN(date), '%d') AS day_min, 
-    DATE_FORMAT(MAX(date), '%d') AS day_max 
+    DATE_FORMAT(MAX(date), '%d') AS day_max,
+    DATE_FORMAT(MIN(date), '%m') AS month_min, 
+    DATE_FORMAT(MAX(date), '%m') AS month_max
 FROM 
     v9ky_match
 WHERE `turnir` = $turnir
@@ -161,24 +147,67 @@ if(isset($_GET['tur'])){
     $currentTur = $_GET['tur'];
 }
 
-// Все игроки из выбранного тура
-$bestPlayers = getPlayersOfTur($allStaticPlayers, $currentTur);
+// dump_arr_first($dataAllPlayers);
 
-// Лучшие игроки - отфильтрованные
-$bestPlayersForTable = mergeStaticAndData($bestPlayers, $dataAllPlayers);
+if($currentTur <= $lastTur) {
+    // Все игроки из выбранного тура
+    $bestPlayers = getPlayersOfTur($allStaticPlayers, $currentTur);
 
-// dump_arr_first($bestPlayersForTable);
+    // Лучшие игроки - отфильтрованные
+    $bestPlayersForTable = mergeStaticAndData($bestPlayers, $dataAllPlayers);
 
-$labels = [
-    'topgravetc' => ['icon' => 'star-icon.png', 'role' => 'Топ-Гравець'], 
-    'golkiper' => ['icon' => 'gloves-icon.png', 'role' => 'Топ-Голкіпер'], 
-    'bombardir' => ['icon' => 'football-icon.png', 'role' => 'Топ-Бомбардир'], 
-    'asistent' => ['icon' => 'boots-icon.svg', 'role' => 'Топ-Асистент'],
-    'zahusnuk' => ['icon' => 'pitt-icon.svg', 'role' => 'Топ-Захисник'],
-    'dribling' => ['icon' => 'player-icon.svg', 'role' => 'Топ-Дриблінг'],
-    'udar' => ['icon' => 'rocket-ball-icon.png', 'role' => 'Топ-Удар'],
-    'pas' => ['icon' => 'ball-icon.png', 'role' => 'Топ-Пас'],
-];
+
+    $labels = [
+        'topgravetc' => ['icon' => 'star-icon.png', 'role' => 'Топ-Гравець'], 
+        'golkiper' => ['icon' => 'gloves-icon.png', 'role' => 'Топ-Голкіпер'], 
+        'bombardir' => ['icon' => 'football-icon.png', 'role' => 'Топ-Бомбардир'], 
+        'asistent' => ['icon' => 'boots-icon.svg', 'role' => 'Топ-Асистент'],
+        'zahusnuk' => ['icon' => 'pitt-icon.svg', 'role' => 'Топ-Захисник'],
+        'dribling' => ['icon' => 'player-icon.svg', 'role' => 'Топ-Дриблінг'],
+        'udar' => ['icon' => 'rocket-ball-icon.png', 'role' => 'Топ-Удар'],
+        'pas' => ['icon' => 'ball-icon.png', 'role' => 'Топ-Пас'],
+    ];
+}
+
+$queryDataCurrentTur = $db->Execute(
+    "SELECT 
+    m.date,
+    m.tur, 
+    m.team1,
+    t1.name AS team1_name,
+    t1.pict AS team1_photo,
+    m.team2,    
+    t2.name AS team2_name,
+    t2.pict AS team2_photo,
+    m.field,
+    f.name AS field_name,
+    m.canseled,
+    m.gols1 AS goals1,
+    m.gols2 AS goals2,
+    t.ru AS turnir_name
+FROM 
+    v9ky_match m
+LEFT JOIN 
+	`v9ky_team` t1 ON t1.id = m.team1
+LEFT JOIN
+	`v9ky_team` t2 ON t2.id = m.team2
+LEFT JOIN
+    `v9ky_turnir` t ON t.id = m.turnir
+LEFT JOIN
+    `v9ky_fields` f ON f.id = m.field
+WHERE m.`turnir` = $turnir AND m.`tur` = $currentTur 
+ORDER BY 
+    m.id"
+);
+
+$dataCurrentTur = [];
+while(!$queryDataCurrentTur->EOF){
+    $dataCurrentTur [] = $queryDataCurrentTur->fields;
+    $queryDataCurrentTur->MoveNext();
+}
+
+// Добавляем два элемента в массивы - форматированная дата и время матча.
+$dataCurrentTur = getArrayWithFormattedData($dataCurrentTur);
 
 ?>
 
@@ -195,10 +224,10 @@ $labels = [
                     <?php foreach($dateTurs as $dateTur): ?>
                         <div class="swiper-slide swiper-slide-month-controls swiper-slide-active" role="group" aria-label="1 / 15" style="margin-right: 5px;">
                             <a  class="month-controls__button <?= $dateTur['tur'] <= $lastTur ? 'month-controls__button--past ' : '' ?> <?= $currentTur ==  $dateTur['tur'] ? 'month-controls__button--current' : '' ?>" 
-                                href="<?= $url ?>/team_tur?tur=<?=$dateTur['tur']?>
-                            ">
-                                <p><?= date_translate($dateTur['month_name']) ?></p>
-                                <p><?= $dateTur['day_min'] == $dateTur['day_max'] ? $dateTur['day_min'] : $dateTur['day_min'] .'-'. $dateTur['day_max'] ?></p>
+                                href="<?= $url ?>?tur=<?=$dateTur['tur']?>&foo=foo"
+                            >
+                                <p><?= date_translate($dateTur['month_min_name']) ?></p>
+                                <p><?= $dateTur['day_min']?></p>
                             </a>
                         </div>
                     <?php endforeach ?>                  
@@ -211,255 +240,62 @@ $labels = [
             <div class="calendar-of-matches__aside">
                 <div class="swiper-matches swiper swiper-initialized swiper-horizontal swiper-backface-hidden">
                     <div class="swiper-wrapper" id="swiper-wrapper-1b58efbe70e5fba9" aria-live="polite" style="transform: translate3d(0px, 0px, 0px);">
-                        <div class="swiper-slide swiper-slide-active" role="group" aria-label="1 / 5" style="margin-right: 5px;">
-                        <div class="card-of-matches">
-                            <div class="card-of-matches__title-match">
-                            <img class="card-of-matches__shirt card-of-matches__shirt--left" src="/css/components/card-of-matches/assets/images/yellow-shirt.svg" alt="yellow">
+                        <?php foreach($dataCurrentTur as $match): ?>
+                            <div class="swiper-slide swiper-slide-active" role="group" aria-label="1 / 5" style="margin-right: 5px;">
+                                <div class="card-of-matches">
+                                    <div class="card-of-matches__title-match">
+                                    <img class="card-of-matches__shirt card-of-matches__shirt--left" src="/css/components/card-of-matches/assets/images/yellow-shirt.svg" alt="yellow">
 
-                            <img class="card-of-matches__team-logo card-of-matches__team-logo--left" src="/css/components/card-of-matches/assets/images/chelsea-logo.svg" alt="chelsea">
-                    
-                            <div class="card-of-matches__score">
-                                <span>1</span>
-                                :
-                                <span>0</span>
-                            </div>
-                    
-                            <img class="card-of-matches__team-logo card-of-matches__team-logo--right" src="/css/components/card-of-matches/assets/images/leicester-logo.svg" alt="leicester">
-
-                            <p class="card-of-matches__team card-of-matches__team--left">ФК Челсі</p>
-                    
-                            <div class="card-of-matches__date-and-time">
-                                <div class="card-of-matches__date">13 серпня (сб)</div>
-                                <div class="card-of-matches__time">16:00</div>
-                            </div>
-                    
-                            <p class="card-of-matches__team card-of-matches__team--right">Лестер</p>
-
-                            <img class="card-of-matches__shirt card-of-matches__shirt--right" src="/css/components/card-of-matches/assets/images/blue-shirt.svg" alt="blue">
-
-                            <div class="card-of-matches__marks">
-                                <a class="card-of-matches__mark"><span>Прем'єр-Ліга</span></a>
-                                <a class="card-of-matches__mark"><span>5 тур</span></a>
-                                <a class="card-of-matches__mark"><span>X-Park</span></a>
-                            </div>
-                            </div>
+                                    <img class="card-of-matches__team-logo card-of-matches__team-logo--left" src="<?= $team_logo_path ?>/<?= $match['team1_photo'] ?>" alt="Логотип команди">
                             
-                            <div class="card-of-matches__controls">
-                            <a href="#"><img src="/css/components/card-of-matches/assets/images/edit-icon.svg" alt=""></a>
-                            <a href="#"><img src="/css/components/card-of-matches/assets/images/scale-icon.svg" alt=""></a>
-                            <a href="#"><img src="/css/components/card-of-matches/assets/images/cut-icon.svg" alt=""></a>
-                            <a href="#"><img src="/css/components/card-of-matches/assets/images/hd-icon.svg" alt=""></a>
-                            <a href="#"><img src="/css/components/card-of-matches/assets/images/red-icon.svg" alt=""></a>
-                            <a href="#"><img src="/css/components/card-of-matches/assets/images/photo-icon.svg" alt=""></a>
-                            </div>
-
-                            <div class="card-of-matches__status">МАТЧ ЗАВЕРШЕНО</div>
-
-                            <a class="card-of-matches__share-button" href="#">
-                            <img src="/css/components/card-of-matches/assets/images/share-icon.svg" alt="share">
-                            </a>
-                        </div>
-                        </div>
-
-                        <div class="swiper-slide swiper-slide-next" role="group" aria-label="2 / 5" style="margin-right: 5px;">
-                        <div class="card-of-matches">
-                            <div class="card-of-matches__title-match">
-                            <img class="card-of-matches__shirt card-of-matches__shirt--left" src="/css/components/card-of-matches/assets/images/yellow-shirt.svg" alt="yellow">
-
-                            <img class="card-of-matches__team-logo card-of-matches__team-logo--left" src="/css/components/card-of-matches/assets/images/chelsea-logo.svg" alt="chelsea">
-                    
-                            <div class="card-of-matches__score">
-                                <span>1</span>
-                                :
-                                <span>0</span>
-                            </div>
-                    
-                            <img class="card-of-matches__team-logo card-of-matches__team-logo--right" src="/css/components/card-of-matches/assets/images/leicester-logo.svg" alt="leicester">
-
-                            <p class="card-of-matches__team card-of-matches__team--left">ФК Челсі</p>
-                    
-                            <div class="card-of-matches__date-and-time">
-                                <div class="card-of-matches__date">13 серпня (сб)</div>
-                                <div class="card-of-matches__time">16:00</div>
-                            </div>
-                    
-                            <p class="card-of-matches__team card-of-matches__team--right">Лестер</p>
-
-                            <img class="card-of-matches__shirt card-of-matches__shirt--right" src="/css/components/card-of-matches/assets/images/blue-shirt.svg" alt="blue">
-
-                            <div class="card-of-matches__marks">
-                                <a class="card-of-matches__mark"><span>Прем'єр-Ліга</span></a>
-                                <a class="card-of-matches__mark"><span>5 тур</span></a>
-                                <a class="card-of-matches__mark"><span>X-Park</span></a>
-                            </div>
-                            </div>
+                                    <div class="card-of-matches__score">
+                                        <?php if($match['goals1']): ?>
+                                            <span><?= $match['goals1'] ?></span>
+                                            :
+                                            <span><?= $match['goals2'] ?></span>
+                                        <?php else:?>
+                                            <span>VS</span>
+                                        <?php endif?>
+                                    </div>
                             
-                            <div class="card-of-matches__controls">
-                            <a href="#"><img src="/css/components/card-of-matches/assets/images/edit-icon.svg" alt=""></a>
-                            <a href="#"><img src="/css/components/card-of-matches/assets/images/scale-icon.svg" alt=""></a>
-                            <a href="#"><img src="/css/components/card-of-matches/assets/images/cut-icon.svg" alt=""></a>
-                            <a href="#"><img src="/css/components/card-of-matches/assets/images/hd-icon.svg" alt=""></a>
-                            <a href="#"><img src="/css/components/card-of-matches/assets/images/red-icon.svg" alt=""></a>
-                            <a href="#"><img src="/css/components/card-of-matches/assets/images/photo-icon.svg" alt=""></a>
-                            </div>
+                                    <img class="card-of-matches__team-logo card-of-matches__team-logo--right" src="<?= $team_logo_path ?>/<?= $match['team2_photo'] ?>" alt="leicester">
 
-                            <div class="card-of-matches__status">МАТЧ ЗАВЕРШЕНО</div>
-
-                            <a class="card-of-matches__share-button" href="#">
-                            <img src="/css/components/card-of-matches/assets/images/share-icon.svg" alt="share">
-                            </a>
-                        </div>
-                        </div>
-
-                        <div class="swiper-slide" role="group" aria-label="3 / 5" style="margin-right: 5px;">
-                        <div class="card-of-matches">
-                            <div class="card-of-matches__title-match">
-                            <img class="card-of-matches__shirt card-of-matches__shirt--left" src="/css/components/card-of-matches/assets/images/yellow-shirt.svg" alt="yellow">
-
-                            <img class="card-of-matches__team-logo card-of-matches__team-logo--left" src="/css/components/card-of-matches/assets/images/chelsea-logo.svg" alt="chelsea">
-                    
-                            <div class="card-of-matches__score">
-                                <span>1</span>
-                                :
-                                <span>0</span>
-                            </div>
-                    
-                            <img class="card-of-matches__team-logo card-of-matches__team-logo--right" src="/css/components/card-of-matches/assets/images/leicester-logo.svg" alt="leicester">
-
-                            <p class="card-of-matches__team card-of-matches__team--left">ФК Челсі</p>
-                    
-                            <div class="card-of-matches__date-and-time">
-                                <div class="card-of-matches__date">13 серпня (сб)</div>
-                                <div class="card-of-matches__time">16:00</div>
-                            </div>
-                    
-                            <p class="card-of-matches__team card-of-matches__team--right">Лестер</p>
-
-                            <img class="card-of-matches__shirt card-of-matches__shirt--right" src="/css/components/card-of-matches/assets/images/blue-shirt.svg" alt="blue">
-
-                            <div class="card-of-matches__marks">
-                                <a class="card-of-matches__mark"><span>Прем'єр-Ліга</span></a>
-                                <a class="card-of-matches__mark"><span>5 тур</span></a>
-                                <a class="card-of-matches__mark"><span>X-Park</span></a>
-                            </div>
-                            </div>
+                                    <p class="card-of-matches__team card-of-matches__team--left"><?= $match['team1_name'] ?></p>
                             
-                            <div class="card-of-matches__controls">
-                            <a href="#"><img src="/css/components/card-of-matches/assets/images/edit-icon.svg" alt=""></a>
-                            <a href="#"><img src="/css/components/card-of-matches/assets/images/scale-icon.svg" alt=""></a>
-                            <a href="#"><img src="/css/components/card-of-matches/assets/images/cut-icon.svg" alt=""></a>
-                            <a href="#"><img src="/css/components/card-of-matches/assets/images/hd-icon.svg" alt=""></a>
-                            <a href="#"><img src="/css/components/card-of-matches/assets/images/red-icon.svg" alt=""></a>
-                            <a href="#"><img src="/css/components/card-of-matches/assets/images/photo-icon.svg" alt=""></a>
-                            </div>
-
-                            <div class="card-of-matches__status">МАТЧ ЗАВЕРШЕНО</div>
-
-                            <a class="card-of-matches__share-button" href="#">
-                            <img src="/css/components/card-of-matches/assets/images/share-icon.svg" alt="share">
-                            </a>
-                        </div>
-                        </div>
-
-                        <div class="swiper-slide" role="group" aria-label="4 / 5" style="margin-right: 5px;">
-                        <div class="card-of-matches">
-                            <div class="card-of-matches__title-match">
-                            <img class="card-of-matches__shirt card-of-matches__shirt--left" src="/css/components/card-of-matches/assets/images/yellow-shirt.svg" alt="yellow">
-
-                            <img class="card-of-matches__team-logo card-of-matches__team-logo--left" src="/css/components/card-of-matches/assets/images/chelsea-logo.svg" alt="chelsea">
-                    
-                            <div class="card-of-matches__score">
-                                <span>1</span>
-                                :
-                                <span>0</span>
-                            </div>
-                    
-                            <img class="card-of-matches__team-logo card-of-matches__team-logo--right" src="/css/components/card-of-matches/assets/images/leicester-logo.svg" alt="leicester">
-
-                            <p class="card-of-matches__team card-of-matches__team--left">ФК Челсі</p>
-                    
-                            <div class="card-of-matches__date-and-time">
-                                <div class="card-of-matches__date">13 серпня (сб)</div>
-                                <div class="card-of-matches__time">16:00</div>
-                            </div>
-                    
-                            <p class="card-of-matches__team card-of-matches__team--right">Лестер</p>
-
-                            <img class="card-of-matches__shirt card-of-matches__shirt--right" src="/css/components/card-of-matches/assets/images/blue-shirt.svg" alt="blue">
-
-                            <div class="card-of-matches__marks">
-                                <a class="card-of-matches__mark"><span>Прем'єр-Ліга</span></a>
-                                <a class="card-of-matches__mark"><span>5 тур</span></a>
-                                <a class="card-of-matches__mark"><span>X-Park</span></a>
-                            </div>
-                            </div>
+                                    <div class="card-of-matches__date-and-time">
+                                        <div class="card-of-matches__date"><?= $match['match_day'] ?></div>
+                                        <div class="card-of-matches__time"><?= $match['match_time'] ?></div>
+                                    </div>
                             
-                            <div class="card-of-matches__controls">
-                            <a href="#"><img src="/css/components/card-of-matches/assets/images/edit-icon.svg" alt=""></a>
-                            <a href="#"><img src="/css/components/card-of-matches/assets/images/scale-icon.svg" alt=""></a>
-                            <a href="#"><img src="/css/components/card-of-matches/assets/images/cut-icon.svg" alt=""></a>
-                            <a href="#"><img src="/css/components/card-of-matches/assets/images/hd-icon.svg" alt=""></a>
-                            <a href="#"><img src="/css/components/card-of-matches/assets/images/red-icon.svg" alt=""></a>
-                            <a href="#"><img src="/css/components/card-of-matches/assets/images/photo-icon.svg" alt=""></a>
+                                    <p class="card-of-matches__team card-of-matches__team--right"><?= $match['team2_name'] ?></p>
+
+                                    <img class="card-of-matches__shirt card-of-matches__shirt--right" src="/css/components/card-of-matches/assets/images/blue-shirt.svg" alt="blue">
+
+                                    <div class="card-of-matches__marks">
+                                        <a class="card-of-matches__mark"><span><?= $match['turnir_name'] ?></span></a>
+                                        <a class="card-of-matches__mark"><span><?= $currentTur ?> тур</span></a>
+                                        <a class="card-of-matches__mark"><span><?= $match['field_name'] ?></span></a>
+                                    </div>
+                                    </div>
+                                    
+                                    <div class="card-of-matches__controls">
+                                    <a href="#"><img src="/css/components/card-of-matches/assets/images/edit-icon.svg" alt=""></a>
+                                    <a href="#"><img src="/css/components/card-of-matches/assets/images/scale-icon.svg" alt=""></a>
+                                    <a href="#"><img src="/css/components/card-of-matches/assets/images/cut-icon.svg" alt=""></a>
+                                    <a href="#"><img src="/css/components/card-of-matches/assets/images/hd-icon.svg" alt=""></a>
+                                    <a href="#"><img src="/css/components/card-of-matches/assets/images/red-icon.svg" alt=""></a>
+                                    <a href="#"><img src="/css/components/card-of-matches/assets/images/photo-icon.svg" alt=""></a>
+                                    </div>
+
+                                    <div class="card-of-matches__status">МАТЧ ЗАВЕРШЕНО</div>
+
+                                    <a class="card-of-matches__share-button" href="#">
+                                    <img src="/css/components/card-of-matches/assets/images/share-icon.svg" alt="share">
+                                    </a>
+                                </div>
                             </div>
+                        <?php endforeach ?>
 
-                            <div class="card-of-matches__status">МАТЧ ЗАВЕРШЕНО</div>
-
-                            <a class="card-of-matches__share-button" href="#">
-                            <img src="/css/components/card-of-matches/assets/images/share-icon.svg" alt="share">
-                            </a>
-                        </div>
-                        </div>
-
-                        <div class="swiper-slide" role="group" aria-label="5 / 5" style="margin-right: 5px;">
-                        <div class="card-of-matches">
-                            <div class="card-of-matches__title-match">
-                            <img class="card-of-matches__shirt card-of-matches__shirt--left" src="/css/components/card-of-matches/assets/images/yellow-shirt.svg" alt="yellow">
-
-                            <img class="card-of-matches__team-logo card-of-matches__team-logo--left" src="/css/components/card-of-matches/assets/images/chelsea-logo.svg" alt="chelsea">
-                    
-                            <div class="card-of-matches__score">
-                                <span>1</span>
-                                :
-                                <span>0</span>
-                            </div>
-                    
-                            <img class="card-of-matches__team-logo card-of-matches__team-logo--right" src="/css/components/card-of-matches/assets/images/leicester-logo.svg" alt="leicester">
-
-                            <p class="card-of-matches__team card-of-matches__team--left">ФК Челсі</p>
-                    
-                            <div class="card-of-matches__date-and-time">
-                                <div class="card-of-matches__date">13 серпня (сб)</div>
-                                <div class="card-of-matches__time">16:00</div>
-                            </div>
-                    
-                            <p class="card-of-matches__team card-of-matches__team--right">Лестер</p>
-
-                            <img class="card-of-matches__shirt card-of-matches__shirt--right" src="/css/components/card-of-matches/assets/images/blue-shirt.svg" alt="blue">
-
-                            <div class="card-of-matches__marks">
-                                <a class="card-of-matches__mark"><span>Прем'єр-Ліга</span></a>
-                                <a class="card-of-matches__mark"><span>5 тур</span></a>
-                                <a class="card-of-matches__mark"><span>X-Park</span></a>
-                            </div>
-                            </div>
-                            
-                            <div class="card-of-matches__controls">
-                            <a href="#"><img src="/css/components/card-of-matches/assets/images/edit-icon.svg" alt=""></a>
-                            <a href="#"><img src="/css/components/card-of-matches/assets/images/scale-icon.svg" alt=""></a>
-                            <a href="#"><img src="/css/components/card-of-matches/assets/images/cut-icon.svg" alt=""></a>
-                            <a href="#"><img src="/css/components/card-of-matches/assets/images/hd-icon.svg" alt=""></a>
-                            <a href="#"><img src="/css/components/card-of-matches/assets/images/red-icon.svg" alt=""></a>
-                            <a href="#"><img src="/css/components/card-of-matches/assets/images/photo-icon.svg" alt=""></a>
-                            </div>
-
-                            <div class="card-of-matches__status">МАТЧ ЗАВЕРШЕНО</div>
-
-                            <a class="card-of-matches__share-button" href="#">
-                            <img src="/css/components/card-of-matches/assets/images/share-icon.svg" alt="share">
-                            </a>
-                        </div>
-                        </div>
                     </div>
 
                 <div class="swiper-bg-scroll"></div>
@@ -475,34 +311,38 @@ $labels = [
             <div class="green-zone__current">
                 <h2 class="green-zone__title title">ЗБІРНА ТУРУ</h2>
         
-                <div class="green-zone__players">
+                <div class=" <?= $currentTur <= $lastTur ? 'green-zone__players' : '' ?>">
                 
-
-                    <?php foreach($bestPlayersForTable as $player) : ?>
-            
-                        <div class="player-card">
-                            <div class="player-card__photo-container">
-                                <div class="player-card__left-icon">
-                                    <img src="/css/components/player-card/assets/images/<?= $labels[$player['best_player']]['icon'] ?>" alt="star">
-                                    <span><?= $player['count_points'] ?></span>
+                    <?php if($currentTur <= $lastTur) : ?>
+                        <?php foreach($bestPlayersForTable as $player) : ?>
+                
+                            <div class="player-card">
+                                <div class="player-card__photo-container">
+                                    <div class="player-card__left-icon">
+                                        <img src="/css/components/player-card/assets/images/<?= $labels[$player['best_player']]['icon'] ?>" alt="star">
+                                        <span><?= $player['count_points'] ?></span>
+                                    </div>
+                        
+                                    <img class="player-card__right-icon" src="<?= $team_logo_path ?>/<?= $player['team_photo'] ?>" alt="Логотип команды">
+                        
+                                    <img class="player-card__photo" src="<?= $player_face_path ?>/<?= $player['player_photo'] ?>" alt="yarmol">
                                 </div>
                     
-                                <img class="player-card__right-icon" src="<?= $team_logo_path ?>/<?= $player['team_photo'] ?>" alt="Логотип команды">
+                                <div class="player-card__role"><?= $labels[$player['best_player']]['role'] ?></div>
+                                <div class="player-card__club"><?= $player['team_name'] ?></div>
+                                <div class="player-card__name"><?= $player['first_name'] ?> <?= $player['last_name'] ?></div>
                     
-                                <img class="player-card__photo" src="<?= $player_face_path ?>/<?= $player['player_photo'] ?>" alt="yarmol">
+                                <a href="#" class="player-card__link">
+                                <span>Таблиця</span>
+                                <img src="/css/components/player-card/assets/images/arrow-icon.svg" alt="arrow">
+                                </a>
                             </div>
-                
-                            <div class="player-card__role"><?= $labels[$player['best_player']]['role'] ?></div>
-                            <div class="player-card__club"><?= $player['team_name'] ?></div>
-                            <div class="player-card__name"><?= $player['first_name'] ?> <?= $player['last_name'] ?></div>
-                
-                            <a href="#" class="player-card__link">
-                            <span>Таблиця</span>
-                            <img src="/css/components/player-card/assets/images/arrow-icon.svg" alt="arrow">
-                            </a>
-                        </div>
 
-                    <?php endforeach ?>
+                        <?php endforeach ?>
+                    <?php else: ?>
+                        <h2 class="green-zone__title text-center">Цей турнір ще не відбувся, або дані турніру не внесені адміністратором </h2>
+                    <?php endif ?>
+
 
                     <div class="green-zone__footer-title">
                         <img src="/css/components/green-zone/assets/images/v9ku-logo-on-white-back.png" alt="v9ku-logo">

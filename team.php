@@ -572,8 +572,6 @@ while(!$queryAllPlayersData->EOF){
   $queryAllPlayersData->MoveNext();
 }
 
-// dump_arr_first($dataAllPlayers);
-
 // Отсортированный массив по рубрике Топ-Гравець
 // $trainer = getTopPlayers( $allStaticPlayers, $dataAllPlayers, 'trainer', $lastTur );
 
@@ -660,17 +658,15 @@ $requestUri = $_SERVER['REQUEST_URI'];
 // Разделение пути по "/"
 $partsUri = explode('/', $requestUri);
 
-// Извлечение нужной части адресной строки
-// $season = isset($parts[1]) ? $parts[1] : null;
-// echo $teamId;
-// $rreess = getBestPlayerOfTur($allStaticPlayers, $lastTur, $teamId);
-// dump_arr($rreess);
+$playersOfAllTurs = getPlayersOfAllTurs($allStaticPlayers, $lastTur);
+
+$playerIds = getPlayerIds($dataAllPlayers, $teamId);
+$countInTurOfTeam = getCountInTurOfTeam($playersOfAllTurs, $playerIds);
 
 
-}
-// -- END Freedman --
 
-// dump_arr_first($allStaticPlayers);
+}// -- END Freedman --
+
 ?>
 
 <div class="content">
@@ -858,7 +854,7 @@ if (isset($params['id'])) {
 
             <div class="team-page__skills-item">
               <img style="width: 100%" width="19" height="19" src="/css/components/card-player-full/assets/images/yellow-shirt.png" alt="">
-              <span>234</span>
+              <span><?= $countInTurOfTeam ?></span>
             </div>
 
             <div class="team-page__skills-item">
@@ -938,8 +934,6 @@ if (isset($params['id'])) {
 
 
     ?>
-
-
 
     <div class="team-page__management">
       <div class="team-page__manager">
@@ -1203,18 +1197,18 @@ if (isset($params['id'])) {
         <ul class="card-player-full__top-statistic">
           
             <li>
-              <img src="/css/components/card-player-full/assets/images/football-icon.png" alt="">
+              <img src="/css/components/card-player-full/assets/images/football-icon.png" alt="Кількість забитих м'ячів">
               <p><?= $indStaticPlayer['count_goals'] ?></p>
             </li>
 
             <li>
-              <img src="/css/components/card-player-full/assets/images/golden-star-icon.png" alt="">
+              <img src="/css/components/card-player-full/assets/images/golden-star-icon.png" alt="Кількість гольових пасів">
               <p><?= $indStaticPlayer['count_best_player_of_match'] ?></p>
             </li>   
             
             <li>
-              <img src="/css/components/card-player-full/assets/images/yellow-shirt.png" alt="">
-              <p><?= $indStaticPlayer['count_in_tour'] ?></p>
+              <img src="/css/components/card-player-full/assets/images/yellow-shirt.png" alt="Кількість раів учасник збірна туру">
+              <p><?= getCountInTur($playersOfAllTurs, $recordSet->fields['id']) ?> </p>
             </li>
           
             <li>

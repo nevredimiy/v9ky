@@ -30,3 +30,8 @@
 
 @import url(./components/match/match.style.css);
 @import url(./components/match-review/match-review.style.css);
+
+
+.text-center {
+	text-align: center;
+}

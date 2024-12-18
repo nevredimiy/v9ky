@@ -16,11 +16,11 @@ $queryStaticPlayers = $db->Execute(
     (SELECT `id` FROM `v9ky_team` WHERE `turnir` = $turnir ))"
 );
 
+// Получаем игрока матча
 $queryBestPlayerOfMatch = $db->Execute(
   "SELECT `best_player`, id, tur FROM `v9ky_match` WHERE `turnir`=523 and `best_player`>0 ORDER by tur"
 );
           
-  
 // Получаем данные из БД. Статистика забитых голов игроков.
 $queryGoals = $db->Execute( 
   "SELECT `matc`, `player` FROM `v9ky_gol` WHERE `player` IN  
@@ -291,19 +291,11 @@ while(!$queryAllPlayersData->EOF){
   $queryAllPlayersData->MoveNext();
 }
 
-// dump_arr_first($dataAllPlayers);
-
-// Отсортированный массив по рубрике Топ-Гравець
-// $trainer = getTopPlayers( $allStaticPlayers, $dataAllPlayers, 'trainer', $lastTur );
-
 // Отсортированный массив по рубрике Топ-Гравець
 $topGravetc = getTopPlayers($allStaticPlayers, $dataAllPlayers, 'topgravetc', $lastTur);
 
-// dump_arr($topGravetc);
-
 // Отсортированный массив по рубрике Топ-Голкипер
 $topGolkiper = getTopPlayers($allStaticPlayers, $dataAllPlayers, 'golkiper', $lastTur);
-
 
 // Отсортированный массив по рубрике Топ-Бомбардир
 $topBombardi = getTopPlayers($allStaticPlayers, $dataAllPlayers, 'count_goals', $lastTur);
@@ -347,45 +339,7 @@ $topTopUdar = reset($topUdar);
 // Берем первый элемент массива - топ-игрок
 $topTopPas = reset($topPas);
 
-
-
-// Получаем идентификатор команды из адресной строки
-if (isset($params['id'])) {
-  $teamId = $params['id'];
-}
-
-// Сумма статистики команды
-$totalGoalsByTeam = getTotalStaticByTeam($topBombardi, $teamId);
-$totalAsistByTeam = getTotalStaticByTeam($topAsists, $teamId);
-$totalMatchesByTeam = getTotalStaticByTeam($topAsists, $teamId, 'match_count');
-$totalYellowByTeam = getTotalStaticByTeam($topAsists, $teamId, 'yellow_cards');
-$totalYellowRedByTeam = getTotalStaticByTeam($topAsists, $teamId, 'yellow_red_cards');
-$totalRedByTeam = getTotalStaticByTeam($topAsists, $teamId, 'red_cards');
-$totalBestPlayerByTeam = getTotalStaticByTeam($topAsists, $teamId, 'count_best_player_of_match');
-
-// Лучшие показатели в команде 
-$bestGravetc = getBestPlayer($topGravetc, $teamId);
-$bestGolkiper = getBestPlayer($topGolkiper, $teamId);
-$bestBombardi = getBestPlayer($topBombardi, $teamId);
-$bestAssist = getBestPlayer($topAsists, $teamId);
-$bestZhusnuk = getBestPlayer($topZhusnuk, $teamId);
-$bestDribling = getBestPlayer($topDribling, $teamId);
-$bestUdar = getBestPlayer($topUdar, $teamId);
-$bestPas = getBestPlayer($topPas, $teamId);
-
-$requestUri = $_SERVER['REQUEST_URI'];
-
-// Разделение пути по "/"
-$partsUri = explode('/', $requestUri);
-
-// Извлечение нужной части адресной строки
-// $season = isset($parts[1]) ? $parts[1] : null;
-
-// echo $teamId;
-// $rreess = getBestPlayerOfTur($allStaticPlayers, $lastTur, $teamId);
-// dump_arr($rreess);
-
-// ?>
+?>
 
 <section class="ratings">
     <h2 class="title">Рейтинги гравців ліги</h2>

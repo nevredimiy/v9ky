@@ -557,8 +557,10 @@ function getIndStaticPlayer($allStaticPlayers, $player_id){
     $coutnGoals = 0;
     // Иконка зведочка
     $countNominationPlayerOfMatch = 0;
+    
     // Иконка футболка
-    $countInTour = 0;
+    // $countInTour = 0;
+
     // Иконка бутса
     $countAsists = 0;
     // Иконка поле
@@ -588,7 +590,8 @@ function getIndStaticPlayer($allStaticPlayers, $player_id){
         $countBestPlayerOfMatch += isset($stats['count_best_player_of_match']) ? $stats['count_best_player_of_match'] : 0;
 
         // Иконка футболка
-        $countInTour += isset($stats['count_in_tour']) ? $stats['count_in_tour'] : 0;
+        // $countInTour += isset($stats['count_in_tour']) ? $stats['count_in_tour'] : 0;
+
         // Иконка бутса
         $countAsists += $stats['count_asists'];
         // иконка поле
@@ -637,7 +640,7 @@ function getIndStaticPlayer($allStaticPlayers, $player_id){
     $indStatPlayer = [
       'count_goals' => $countGoals != '' ? $countGoals : 0,
       'count_best_player_of_match' => $countBestPlayerOfMatch != '' ? $countBestPlayerOfMatch : 0,
-      'count_in_tour' => $countInTour != '' ? $countInTour : 0,
+      // 'count_in_tour' => $countInTour != '' ? $countInTour : 0,
       'count_asists' => $countAsists != '' ? $countAsists : 0,
       'count_matches' => $countMatches != '' ? $countMatches : 0,
       'yellow_cards' => $yellowCards != '' ? $yellowCards : 0,
@@ -952,7 +955,7 @@ function checkingCurrentTur( $indexIteration, $lastTur=0, $totalValue=0, $sufix=
 
 
   /**
-   * Находим лучших защитников
+   * Находим лучших игроков тура. Например, защитников, бомбардиров и т.д.
    * @param array - все игроки тура
    * @param string - например zahusnuk, dribling, udar
    * @return array - массив лучших игроков тура по рубрике Захисник
@@ -1114,3 +1117,105 @@ function checkingCurrentTur( $indexIteration, $lastTur=0, $totalValue=0, $sufix=
 
     return $result;
   }
+
+  /**
+   * Получает всех лучших игроков из все туров.
+   * @param array - Статистика всех игроков
+   * @param int - колчиство сыграных туров
+   * @return array - массив игроков призеров всех туров по отдельности. 
+   */
+  function getPlayersOfAllTurs($allStaticPlayers, $lastTur) {
+    $bestPlayerOfAllTurs = [];
+    for ($i = 1; $i <= $lastTur; $i++) {
+        $playersOfTur = getPlayersOfTur($allStaticPlayers, $i); // Получаем результат функции
+        foreach ($playersOfTur as $player) {
+            $bestPlayerOfAllTurs[] = $player; // Добавляем элементы без вложений
+        }
+    }
+    return $bestPlayerOfAllTurs;
+}
+
+/**
+ * Находит количество раз попаданий в сборную тура
+ * @param array - массив всех игроков, которые пападали в сборную тура. Реультат функции getPlayersOfAllTurs()
+ * @param integer - идентификатор игрока
+ * @return integer 
+ */
+function getCountInTur($palyersOfAllTurs, $playerId){
+  $count = 0;
+
+  foreach( $palyersOfAllTurs as $player) {
+    if($player['player'] == $playerId) {
+      $count ++;
+    }
+  }
+
+  return $count;
+}
+
+/**
+ * Получает количество ра попаданий в сборную тура всех игроков команды.
+ * @param array - массив всех игроков, которые пападали в сборную тура. Реультат функции getPlayersOfAllTurs()
+ * @param array - массив идентификатор всех игроков команды
+ * @return integer
+ */
+function getCountInTurOfTeam($palyersOfAllTurs, $playerIds){
+  // Счетчик совпадений
+  $matchCount = 0;
+
+  // Проходим по массиву и считаем совпадения
+  foreach ($palyersOfAllTurs as $item) {
+    if (in_array($item['player'], $playerIds)) {
+        $matchCount++;
+    }
+  }
+
+  return $matchCount;
+}
+
+/**
+ * получает идентификатор всех  игроков команды
+ */
+function getPlayerIds($dataAllPlayers, $teamId) {
+  $playerIds = [];
+  foreach ($dataAllPlayers as $key => $value){
+    if($value['team_id'] === $teamId) {
+      $playerIds[] = $key;
+    }    
+  }
+  return $playerIds;
+}
+
+/**
+ * @param string - дата и баы данных в формате  '2024-12-01 12:30:00'
+ * @return array - с двумя элементами - Например, Array( [0] => 24 листопад (нд), [1] => 11:35)
+ */
+function getFormattedDate($dateFromDB) {
+  
+  // Преобразуем дату в объект DateTime
+  $date = new DateTime($dateFromDB);
+
+  // Устанавливаем локаль для русского языка
+  setlocale(LC_TIME, 'uk_UA.UTF-8');
+
+  // Форматируем дату
+  $formattedDate = strftime('%e %B (%a)', $date->getTimestamp());
+  $formattedTime = strftime('%H:%M', $date->getTimestamp());
+
+  // Вывод результата  
+  return [$formattedDate, $formattedTime];
+}
+
+/**
+ * Добавляем в массив два элемента с форматированной датой для выода на страницу
+ * @param array
+ * @return array
+ */
+function getArrayWithFormattedData($dataCurrentTur){
+  foreach ($dataCurrentTur as $key => $match) {
+    $formattedDate = getFormattedDate($match['date']);
+    $dataCurrentTur[$key]['match_day'] = $formattedDate[0];
+    $dataCurrentTur[$key]['match_time'] = $formattedDate[1];
+  }
+  return $dataCurrentTur;
+}
