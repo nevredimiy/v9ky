@@ -179,3 +179,4 @@ $topGravetc = getTopPlayers($allStaticPlayers, $dataAllPlayers, 'topgravetc', $l
         </table>
     </div>
 </div>
+<?php include_once "freedman/footer.php" ?>

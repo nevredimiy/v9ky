@@ -175,3 +175,5 @@ $topAsists = getTopPlayers($allStaticPlayers, $dataAllPlayers, 'count_asists', $
     </table>
     </div>
 </div>
+
+<?php include_once "freedman/footer.php" ?>

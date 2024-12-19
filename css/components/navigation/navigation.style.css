@@ -7,10 +7,13 @@
 
 .navigation__wrap {
   display: flex;
-  overflow-x: auto;
   gap: 15px;
   cursor: grab;
   padding-bottom: 5px;
+}
+
+.navigation__wrap:active{
+  cursor: grabbing;
 }
 
 @media screen and (min-width: 700px) {
@@ -112,6 +115,10 @@
 
   .navigation__item {
     height: 60px;
+  }
+
+  .navigation__item:not(:has(.broadcast))>a {
+    font-size: var(--font-size-xl);
   }
 
   .navigation__item>a {

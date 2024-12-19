@@ -20,7 +20,7 @@
   background-color: #fff;
   height: 28px;
   border-radius: var(--border-radius-m);
-  /* display: flex; */
+  display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 5px;
@@ -48,7 +48,7 @@
   font-weight: 500;
   font-size: var(--font-size-s);
   line-height: 14px;
-  /* display: flex; */
+  display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
@@ -90,6 +90,8 @@
   height: 15px;
   width: 15px;
   border-radius: var(--border-radius-s);
+  display: block;
+  margin: 0 auto;
 }
 
 .table-league__table tr th:has(.cell--team-logo),
@@ -101,7 +103,11 @@
 .cell--team {
   text-align: left;
   justify-content: start;
-  margin-right: 50px;
+  margin-right: 20px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 80px;
 }
 
 .cell--games {}
@@ -127,6 +133,16 @@
 .cell--total {
   background: #292929;
   color: #fff;
+}
+
+@media screen and (min-width: 840px) {
+  .cell--team {
+    margin-right: 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 90px;
+  }
 }
 
 @media screen and (min-width: 1260px) {
@@ -194,6 +210,14 @@
 
   .cell--team-logo {
     min-width: 36px;
+  }
+
+  .cell--team {
+    margin-right: 50px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 115px;
   }
 
   .table-league__table tr th:has(.cell--team-logo),

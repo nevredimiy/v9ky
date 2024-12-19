@@ -262,7 +262,10 @@ $queryAllPlayersData = $db->Execute(
       p.vibuv AS vibuv,
       m.name1 AS last_name,
       m.name2 AS first_name,
-      mf.pict AS player_photo,
+      (SELECT mf.pict 
+        FROM v9ky_man_face mf 
+        WHERE mf.man = p.man 
+        ORDER BY mf.id DESC LIMIT 1) AS player_photo,
       t.pict AS team_photo,
       t.name AS team_name
   FROM 
@@ -339,211 +342,28 @@ $topTopUdar = reset($topUdar);
 // Берем первый элемент массива - топ-игрок
 $topTopPas = reset($topPas);
 
-?>
+$topPlayers = [
+  'top_gravetc' => $topTopGravetc,
+  'top_golkiper' => $topTopGolkiper,
+  'top_bombardir' => $topTopBombardi,
+  'top_asist' => $topTopAsists,
+  'top_zahusnuk' => $topTopZhusnuk,
+  'top_dribling' => $topTopDribling,
+  'top_udar' => $topTopUdar,
+  'top_pas' => $topTopPas
+];
 
-<section class="ratings">
-    <h2 class="title">Рейтинги гравців ліги</h2>
+$topPlayersData = [
+  'top_gravetc' => ['icon' => 'star-icon.png','label' => 'Топ-Гравець' ],
+  'top_golkiper' => ['icon' => 'gloves-icon.png', 'label' => 'Топ-Голкіпер' ],
+  'top_bombardir' => ['icon' => 'football-icon.png', 'label' => 'Топ-Бомбардир' ],
+  'top_asist' => ['icon' => 'boots-icon.svg', 'label' => 'Топ-Асистент' ],
+  'top_zahusnuk' => ['icon' => 'pitt-icon.svg', 'label' => 'Топ-Захисник' ],
+  'top_dribling' => ['icon' => 'player-icon.svg', 'label' => 'Топ-Дриблінг' ],
+  'top_udar' => ['icon' => 'rocket-ball-icon.png', 'label' => 'Топ-Удар' ],
+  'top_pas' => ['icon' => 'ball-icon.png', 'label' => 'Топ-Пас' ]
+];
 
-    <div class="-ratings ratings__container">
+// dump_arr($topPlayers);
 
-        <div class="-wrap ratings__wrap containers">
-
-          <div class="-slide ratings__player player-card">
-            <div class="player-card">
-              <div class="player-card__photo-container">
-                <div class="player-card__left-icon">
-                  <img src="/css/components/player-card/assets/images/star-icon.png" alt="star">
-                  <span><?= $topTopGravetc['total_key']?></span>
-                </div>
-    
-                <img class="player-card__right-icon" src="<?= $team_logo_path; ?>/<?= $topTopGravetc['team_photo']; ?>" alt="Логотип команди">
-    
-                <img class="player-card__photo" src="<?= $player_face_path; ?>/<?= $topTopGravetc['player_photo']; ?>" alt="yarmol">
-              </div>
-    
-              <div class="player-card__role">Топ-гравець</div>
-              <div class="player-card__club"><?= $topTopGravetc['team_name']?></div>
-              <div class="player-card__name"><?= $topTopGravetc['first_name']?> <?= $topTopGravetc['last_name']?></div>
-    
-              <a href="<?= $site_url ?>/<?= $partsUri[1] ?>/top_gravetc" class="player-card__link scroll-link">
-                <span>Таблиця</span>
-                <img src="/css/components/player-card/assets/images/arrow-icon.svg" alt="arrow">
-              </a>
-            </div>
-          </div>
-
-          <div class="-slide ratings__player player-card">
-            <div class="player-card">
-              <div class="player-card__photo-container">
-                <div class="player-card__left-icon">
-                  <img src="/css/components/player-card/assets/images/gloves-icon.png" alt="star">
-                  <span><?= $topTopGolkiper['total_key']?></span>
-                </div>
-    
-                <img class="player-card__right-icon" src="<?=$team_logo_path?>/<?= $topTopGolkiper['team_photo']?>" alt="sparta">
-    
-                <img class="player-card__photo" src="<?=$player_face_path?>/<?= $topTopGolkiper['player_photo']?>" alt="yarmol">
-              </div>
-    
-              <div class="player-card__role">Топ-голкіпер</div>
-              <div class="player-card__club"><?= $topTopGolkiper['team_name']?></div>
-              <div class="player-card__name"><?= $topTopGolkiper['first_name']?> <?= $topTopGolkiper['last_name']?></div>
-    
-              <a href="<?= $site_url ?>/<?= $partsUri[1] ?>/top_golkiper" class="player-card__link scroll-link">
-                <span>Таблиця</span>
-                <img src="/css/components/player-card/assets/images/arrow-icon.svg" alt="arrow">
-              </a>
-            </div>
-          </div>         
-          
-          <div class="-slide ratings__player player-card">
-            <div class="player-card">
-              <div class="player-card__photo-container">
-                <div class="player-card__left-icon">
-                  <img src="/css/components/player-card/assets/images/football-icon.png" alt="star">
-                  <span><?= $topTopBombardi['total_key']?></span>
-                </div>
-    
-                <img class="player-card__right-icon" src="<?=$team_logo_path?>/<?= $topTopBombardi['team_photo']?>" alt="sparta">
-    
-                <img class="player-card__photo" src="<?=$player_face_path?>/<?= $topTopBombardi['player_photo']?>" alt="yarmol">
-              </div>
-              
-              <div class="player-card__role">Топ-Бомбардир</div>
-              <div class="player-card__club"><?= $topTopBombardi['team_name']?></div>
-              <div class="player-card__name"><?= $topTopBombardi['first_name']?> <?= $topTopBombardi['last_name']?> </div>
-    
-              <a href="<?= $site_url ?>/<?= $partsUri[1] ?>/top_bombardir" class="player-card__link scroll-link">
-                <span>Таблиця</span>
-                <img src="/css/components/player-card/assets/images/arrow-icon.svg" alt="arrow">
-              </a>
-            </div>
-          </div>
-
-          <div class="-slide ratings__player player-card">
-            <div class="player-card">
-              <div class="player-card__photo-container">
-                <div class="player-card__left-icon">
-                  <img src="/css/components/player-card/assets/images/boots-icon.svg" alt="star">
-                  <span><?= $topTopAsists['total_key']?></span>
-                </div>
-    
-                <img class="player-card__right-icon" src="<?=$team_logo_path?>/<?= $topTopAsists['team_photo']?>" alt="sparta">
-    
-                <img class="player-card__photo" src="<?=$player_face_path?>/<?= $topTopAsists['player_photo']?>" alt="yarmol">
-              </div>
-              
-              <div class="player-card__role">Топ-Асистент</div>
-              <div class="player-card__club"><?= $topTopAsists['team_name']?></div>
-              <div class="player-card__name"><?= $topTopAsists['first_name']?> <?= $topTopAsists['last_name']?> </div>
-    
-              <a href="<?= $site_url ?>/<?= $partsUri[1] ?>/top_asist" class="player-card__link scroll-link">
-                <span>Таблиця</span>
-                <img src="/css/components/player-card/assets/images/arrow-icon.svg" alt="arrow">
-              </a>
-            </div>
-          </div>
-                  
-          <div class="-slide ratings__player player-card">
-            <div class="player-card">
-              <div class="player-card__photo-container">
-                <div class="player-card__left-icon">
-                  <img src="/css/components/player-card/assets/images/pitt-icon.svg" alt="star">
-                  <span><?= $topTopZhusnuk['total_key'] ?></span>
-                </div>
-    
-                <img class="player-card__right-icon" src="<?=$team_logo_path?>/<?= $topTopZhusnuk['team_photo'] ?>" alt="sparta">
-    
-                <img class="player-card__photo" src="<?=$player_face_path?>/<?= $topTopZhusnuk['player_photo'] ?>" alt="yarmol">
-              </div>
-    
-              <div class="player-card__role">Топ-захисник</div>
-              <div class="player-card__club"><?= $topTopZhusnuk['team_name'] ?></div>
-              <div class="player-card__name"><?= $topTopZhusnuk['first_name'] ?> <?= $topTopZhusnuk['last_name'] ?></div>
-    
-              <a href="<?= $site_url ?>/<?= $partsUri[1] ?>/top_zahusnuk" class="player-card__link scroll-link">
-                <span>Таблиця</span>
-                <img src="/css/components/player-card/assets/images/arrow-icon.svg" alt="arrow">
-              </a>
-            </div>
-          </div>
-
-          <div class="-slide ratings__player player-card">
-            <div class="player-card">
-              <div class="player-card__photo-container">
-                <div class="player-card__left-icon">
-                  <img src="/css/components/player-card/assets/images/player-icon.svg" alt="star">
-                  <span><?= $topTopDribling['total_key'] ?></span>
-                </div>
-    
-                <img class="player-card__right-icon" src="<?=$team_logo_path?>/<?= $topTopDribling['team_photo'] ?>" alt="sparta">
-    
-                <img class="player-card__photo" src="<?=$player_face_path?>/<?= $topTopDribling['player_photo'] ?>" alt="yarmol">
-              </div>
-    
-              <div class="player-card__role">Топ-дриблінг</div>
-              <div class="player-card__club"><?= $topTopDribling['team_name'] ?></div>
-              <div class="player-card__name"><?= $topTopDribling['first_name'] ?> <?= $topTopDribling['last_name'] ?></div>
-    
-              <a href="<?= $site_url ?>/<?= $partsUri[1] ?>/top_dribling" class="player-card__link scroll-link">
-                <span>Таблиця</span>
-                <img src="/css/components/player-card/assets/images/arrow-icon.svg" alt="arrow">
-              </a>
-            </div>
-          </div>
-
-          <div class="-slide ratings__player player-card">
-            <div class="player-card">
-              <div class="player-card__photo-container">
-                <div class="player-card__left-icon">
-                  <img src="/css/components/player-card/assets/images/rocket-ball-icon.png" alt="star">
-                  <span><?= $topTopUdar['total_key'] ?></span>
-                </div>
-    
-                <img class="player-card__right-icon" src="<?=$team_logo_path?>/<?= $topTopUdar['team_photo'] ?>" alt="sparta">
-    
-                <img class="player-card__photo" src="<?=$player_face_path?>/<?= $topTopUdar['player_photo'] ?>" alt="yarmol">
-              </div>
-    
-              <div class="player-card__role">Топ-удар</div>
-              <div class="player-card__club"><?= $topTopUdar['team_name'] ?></div>
-              <div class="player-card__name"><?= $topTopUdar['first_name'] ?> <?= $topTopUdar['last_name'] ?></div>
-    
-              <a href="<?= $site_url ?>/<?= $partsUri[1] ?>/top_udar" class="player-card__link scroll-link">
-                <span>Таблиця</span>
-                <img src="/css/components/player-card/assets/images/arrow-icon.svg" alt="arrow">
-              </a>
-            </div>
-          </div>
-
-          <div class="-slide ratings__player player-card">
-            <div class="player-card">
-              <div class="player-card__photo-container">
-                <div class="player-card__left-icon">
-                  <img src="/css/components/player-card/assets/images/ball-icon.png" alt="star">
-                  <span><?= $topTopPas['total_key'] ?></span>
-                </div>
-    
-                <img class="player-card__right-icon" src="<?=$team_logo_path?>/<?= $topTopPas['team_photo'] ?>" alt="sparta">
-    
-                <img class="player-card__photo" src="<?=$player_face_path?>/<?= $topTopPas['player_photo'] ?>" alt="yarmol">
-              </div>
-    
-              <div class="player-card__role">Топ-пас</div>
-              <div class="player-card__club"><?= $topTopPas['team_name'] ?></div>
-              <div class="player-card__name"><?= $topTopPas['first_name'] ?> <?= $topTopPas['last_name'] ?></div>
-    
-              <a href="<?= $site_url ?>/<?= $partsUri[1] ?>/top_pas" class="player-card__link scroll-link">
-                <span>Таблиця</span>
-                <img src="/css/components/player-card/assets/images/arrow-icon.svg" alt="arrow">
-              </a>
-            </div>
-          </div>
-
-        </div>
-         <!-- If we need scrollbar -->
-        <div class="-ratings-scrollbar"></div>
-
-    </div>
-
-</section>
+require_once 'views/rating_players.tpl.php';

@@ -182,3 +182,4 @@ $topDribling = getTopPlayers($allStaticPlayers, $dataAllPlayers, 'dribling', $la
     </table>
     </div>
 </div>
+<?php include_once "freedman/footer.php" ?>

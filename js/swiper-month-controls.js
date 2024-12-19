@@ -18,15 +18,15 @@ if (swiperMonthControls && swiperMonthControls.length > 0){
 
     totalWidthMatchZoneControls += slidesMatchZoneControls.length * GAP_MONTH_CONTROLS;
 
-    console.log('totalWidthMatchZoneControls = ', totalWidthMatchZoneControls);
+    // console.log('totalWidthMatchZoneControls = ', totalWidthMatchZoneControls);
 
     const swiperWrapper = el.querySelector('.swiper-wrapper-month-controls');
-    console.log('wrapper', swiperWrapper.clientWidth);
+    // console.log('wrapper', swiperWrapper.clientWidth);
 
-    console.log('swiper = ', swiperWrapper.clientWidth < totalWidthMatchZoneControls);
+    // console.log('swiper = ', swiperWrapper.clientWidth < totalWidthMatchZoneControls);
 
     if (swiperWrapper.offsetWidth >= totalWidthMatchZoneControls) {
-      console.log('style');
+      // console.log('style');
       swiperWrapper.style.display = 'flex';
       swiperWrapper.style.justifyContent = 'center';
       swiperWrapper.style.alignItems = 'center';

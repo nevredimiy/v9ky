@@ -182,3 +182,4 @@ $topUdar = getTopPlayers($allStaticPlayers, $dataAllPlayers, 'udar', $lastTur);
         </table>
     </div>
 </div>
+<?php include_once "freedman/footer.php" ?>

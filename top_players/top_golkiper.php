@@ -183,3 +183,4 @@ $topGolkiper = getTopPlayers($allStaticPlayers, $dataAllPlayers, 'golkiper', $la
     </table>
     </div>
 </div>
+<?php include_once "freedman/footer.php" ?>

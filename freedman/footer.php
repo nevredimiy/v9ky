@@ -3,7 +3,6 @@ if (!defined('READFILE'))
   {exit('Wrong way to file');} 
 ?>
 
-
 </main>
 
 <footer class="footer">
@@ -36,6 +35,7 @@ printf("Страница сгенерирована за %f секунд",$time)
 <script src="/js/variables.js"></script>
 <script src="/js/script.js"></script>
 <script src="/js/swiper-nav.js"></script>
+<script src="/js/swiper-controls.js"></script>
 <script src="/js/swiper-ratings.js"></script>
 <script src="/js/swiper-disqualification.js"></script>
 <script src="/js/swiper-leagues.js"></script>
@@ -44,6 +44,7 @@ printf("Страница сгенерирована за %f секунд",$time)
 <script src="/js/swiper-month-controls.js"></script>
 <script src="/js/swiper-photo.js"></script>
 <script src="/css/components/video-content/video.script.js"></script>
+<script src="/js/action-calendar.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
 <script>

@@ -180,3 +180,4 @@ $topZhusnuk = getTopPlayers($allStaticPlayers, $dataAllPlayers, 'zahusnuk', $las
     </table>
     </div>
 </div>
+<?php include_once "freedman/footer.php" ?>
