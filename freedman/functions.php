@@ -189,6 +189,8 @@ function getDataCurrentTur($turnir, $currentTur)
 
     $queryDataCurrentTur = 
         "SELECT 
+        m.id,
+        m.anons,
         t.season,
         m.date,
         m.tur, 
@@ -269,11 +271,13 @@ ORDER BY
  */
 function getTournament()
 {
+    global $mysqli;
+
     $sql = "SELECT * FROM `v9ky_turnir` WHERE `seasons` = (SELECT id FROM `v9ky_seasons` ORDER BY id DESC LIMIT 1)";
     $stmt = $mysqli->prepare($sql);
     $stmt->execute();
     $dataTurnir = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    print_r($dataTurnir);
-    $tournament = $dataTurnir['name'];
+    
+    $tournament = isset($dataTurnir[0]['name']) ? $dataTurnir[0]['name'] : 'not';
     return $tournament;
 }

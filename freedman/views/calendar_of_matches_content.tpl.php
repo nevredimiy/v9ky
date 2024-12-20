@@ -83,18 +83,20 @@
                             </div>
 
                             <div class="card-of-matches__controls">
-                                <a href="#"><img src="/css/components/card-of-matches/assets/images/edit-icon.svg"
-                                        alt=""></a>
-                                <a href="#"><img src="/css/components/card-of-matches/assets/images/scale-icon.svg"
-                                        alt=""></a>
-                                <a href="#"><img src="/css/components/card-of-matches/assets/images/cut-icon.svg"
-                                        alt=""></a>
-                                <a href="#"><img src="/css/components/card-of-matches/assets/images/hd-icon.svg"
-                                        alt=""></a>
-                                <a href="#"><img src="/css/components/card-of-matches/assets/images/red-icon.svg"
-                                        alt=""></a>
-                                <a href="#"><img src="/css/components/card-of-matches/assets/images/photo-icon.svg"
-                                        alt=""></a>
+                                <?php $href = (isset($match['anons']) && !empty(trim($match['anons']))) ? 'href="#"' : ''; ?>  
+                                <a class="card-of-matches__controls-link" <?php echo $href; ?> title="Анонс">  
+                                    <img src="/css/components/card-of-matches/assets/images/anons-icon.png" alt="Анонс" title="Анонс">
+                                </a>
+                                <a class="card-of-matches__controls-link" href="#" title="Статистика матчу"><img src="/css/components/card-of-matches/assets/images/stat-match-icon.png"
+                                        alt="Статистика матчу" title="Статистика матчу"></a>
+                                <a class="card-of-matches__controls-link" href="#" title="Відео трансляція"><img src="/css/components/card-of-matches/assets/images/live-video-icon.png"
+                                        alt="Відео трансляція" title="Відео трансляція"></a>
+                                <a class="card-of-matches__controls-link" href="#" title="Запис відео"><img src="/css/components/card-of-matches/assets/images/hd-icon.png"
+                                        alt="Запис відео" title="Запис відео"></a>
+                                <a class="card-of-matches__controls-link" href="#" title="Індивідуальна статистика"><img src="/css/components/card-of-matches/assets/images/ind-stat-icon.png"
+                                        alt="Індивідуальна статистика" title="Індивідуальна статистика"></a>
+                                <a class="card-of-matches__controls-link" href="#" title="Фото матчу"><img src="/css/components/card-of-matches/assets/images/photo-match-icon.png"
+                                        alt="Фото матчу" title="Фото матчу"></a>
                             </div>
 
                             <div class="card-of-matches__status">МАТЧ ЗАВЕРШЕНО</div>

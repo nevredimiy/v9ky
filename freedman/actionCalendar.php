@@ -25,7 +25,7 @@ if($data['tur'] && $data['turnir']) {
         $tournament = mb_substr( strstr( $_SERVER["REQUEST_URI"], "?", true ), 1 );
 
         if(!$tournament) {
-            $tournament = '2024-25_Zyma_Kyiv_Gold_Futsal';
+            $tournament = getTournament();
         }
 
     }

@@ -11,19 +11,14 @@ if (swiperMonthControls && swiperMonthControls.length > 0){
     for (let i = 0; i < slidesMatchZoneControls.length; i++) {
       const slide = slidesMatchZoneControls[i];
 
-      // console.log(i, slide.offsetWidth, slide);
-
       totalWidthMatchZoneControls += slide.offsetWidth;
     }
 
     totalWidthMatchZoneControls += slidesMatchZoneControls.length * GAP_MONTH_CONTROLS;
 
-    // console.log('totalWidthMatchZoneControls = ', totalWidthMatchZoneControls);
 
     const swiperWrapper = el.querySelector('.swiper-wrapper-month-controls');
-    // console.log('wrapper', swiperWrapper.clientWidth);
 
-    // console.log('swiper = ', swiperWrapper.clientWidth < totalWidthMatchZoneControls);
 
     if (swiperWrapper.offsetWidth >= totalWidthMatchZoneControls) {
       // console.log('style');
@@ -31,12 +26,6 @@ if (swiperMonthControls && swiperMonthControls.length > 0){
       swiperWrapper.style.justifyContent = 'center';
       swiperWrapper.style.alignItems = 'center';
       swiperWrapper.style.gap = `${GAP_MONTH_CONTROLS}px`;
-      // swiperWrapper.style.maxWidth = '1440px';
-      // swiperWrapper.style.width = 'fit-content';
-      // swiperWrapper.style.margin = '0 auto';
-      // swiperWrapper.style.backgroundColor = 'red';
-      // swiperWrapper.style.padding = '0';
-
       return;
     }
 
@@ -52,7 +41,5 @@ if (swiperMonthControls && swiperMonthControls.length > 0){
       },
     });
   });
-
-// console.log(window.innerWidth, 'totalWidthMatchZoneControls = ', totalWidthMatchZoneControls);
 
 }
