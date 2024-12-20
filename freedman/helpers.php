@@ -1,9 +1,5 @@
 <?php
 
-//проверка на вшивость
-if (!defined('READFILE')) {exit('Wrong way to file');};
-
-
 function dump_arr($data) {
   echo '<pre>' . print_r($data, 1) . '</pre>';
 }
@@ -1211,7 +1207,7 @@ function getFormattedDate($dateFromDB) {
  * @param array
  * @return array
  */
-function getArrayWithFormattedData($dataCurrentTur){
+function getArrayWithFormattedDate($dataCurrentTur){
   foreach ($dataCurrentTur as $key => $match) {
     $formattedDate = getFormattedDate($match['date']);
     $dataCurrentTur[$key]['match_day'] = $formattedDate[0];

@@ -1,7 +1,7 @@
 
 $(document).ready(function () {
-    $('[data-tur]').click(function (e) {
 
+    $('.calendar-of-matches__grid-container').on('click', '[data-tur]', function (e) {
         e.preventDefault();
         let tur = $(this).attr('data-tur');
         let turnir = $(this).attr('data-turnir');
@@ -13,7 +13,7 @@ $(document).ready(function () {
                 url: "../freedman/actionCalendar.php",
                 data: JSON.stringify({ tur: tur, turnir: turnir, lasttur: lastTur }),
                 success: function (response) {
-                    console.log(response);
+                    $(".calendar-of-matches__grid-container").html(response);
                 },
                 error: function (xhr, status, error) {
                     console.error('Ошибка AJAX:', error); // Логируем ошибку
