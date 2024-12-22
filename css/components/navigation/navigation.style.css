@@ -12,14 +12,8 @@
   padding-bottom: 5px;
 }
 
-.navigation__wrap:active{
+.navigation__wrap:active {
   cursor: grabbing;
-}
-
-@media screen and (min-width: 700px) {
-  .navigation__wrap {
-    justify-content: center;
-  }
 }
 
 .navigation__item {
@@ -47,7 +41,7 @@
   user-select: none;
 
   color: #0B0B0BB2;
-  font-family: 'Roboto';
+  font-family: 'Roboto Condensed';
   font-style: normal;
   font-weight: 500;
   font-size: var(--font-size-s);
@@ -110,8 +104,21 @@
   color: #fff;
 }
 
+@media screen and (min-width: 768px) {
+  .navigation__item:not(:has(.broadcast))>a {
+    font-size: var(--font-size-l);
+  }
+
+}
+
+@media screen and (min-width: 1024px) {
+  .navigation__wrap {
+    justify-content: center;
+  }
+}
+
 @media screen and (min-width: 1260px) {
-  
+
 
   .navigation__item {
     height: 60px;

@@ -6,9 +6,7 @@
 @import url(../month-controls/month-controls.css);
 
 
-.calendar-of-matches {
-  
-}
+.calendar-of-matches {}
 
 .calendar-of-matches__grid-container {
   display: block;
@@ -63,7 +61,7 @@
   .calendar-of-matches__dynamic-content {
     padding: 0;
     margin: 0;
-  }  
+  }
 
   .calendar-of-matches__grid-container {
     display: grid;
@@ -115,3 +113,4 @@
   }
 
 }
+

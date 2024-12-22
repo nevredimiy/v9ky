@@ -11,73 +11,37 @@
 <!--<![endif]-->
 
 <head>
-    <script data-skip-moving="true">
-    (function(w, d, u) {
-        var s = d.createElement('script');
-        s.async = 1;
-        s.src = u + '?' + (Date.now() / 60000 | 0);
-        var h = d.getElementsByTagName('script')[0];
-        h.parentNode.insertBefore(s, h);
-    })(window, document, 'https://cdn.bitrix24.ua/b8857989/crm/site_button/loader_1_lnk7oo.js');
-    </script>
     <!-- Facebook Pixel Code -->
     <script>
-    ! function(f, b, e, v, n, t, s) {
-        if (f.fbq) return;
-        n = f.fbq = function() {
-            n.callMethod ?
-                n.callMethod.apply(n, arguments) : n.queue.push(arguments)
-        };
-        if (!f._fbq) f._fbq = n;
-        n.push = n;
-        n.loaded = !0;
-        n.version = '2.0';
-        n.queue = [];
-        t = b.createElement(e);
-        t.async = !0;
-        t.src = v;
-        s = b.getElementsByTagName(e)[0];
-        s.parentNode.insertBefore(t, s)
-    }(window, document, 'script',
-        'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '346520639956675');
-    fbq('track', 'PageView');
+        function(f, b, e, v, n, t, s) {
+            if (f.fbq) return;
+            n = f.fbq = function() {
+                n.callMethod ?
+                    n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+            };
+            if (!f._fbq) f._fbq = n;
+            n.push = n;
+            n.loaded = !0;
+            n.version = '2.0';
+            n.queue = [];
+            t = b.createElement(e);
+            t.async = !0;
+            t.src = v;
+            s = b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t, s)
+        }
+        (window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '346520639956675');
+        fbq('track', 'PageView');
     </script>
-    <noscript><img height="1" width="1" style="display:none"
-            src="https://www.facebook.com/tr?id=346520639956675&ev=PageView&noscript=1" /></noscript>
+    <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=346520639956675&ev=PageView&noscript=1" /></noscript>
     <!-- End Facebook Pixel Code -->
+
     <title><?=$title?></title>
 
     <meta charset="utf-8" />
-
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=0.75" />
-
-    <?
- if (isset($params['news'])) {$news=1*intval($params['news']); 
-  $recordSet = $db->Execute("select * from v9ky_news where id=".$news);
-  
-?>
-
-    <? if ($recordSet->fields['head1']!==""){?>
-    <meta property="og:title" content="<?=$recordSet->fields['head1']?>" />
-    <?}else{?>
-    <meta property="og:title" content="Новини турніру" />
-    <?}?>
-
-    <? if ($recordSet->fields['pict1']!=="") {?>
-    <meta property="og:image" content="<?=$recordSet->fields['pict1']?>" />
-    <?}?>
-    <? function limit_words($string, $word_limit) {
-	$words=explode(" ",stripcslashes($string));
-	return implode(" ",array_splice($words,0,$word_limit));
-  }
-  if ($recordSet->fields['text1']!=="") {?>
-    <meta property="og:description" content="<?=limit_words($recordSet->fields['text1'], 30)?>" />
-    <?}?>
-
-    <meta property="og:url" content="http://<?=$_SERVER['SERVER_NAME']?><?=$_SERVER['REQUEST_URI']?>" />
-    <?}?>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">

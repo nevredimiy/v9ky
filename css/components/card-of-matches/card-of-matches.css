@@ -270,17 +270,22 @@
   justify-content: space-between;
 }
 
+.card-of-matches__controls .active {
+  background-color: #FF3B3B;
+  border-color: #f33838;
+}
+
 .card-of-matches--match-zone .card-of-matches__controls {
   display: none;
 }
 
-.card-of-matches__controls-link  {
+.card-of-matches__controls-link {
   height: 26px;
   border-radius: 3px;
   border: 1px solid #dcdcdc;
 }
 
-.card-of-matches__controls-link[href]  {
+.card-of-matches__controls-link[href] {
   background-color: #FFD018;
 }
 
@@ -323,6 +328,8 @@
   color: #fff;
   background: #FF3B3B;
 }
+
+
 
 .card-of-matches--status-finished .card-of-matches__status {
   color: #fff;
@@ -420,4 +427,271 @@
     width: 23px;
     height: 23px;
   }
+}
+
+.anons {
+  font-family: 'Roboto Condensed', serif;
+  margin-bottom: 10px;
+  min-width: fit-content;
+  background-color: #f9f9f9;
+}
+
+.anons__container {
+  margin: 20px 10px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+
+.anons__share {
+  position: relative;
+}
+
+.anons__share-btn {
+  position: absolute;
+  z-index: 10;
+  right: 10px;
+  top: 10px;
+}
+
+.anons__share-btn>img {
+  width: 25px;
+}
+
+.anons__teams {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 30px 0;
+}
+
+.anons__teams-content {
+  display: flex;
+  gap: 15px;
+}
+
+.match-state {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.state__score {
+  padding: 4px;
+  width: 10px;
+  height: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f2f2f2;
+  border: 1px solid #e5e5e5;
+  border-radius: 4px;
+}
+
+.state__text {
+  font-size: 12px;
+}
+
+.anons__logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  border: 1px solid #f9f9f9;
+  border-radius: 50%;
+}
+
+.anons__logo>img {
+  width: 60px;
+}
+
+.state__text {
+  font-weight: 600;
+  text-transform: uppercase;
+  position: relative;
+  top: -10px;
+}
+
+.anons__totalizator {
+  display: grid;
+  grid-template-columns: 6fr 1fr 1fr 1fr;
+  column-gap: 5px;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.totalizator-text {
+  grid-row: span 2;
+  background-color: #e5e5e5;
+}
+
+.totalizator {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 5px;
+  border-radius: 5px;
+}
+
+.totalizator__item {
+  background-color: #e5e5e5;
+  border-radius: 3px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3px 0;
+}
+
+.percent {
+  background-color: #292929;
+  color: #ffffff;
+}
+
+.anons__title {
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.anons__text {
+  color: #979797;
+  font-size: 12px;
+  text-align: center;
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+
+.anons__history-meet .table-title,
+.table th,
+.table td {
+  background-color: #000000;
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 600;
+  text-align: center;
+  text-transform: uppercase;
+  padding: 5px 10px;
+  border-radius: 6px;
+}
+
+.anons__history-meet .table {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.anons__history-meet .table td {
+  background-color: #e5e5e5;
+  color: #000000;
+}
+
+.anons__history-meet .table__count {
+  width: 50%;
+  margin: 0 auto 20px;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.anons__history-meet .table__count td:nth-child(1) {
+  text-align: right;
+  color: #59c65d;
+}
+
+.anons__history-meet .table__count td:nth-child(2) {
+  text-align: center;
+}
+
+.anons__history-meet .table__count td:nth-child(3) {
+  text-align: left;
+  color: #59c65d;
+}
+
+.text-red {
+  color: #ff0000;
+}
+
+@media screen and (min-width: 768px) {
+  .anons__container {
+    padding: 20px 100px;
+  }
+
+  .anons__share-btn {
+    right: 20px;
+    top: 5px;
+  }
+
+  .anons__share-btn>img {
+    width: 40px;
+  }
+
+  .anons__head {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    margin-bottom: 30px;
+  }
+
+  .anons__logo>img {
+    width: 100px;
+  }
+
+  .match-state {
+    font-size: 30px;
+  }
+
+  .state__score {
+    padding: 15px;
+  }
+
+  .state__text {
+    font-size: 16px;
+  }
+
+  .anons__teams {
+    margin: 10px 0;
+  }
+
+  .anons__btn {
+    font-size: 16px;
+  }
+
+  .anons__title {
+    display: block;
+  }
+
+  .anons__text {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 30px;
+  }
+
+  .anons__totalizator,
+  .anons__history-meet .table-title,
+  .anons__history-meet .table__count,
+  .table th,
+  .table td {
+    font-size: 16px;
+  }
+
+}
+
+@media screen and (min-width: 1260px) {
+
+  .anons__history-meet .table__count,
+  .anons__history-meet .table {
+    font-size: 18px;
+  }
+
+  /* .anons__history-meet .table-title {
+    width: 80%;
+    margin: 0 auto 20px;
+  } */
 }

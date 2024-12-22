@@ -1,5 +1,6 @@
 ﻿<!DOCTYPE html>
 <?php
+
 session_start();
 $page=2;
 //ini_set('error_log', '/error_jeka.txt');
@@ -56,6 +57,14 @@ $start = microtime(true);
 <?php
 define('READFILE', true);
 include_once "config.php";
+
+define("ROOT", dirname(__DIR__));
+define("FREEDMAN", ROOT . "/freedman");
+define("HOME", ROOT . "/public_html");
+define("FREEDMANHTML", HOME . "/freedman");
+define("CSS", HOME . "/css" );
+require_once FREEDMAN . "/config.php";
+require_once FREEDMANHTML . "/functions.php";
 
 //error_reporting(E_ALL);
 //ini_set('display_errors', 1);
@@ -180,5 +189,6 @@ switch($tournament) {
         }
 	break;
 }
+
 
 ?>

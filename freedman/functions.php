@@ -281,3 +281,25 @@ function getTournament()
     $tournament = isset($dataTurnir[0]['name']) ? $dataTurnir[0]['name'] : 'not';
     return $tournament;
 }
+
+
+/**
+ * Получает стадионы из базы данных
+ */
+function getFields(){
+    global $mysqli;
+
+    $sql = "SELECT 
+        `name`, 
+        `adres` AS address,
+        (SELECT `name_ua` FROM `v9ky_city` c WHERE f.city = c.id) AS city
+            FROM `v9ky_fields` f
+            WHERE `visible` > 0";
+
+    $smtp = $mysqli-> prepare($sql);
+    $smtp->execute();
+    $fields = $smtp->fetchAll(PDO::FETCH_ASSOC);
+
+    return $fields;
+
+}

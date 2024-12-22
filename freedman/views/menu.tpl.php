@@ -2,7 +2,7 @@
     <div class="swiper-nav">
         <div class="swiper-wrapper swiper-wrapper-nav navigation__wrap">
             <div class="swiper-slide swiper-slide-nav navigation__wrap-item">
-                <div class="navigation__item"><a href="<?=$site_url?>">5x5</a></div>
+                <div class="navigation__item"><a href="<?=$site_url?>/?foo=foo">5x5</a></div>
             </div>
             <div class="swiper-slide swiper-slide-nav">
                 <div class="swiper-slide navigation__item"><a href="<?=$site_url?>/<?=$tournament ?>/teams/">команди</a>

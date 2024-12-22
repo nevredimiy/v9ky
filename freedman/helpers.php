@@ -824,17 +824,11 @@ function checkingCurrentTur( $indexIteration, $lastTur=0, $totalValue=0, $sufix=
 
     // Результат записываем в основной массив
     foreach ($topgravetcs as $topgravetc) {
-      $bestPlayer[] = $topgravetc;
+      // Если у игрока количество очков ноль, то это не топ игрок
+      if($topgravetc['count_points'] > 0) {
+        $bestPlayer[] = $topgravetc;
+      }
     }
-
-    // --- Бомбардир ---
-    // Находим максимальное значение count_goals. 
-    $maxGoals = max(array_column($playerOfTur, 'count_goals'));
-
-    // Отбираем все элементы с максимальным значением count_goals
-    $bombardirs = array_filter($playerOfTur, function ($item) use ($maxGoals) {
-        return $item['count_goals'] == $maxGoals;
-    });
 
     // --- Голкипер ---
     // Получаем массив лучших 
@@ -842,7 +836,10 @@ function checkingCurrentTur( $indexIteration, $lastTur=0, $totalValue=0, $sufix=
 
     // Результат записываем в основной массив
     foreach ($golkipers as $golkiper) {
-      $bestPlayer[] = $golkiper;
+      // Если у игрока количество очков ноль, то это не топ игрок
+      if($golkiper['count_points'] > 0) {
+        $bestPlayer[] = $golkiper;
+      }
     }
 
     // --- Бомбардир ---
@@ -862,7 +859,10 @@ function checkingCurrentTur( $indexIteration, $lastTur=0, $totalValue=0, $sufix=
     
     // Результат записываем в основной массив
     foreach ($bombardirs as $bombardir) {
-      $bestPlayer[] = $bombardir;
+      // Если у игрока количество очков ноль, то это не топ игрок
+      if($bombardir['count_points'] > 0) {
+        $bestPlayer[] = $bombardir;
+      }
     }    
 
     // --- Асистент ---
@@ -882,7 +882,10 @@ function checkingCurrentTur( $indexIteration, $lastTur=0, $totalValue=0, $sufix=
 
     // Результат записываем в основной массив
     foreach ($asists as $asist) {
-      $bestPlayer[] = $asist;
+      // Если у игрока количество очков ноль, то это не топ игрок
+      if($asist['count_points'] > 0) {
+        $bestPlayer[] = $asist;
+      }
     }
 
     // --- Захисник ---
@@ -891,7 +894,10 @@ function checkingCurrentTur( $indexIteration, $lastTur=0, $totalValue=0, $sufix=
 
     // Результат записываем в основной массив
     foreach ($zahusnuks as $zahusnuk) {
-      $bestPlayer[] = $zahusnuk;
+      // Если у игрока количество очков ноль, то это не топ игрок
+      if($zahusnuk['count_points'] > 0) {
+        $bestPlayer[] = $zahusnuk;
+      }
     }
 
     // --- Дриблинг ---
@@ -900,7 +906,10 @@ function checkingCurrentTur( $indexIteration, $lastTur=0, $totalValue=0, $sufix=
 
     // Результат записываем в основной массив
     foreach ($driblings as $dribling) {
-      $bestPlayer[] = $dribling;
+      // Если у игрока количество очков ноль, то это не топ игрок
+      if($dribling['count_points'] > 0) {
+        $bestPlayer[] = $dribling;
+      }
     }
 
     // --- Удар ---
@@ -909,7 +918,10 @@ function checkingCurrentTur( $indexIteration, $lastTur=0, $totalValue=0, $sufix=
 
     // Результат записываем в основной массив
     foreach ($udars as $udar) {
-      $bestPlayer[] = $udar;
+      // Если у игрока количество очков ноль, то это не топ игрок
+      if($udar['count_points'] > 0) {
+        $bestPlayer[] = $udar;
+      }
     }
 
     // --- Пас ---
@@ -918,11 +930,11 @@ function checkingCurrentTur( $indexIteration, $lastTur=0, $totalValue=0, $sufix=
 
     // Результат записываем в основной массив
     foreach ($pases as $pas) {
-      $bestPlayer[] = $pas;
-    }
-
-
-
+      // Если у игрока количество очков ноль, то это не топ игрок
+      if($pas['count_points'] > 0) {
+        $bestPlayer[] = $pas;
+      }
+    } 
 
     return $bestPlayer;
   
@@ -976,7 +988,7 @@ function checkingCurrentTur( $indexIteration, $lastTur=0, $totalValue=0, $sufix=
       // Шаг 2: Находим максимальное значение тотала
       $maxTotal = max($total);
   
-      // Шаг 3: Отбираем все элементы, у которых сумма равна максимальной
+      // Шаг 3: Отбираем всех игроков, у которых maxTotal равна максимальной
       $result = array_filter($playerOfTur, function ($item) use ($maxTotal) {
           return ( $item['count_goals'] * 15 + $item['count_asists'] * 10 +  $item['zagostrennia'] * 10 +
           + $item['pasplus'] * 3 - $item['pasminus'] * 3 - $item['vtrata'] * 3 +

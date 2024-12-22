@@ -83,18 +83,18 @@
                             </div>
 
                             <div class="card-of-matches__controls">
-                                <?php $href = (isset($match['anons']) && !empty(trim($match['anons']))) ? 'href="#"' : ''; ?>  
-                                <a class="card-of-matches__controls-link" <?php echo $href; ?> title="Анонс">  
-                                    <img src="/css/components/card-of-matches/assets/images/anons-icon.png" alt="Анонс" title="Анонс">
+                                <?php $classActive = (isset($match['anons']) && !empty(trim($match['anons']))) ? 'href="#"' : ''; ?>  
+                                <a data-anons="<?= $match['id'] ?>" data-tur="<?= $currentTur ?>" data-turnir="<?= $turnir ?>" class="card-of-matches__controls-link" href="#" title="Анонс матчу">  
+                                    <img src="/css/components/card-of-matches/assets/images/anons-icon.png" alt="Анонс матчу" title="Анонс матчу">
                                 </a>
                                 <a class="card-of-matches__controls-link" href="#" title="Статистика матчу"><img src="/css/components/card-of-matches/assets/images/stat-match-icon.png"
                                         alt="Статистика матчу" title="Статистика матчу"></a>
-                                <a class="card-of-matches__controls-link" href="#" title="Відео трансляція"><img src="/css/components/card-of-matches/assets/images/live-video-icon.png"
-                                        alt="Відео трансляція" title="Відео трансляція"></a>
-                                <a class="card-of-matches__controls-link" href="#" title="Запис відео"><img src="/css/components/card-of-matches/assets/images/hd-icon.png"
-                                        alt="Запис відео" title="Запис відео"></a>
-                                <a class="card-of-matches__controls-link" href="#" title="Індивідуальна статистика"><img src="/css/components/card-of-matches/assets/images/ind-stat-icon.png"
-                                        alt="Індивідуальна статистика" title="Індивідуальна статистика"></a>
+                                <a class="card-of-matches__controls-link" href="#" title="Прев'ю матчу"><img src="/css/components/card-of-matches/assets/images/live-video-icon.png"
+                                        alt="Прев'ю матчу" title="Прев'ю матчу"></a>
+                                <a class="card-of-matches__controls-link" href="#" title="Відео HD якості"><img src="/css/components/card-of-matches/assets/images/hd-icon.png"
+                                        alt="Відео HD якості" title="Відео HD якості"></a>
+                                <a class="card-of-matches__controls-link" href="#" title="ККД Гравців"><img src="/css/components/card-of-matches/assets/images/ind-stat-icon.png"
+                                        alt="ККД Гравців" title="ККД Гравців"></a>
                                 <a class="card-of-matches__controls-link" href="#" title="Фото матчу"><img src="/css/components/card-of-matches/assets/images/photo-match-icon.png"
                                         alt="Фото матчу" title="Фото матчу"></a>
                             </div>
@@ -125,7 +125,7 @@
                     <h2 class="green-zone__title title">ЗБІРНА ТУРУ</h2>
                     <div class=" <?= $currentTur <= $lastTur ? 'green-zone__players' : '' ?>">
 
-                    <?php if($currentTur <= $lastTur) : ?>
+                        <?php if($currentTur <= $lastTur) : ?>
 
 
                         <?php foreach($bestPlayersForTable as $player) : ?>

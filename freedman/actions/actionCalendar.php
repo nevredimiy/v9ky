@@ -1,17 +1,18 @@
 <?php 
 
-// // Увімкнення відображення помилок
-// ini_set('display_errors', 1);
-// ini_set('display_startup_errors', 1);
+// Увімкнення відображення помилок
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
 
-// // Встановлення рівня звітності помилок
-// error_reporting(E_ALL);
+// Встановлення рівня звітності помилок
+error_reporting(E_ALL);
 
 
   
-require_once __DIR__ . '/config.php';
-require_once __DIR__ . '/functions.php';
-require_once 'helpers.php';
+require_once __DIR__ . '/../../../freedman/config.php';
+require_once __DIR__ . '/../functions.php';
+// require FREEDMANHTML . '/functions.php';
+require_once __DIR__ . '/../helpers.php';
 
 $data = json_decode(file_get_contents('php://input'), true);
 
@@ -20,7 +21,7 @@ if($data['tur'] && $data['turnir']) {
 
     // Когда tournament пустая это ознчает, что в адресной строке нет названия тура. Обычно это надпись после слеша в адресной строке
     // Если переменная tournament пустая, то заполняем ее из последнего сезона первым туром
-    if (!$tournament) {
+    if (!isset($tournament)) {
     
         $tournament = mb_substr( strstr( $_SERVER["REQUEST_URI"], "?", true ), 1 );
 
@@ -64,7 +65,7 @@ if($data['tur'] && $data['turnir']) {
     // Добавляем два элемента в массивы - форматированная дата и время матча.
     $dataCurrentTurWithDate = getArrayWithFormattedDate($dataCurrentTur);   
     
-    require_once 'views/calendar_of_matches.tpl.php';
+    require_once '../views/calendar_of_matches.tpl.php';
     
     die;
 }

@@ -34,6 +34,7 @@ if(isset($_GET['tur'])){
 if($currentTur <= $lastTur) {
     // Все игроки из выбранного тура
     $bestPlayers = getPlayersOfTur($allStaticPlayers, $currentTur);
+    
 
     // Лучшие игроки - отфильтрованные
     $bestPlayersForTable = mergeStaticAndData($bestPlayers, $dataAllPlayers);
@@ -56,6 +57,7 @@ $dataCurrentTur = getDataCurrentTur($turnir, $currentTur);
 // Добавляем два элемента в массивы - форматированная дата и время матча.
 $dataCurrentTurWithDate = getArrayWithFormattedDate($dataCurrentTur);
 
-dump_arr_first($dataCurrentTurWithDate);
+// dump_arr_first($dataCurrentTurWithDate);
+// var_dump($dataCurrentTurWithDate[0]['goals1']);
 
 include_once "views/calendar_of_matches.tpl.php";
