@@ -26,6 +26,24 @@
   }
 }
 
+@media screen and (min-width: 860px) {
+  .swiper-month-controls .swiper-wrapper {
+    margin-bottom: 12px;
+    justify-content: center;
+  }
+  
+}
+
+@media screen and (min-width: 1260px) {
+  .swiper-month-controls .swiper-wrapper {
+    margin-bottom: 12px;
+    justify-content: flex-start;
+  }
+  
+}
+
+
+
 @media screen and (min-width: 1440px) {
   .swiper-month-controls .swiper-slide:first-child {
     margin-left: 0px;

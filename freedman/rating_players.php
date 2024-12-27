@@ -2,10 +2,6 @@
 
 // TODO: freedman  Получаем данные для карточек игроков - "Место в лиге" и топ-таблиц
         
-// Подключаю свой файл-помощник
-include_once('freedman/helpers.php');
-include_once('freedman/functions.php');
-
 
 //Получаем всю статистику игроков
 $allStaticPlayers = getAllStaticPlayers($turnir);

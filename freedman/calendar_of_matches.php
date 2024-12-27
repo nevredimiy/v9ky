@@ -1,7 +1,5 @@
 <?php
 
-include_once "freedman/helpers.php";
-include_once "freedman/functions.php";
 
 // Получаем количество сыграных туров в турнире. Это нужно для отображения в таблице знака вопроса для несыграных матчей. 
 $queryLastTur = $db->Execute(
@@ -56,8 +54,5 @@ $dataCurrentTur = getDataCurrentTur($turnir, $currentTur);
 
 // Добавляем два элемента в массивы - форматированная дата и время матча.
 $dataCurrentTurWithDate = getArrayWithFormattedDate($dataCurrentTur);
-
-// dump_arr_first($dataCurrentTurWithDate);
-// var_dump($dataCurrentTurWithDate[0]['goals1']);
 
 include_once "views/calendar_of_matches.tpl.php";

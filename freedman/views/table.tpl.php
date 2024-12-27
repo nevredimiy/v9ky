@@ -25,8 +25,8 @@
                 <?php $position = 1; ?>
                 <?php foreach($stats as $team_id => $stat): ?>
                     <tr>
-                        <td><span class="cell cell--gold"><?= $position?></span></td>
-                        <td><img width="36" height="36" class="cell--team-logo" src="<?= $team_logo_path ?>/<?= $stat['logo']?>"></td>
+                        <td><span class="cell"><?= $position?></span></td>
+                        <td><img width="18" height="18" class="cell--team-logo" src="<?= $team_logo_path ?>/<?= $stat['logo']?>"></td>
                         <td><span class="cell--team"><?= $stat['name']?></span></td>
 
                         <?php foreach ($stats as $key => $value) : ?>
@@ -52,7 +52,5 @@
         </table>
         </div>
     </div>
-    
-    <div class="swiper-scrollbar swiper-scrollbar-horizontal swiper-scrollbar-lock" style="display: none;"><div class="swiper-scrollbar-drag" style="transform: translate3d(0px, 0px, 0px); width: 70px;"></div></div>
-    <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span></div>
+    <div class="swiper-scrollbar-table"></div>
 </section>

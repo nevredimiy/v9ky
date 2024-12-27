@@ -1,12 +1,6 @@
 <?php
 
-function dump_arr($data) {
-  echo '<pre>' . print_r($data, 1) . '</pre>';
-}
 
-function dump_arr_first($data) {
-  echo '<pre>' . print_r(array_slice($data,0,1,true), 1) . '</pre>';
-}
 
 /**
  * Функция дополняет первый массив. все массивы вида [ player_id => [ matches_id => [ name_static => value_static, ... all_statics ] ] ]

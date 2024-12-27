@@ -6,27 +6,28 @@
         <div class="anons__head">
             <div class="anons__teams">
                 <div class="anons__teams-content">
-                    <div class="anons__logo logo-team1"><img src="<?= $team_logo_path ?>/<?= $dataAnons['team1_photo'] ?>"></div>
+                    <div class="anons__logo logo-team1"><img src="<?= $team_logo_path ?>/<?= $dataMatch['team1_photo'] ?>"></div>
                     <div class="match-state state">
-                        <?php if($dataAnons['goals1'] != null) :?>
-                        <div class="state__score"><?= $dataAnons['goals1'] ?></div>
+                        <?php if($dataMatch['goals1'] != null) :?>
+                        <div class="state__score"><?= $dataMatch['goals1'] ?></div>
                         <div class="state__score-middle">:</div>
-                        <div class="state__score"><?= $dataAnons['goals2'] ?></div>
+                        <div class="state__score"><?= $dataMatch['goals2'] ?></div>
                         <?php else: ?>
                             <div class="state__score-middle grey-text">VS</div>
                         <?php endif ?>
                     </div>
-                    <div class="anons__logo logo-team2"><img src="<?= $team_logo_path ?>/<?= $dataAnons['team2_photo'] ?>"></div>
+                    <div class="anons__logo logo-team2"><img src="<?= $team_logo_path ?>/<?= $dataMatch['team2_photo'] ?>"></div>
                 </div>
-                <?php if($dataAnons['goals1'] != null) :?>
+                <?php if($dataMatch['goals1'] != null) :?>
                 <div class="state__text">Матч завершено</div>
                 <?php endif ?>
             </div>
         </div>
         <div class="anons__body">
             <h2 class="anons__title">Анонс</h2>
-            <div class="anons__text"><?= $dataAnons['anons'] ?></div>
+            <div class="anons__text"><?= $dataMatch['anons'] ?></div>
             <div class="anons__history-meet">
+                <?php if(!empty($historyMeets)): ?>
                 <table class="table">
                         <div class="anons__history-meet table-title">Історія зустрічей між собою</div>
                     <thead>
@@ -37,20 +38,20 @@
                         </tr>
                     </thead>
                     <tbody>
+                        
+                        <? foreach($historyMeets as $match): ?>
                         <tr>
-                            <td>Літо 2024</td>
-                            <td>Ліга Голд</td>
-                            <td>Фенербахче
-                                <span class="text-red">4:0</span>
-                                Словацько</td>
+                            <td><?= $match['season_name'] ?></td>
+                            <td><?= $match['liga_name'] ?></td>
+                            <td><?= $match['team1_name'] ?>
+                                <span class="text-red"><?= $match['goals1'] ?>:<?= $match['goals2'] ?></span>
+                                <?= $match['team2_name'] ?></td>
                         </tr>
-                        <tr>
-                            <td>Літо 2019</td>
-                            <td>Ліга Голд</td>
-                            <td>Фенербахче  <span class="text-red">2:1</span> Словацько</td>
-                        </tr>
+                        <?php endforeach ?>
+                        
                     </tbody>
                 </table>
+                
                 <table class="table__count">
                     <tbody>
                         <tr>
@@ -70,6 +71,9 @@
                         </tr>
                     </tbody>
                 </table>
+                <?php else : ?>
+                    <div class="table-title title-info">Дані команди раніше не зустрічались</div>
+                <?php endif ?>
             </div>
             <div class="anons__totalizator">
                 <div class="totalizator totalizator-text">Шанси команд на думку редакції</div>

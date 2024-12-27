@@ -26,6 +26,9 @@
 @import url(./components/spons/spons.style.css);
 @import url(./components/month-controls/month-controls.css);
 @import url(./components/month-controls/swiper-month-controls.style.css);
+@import url(./components/match-stats/match-stats.style.css);
+@import url(./components/kkd/kkd.style.css);
+@import url(./components/preview/preview.style.css);
 /* @import url(./components/description/description.style.css); */
 
 @import url(./components/match/match.style.css);
@@ -34,4 +37,16 @@
 
 .text-center {
 	text-align: center;
+}
+
+
+.danger-info {
+	text-transform: uppercase;
+	font-size: inherit;
+	text-align: center;
+	width: 100%;
+	background-color: #FFD018;
+	padding: 8px;
+	border-radius: 8px;
+	font-weight: 600;
 }

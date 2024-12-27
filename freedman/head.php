@@ -81,6 +81,21 @@
     <?php 
       // Когда tournament пустая это ознчает, что в адресной строке нет названия тура. Обычно это надпись после слеша в адресной строке
       // Если переменная tournament пустая, то заполняем ее из последнего сезона первым туром
+
+        session_start(); // Запуск сессии
+
+        // Определяем текущий выбранный пункт меню
+        $selectedTournament = isset($_SESSION['tournament']) ? $_SESSION['tournament'] : '';
+
+        // Если был отправлен GET-запрос с выбором меню
+        if (isset($_GET['tournament'])) {
+            $selectedTournament = $_GET['tournament']; // Приведение к числу для безопасности
+            $_SESSION['tournament'] = $selectedTournament; // Сохраняем выбор в сессии
+        }
+        if(isset($_SESSION['tournament']) &&  $_SESSION['tournament'] != ''){
+            $tournament = $_SESSION['tournament'];
+        }
+
       if (!$tournament) {
         // получаем последний сезон
         $queryGetTurnirsOfLastSeason = $db->Execute("SELECT * FROM `v9ky_turnir` WHERE `seasons` = (SELECT id FROM

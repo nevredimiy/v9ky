@@ -13,7 +13,7 @@
 
 			<div class="swiper-slide">
 				<div class="leagues__item<?=$strligi?>">
-				<a href="<?=$site_url?>/<?=$recligi->fields['name']?>?foo=foo">
+				<a data-tournament="<?=$recligi->fields['name']?>" href="<?=$site_url?>/<?=$recligi->fields['name']?>?foo=foo&tournament=<?=$recligi->fields['name']?>">
 					<span class="leagues__item-title"><?=$recligi->fields['ru']?></span>
 					<div class="leagues__item-location">
 						<img src="/css/components/leagues/assets/images/location-icon.svg" alt="location">

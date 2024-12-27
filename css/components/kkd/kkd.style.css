@@ -1,0 +1,104 @@
+.kkd__tables-head {
+    background-color: #e6eef6;
+    text-transform: uppercase;
+    padding: 15px;
+    border-radius: 10px;
+    color: #4582ba;
+    margin-bottom: 15px;
+    font-size: 10px;
+    font-weight: 600;
+
+}
+
+.kkd__table {
+    width: 100%;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    padding: 15px;
+}
+
+.kkd__table tr td {
+    padding: 5px 3px;
+    text-align: center;
+}
+
+.kkd__table tr td:nth-child(1) {
+    text-align: right;
+    white-space: nowrap;
+    /* Текст не переносится на новую строку */
+    overflow: hidden;
+    /* Скрывает текст, выходящий за пределы элемента */
+    text-overflow: ellipsis;
+    /* Добавляет троеточие, если текст обрезан */
+    max-width: 150px;
+    /* Установите максимальную ширину для обрезки текста */
+    display: block;
+    /* Убедитесь, что элемент обрабатывается как блок */
+}
+
+.kkd__table tr td:nth-child(2),
+.kkd__table tr td:nth-child(3),
+.kkd__table tr td:nth-child(4),
+.kkd__table tr td:nth-child(5),
+.kkd__table tr td:nth-child(8),
+.kkd__table tr td:nth-child(10),
+.kkd__table tr td:nth-child(12),
+.kkd__table tr td:nth-child(13),
+.kkd__table tr td:nth-child(14),
+.kkd__table tr td:nth-child(15) {
+    color: #59c65d;
+}
+
+.kkd__table tr td:nth-child(6),
+.kkd__table tr td:nth-child(7),
+.kkd__table tr td:nth-child(9),
+.kkd__table tr td:nth-child(11),
+.kkd__table tr td:nth-child(13),
+.kkd__table tr td:nth-child(16) {
+    color: #ff3b3b;
+}
+
+.kkd__info {
+    width: 250px;
+    font-size: 10px;
+    line-height: 1.8;
+    margin: 0 auto;
+}
+
+.kkd__list {
+    columns: 2;
+    /* Устанавливает количество колонок */
+    column-gap: 20px;
+    /* Промежуток между колонками */
+}
+
+.kkd__item {
+    break-inside: avoid;
+    /* Предотвращает разрыв элементов между колонками */
+}
+
+.text-green {
+    color: #59c65d;
+}
+
+.text-red {
+    color: #ff3b3b;
+}
+
+
+@media screen and (min-width: 768px) {
+    .kkd__tables {
+        min-width: 480px;
+    }
+
+    .kkd__tables-head {
+        font-size: 14px;
+    }
+
+    .kkd__table {
+        font-size: 12px;
+        padding: 15px 20px;
+    }
+}

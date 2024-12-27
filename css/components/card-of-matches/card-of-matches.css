@@ -47,6 +47,7 @@
   display: none;
   width: 40px;
   height: 40px;
+
 }
 
 .card-of-matches--match-zone .card-of-matches__shirt {
@@ -193,7 +194,7 @@
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 600;
-  font-size: var(--font-size-m);
+  font-size: var(--font-size-s);
   line-height: 150%;
   text-align: center;
   text-transform: none;
@@ -561,6 +562,7 @@
   text-transform: uppercase;
 }
 
+
 .anons__text {
   color: #979797;
   font-size: 12px;
@@ -582,10 +584,20 @@
   border-radius: 6px;
 }
 
+
+.anons__history-meet .title-info {
+  padding: 20px;
+  margin-bottom: 20px;
+  background-color: #FFD018;
+  color: black;
+}
+
 .anons__history-meet .table {
   width: 100%;
   margin-bottom: 20px;
 }
+
+
 
 .anons__history-meet .table td {
   background-color: #e5e5e5;

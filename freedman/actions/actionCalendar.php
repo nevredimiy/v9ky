@@ -9,10 +9,10 @@ error_reporting(E_ALL);
 
 
   
-require_once __DIR__ . '/../../../freedman/config.php';
-require_once __DIR__ . '/../functions.php';
-// require FREEDMANHTML . '/functions.php';
-require_once __DIR__ . '/../helpers.php';
+
+require dirname(__DIR__) . '/../../freedman/config.php';
+require CORE . '/helpers.php';
+require CORE . '/functions.php';
 
 $data = json_decode(file_get_contents('php://input'), true);
 

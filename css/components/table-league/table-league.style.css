@@ -4,7 +4,7 @@
   padding: 12px;
   border-radius: var(--border-radius-m);
   background-color: #000;
-  margin: 0 10px 15px;
+  margin: 0 10px 10px;
 }
 
 .table-league__title>span:last-child {
@@ -18,7 +18,7 @@
 
 .table-league__table tr {
   background-color: #fff;
-  height: 28px;
+  height: 30px;
   border-radius: var(--border-radius-m);
   display: flex;
   align-items: center;
@@ -42,11 +42,11 @@
 .table-league__table tr th,
 .table-league__table tr td {
   padding: 5px;
-  min-width: 20px;
+  width: 34px;
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 500;
-  font-size: var(--font-size-s);
+  font-size: var(--font-size-m);
   line-height: 14px;
   display: flex;
   flex-direction: row;
@@ -56,14 +56,39 @@
   color: #0B0B0B;
 }
 
+.table-league__table tr th:nth-child(3),
+.table-league__table tr td:nth-child(3) {
+  min-width: 160px;
+  text-align: left;
+  justify-content: flex-start;
+}
+
+.table-league__table tr:nth-last-child(1) td:first-child span,
+.table-league__table tr:nth-last-child(2) td:first-child span {
+  background-color: #FF3B3B;
+}
+
 .cell {
-  width: 18px;
-  height: 18px;
+  width: 28px;
+  height: 28px;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: var(--border-radius-s)px;
 }
+
+.table-league__table tr:nth-child(2) td:first-child span {
+  background-color: #FDBE11;
+}
+
+.table-league__table tr:nth-child(3) td:first-child span {
+  background: linear-gradient(180deg, #B9B9B9 0%, #E2E2E2 100%);
+}
+
+.table-league__table tr:nth-child(4) td:first-child span {
+  background-color: #C79417;
+}
+
 
 .cell--gold {
   background-color: #FDBE11;
@@ -87,27 +112,26 @@
 
 .cell--own {
   background-color: #C9C9C9;
-  height: 15px;
-  width: 15px;
+  height: 26px;
+  width: 26px;
   border-radius: var(--border-radius-s);
   display: block;
   margin: 0 auto;
 }
 
-.table-league__table tr th:has(.cell--team-logo),
-.table-league__table tr td:has(.cell--team-logo) {
-  display: none;
-}
-
-
 .cell--team {
   text-align: left;
-  justify-content: start;
-  margin-right: 20px;
+  margin-right: 5px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  width: 80px;
+}
+
+td .cell--team-logo {
+  min-width: 18px;
+  border-radius: 50%;
+  border: 1px solid #C9C9C9;
+  padding: 3px;
 }
 
 .cell--games {}
@@ -141,7 +165,7 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    width: 90px;
+    width: 140px;
   }
 }
 
@@ -168,7 +192,7 @@
   }
 
   .table-league__table tr {
-    height: 76.02px;
+    height: 60px;
     border-radius: 0;
     margin-bottom: 0;
     padding: 0 20px;
@@ -195,8 +219,13 @@
   .table-league__table tr th,
   .table-league__table tr td {
     min-width: 26px;
-    font-size: var(--font-size-l);
+    font-size: var(--font-size-xl);
     line-height: 36px;
+  }
+
+  td .cell--team-logo {
+    min-width: 30px;
+    min-height: 30px;
   }
 
   .cell {
@@ -208,10 +237,6 @@
     border-radius: var(--border-radius-m);
   }
 
-  .cell--team-logo {
-    min-width: 36px;
-  }
-
   .cell--team {
     margin-right: 50px;
     white-space: nowrap;
@@ -220,10 +245,7 @@
     width: 115px;
   }
 
-  .table-league__table tr th:has(.cell--team-logo),
-  .table-league__table tr td:has(.cell--team-logo) {
-    display: inherit;
-  }
+
 
   .cell--own {
     height: 26px;

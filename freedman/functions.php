@@ -1,6 +1,42 @@
 <?php
 
 
+function dump($data)
+{
+    echo "<pre>";
+    var_dump($data);
+    echo "</pre>";
+}
+
+function dd($data)
+{
+    dump($data);
+    die;
+}
+
+function dump_arr($data) {
+    echo '<pre>' . print_r($data, 1) . '</pre>';
+}
+  
+function dump_arr_first($data) {
+    echo '<pre>' . print_r(array_slice($data,0,1,true), 1) . '</pre>';
+}
+
+
+
+/**
+ * подключает вид страниц и прекращает работу скрипта
+ * @param string|integer
+ * @return void
+ */
+function abort($code = 404)
+{
+    http_response_code($code);
+    require VIEWS . "/errors/{$code}.tpl.php";
+    die;
+}
+
+
 /**
  * 
  */
@@ -195,9 +231,11 @@ function getDataCurrentTur($turnir, $currentTur)
         m.date,
         m.tur, 
         m.team1,
+        t1.id AS team1_id,
         t1.name AS team1_name,
         t1.pict AS team1_photo,
         m.team2,    
+        t2.id AS team2_id,
         t2.name AS team2_name,
         t2.pict AS team2_photo,
         m.field,
@@ -296,10 +334,60 @@ function getFields(){
             FROM `v9ky_fields` f
             WHERE `visible` > 0";
 
-    $smtp = $mysqli-> prepare($sql);
-    $smtp->execute();
-    $fields = $smtp->fetchAll(PDO::FETCH_ASSOC);
+    $stmt = $mysqli-> prepare($sql);
+    $stmt->execute();
+    $fields = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     return $fields;
 
 }
+
+/**
+ *  Функция получает данные матчей из всех сезонов, где встречались две команды
+ * @param string - Назвиние команды 1
+ * @param string - Назвиние команды 2
+ * @return array - массив матчей
+ */
+function getHistoryMeets($team1, $team2) {
+    global $mysqli;
+
+    $team1 = trim($team1);
+    $team2 = trim($team2);
+
+    $sql = "SELECT 
+        tr.season AS season_name,
+        tr.ru AS liga_name,
+        t1.name AS team1_name,
+        t2.name AS team2_name,
+        m.gols1 AS goals1, 
+        m.gols2 AS goals2
+    FROM `v9ky_match` m 
+    LEFT JOIN 
+        `v9ky_team` t1 ON t1.id = m.team1
+    LEFT JOIN 
+        `v9ky_team` t2 ON t2.id = m.team2
+    LEFT JOIN 
+        `v9ky_turnir` tr ON tr.id = m.turnir
+    WHERE `team1` IN (
+        SELECT `id` FROM `v9ky_team` WHERE name = :team1) 
+    AND `team2` IN (
+        SELECT `id` FROM `v9ky_team` WHERE name = :team2) 
+    AND `canseled` > 0
+    OR `team2` IN (
+        SELECT `id` FROM `v9ky_team` WHERE name = :team2) 
+    AND `team1` IN (
+        SELECT `id` FROM `v9ky_team` WHERE name = :team1) 
+    AND `canseled` > 0
+    ORDER BY m.date DESC";
+
+    $stmt = $mysqli-> prepare($sql);
+    $stmt->bindParam(':team1', $team1, PDO::PARAM_INT);  
+    $stmt->bindParam(':team2', $team2, PDO::PARAM_INT);  
+    $stmt->execute();
+    $fields = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    return $fields;
+}
+/**
+ * ТУТ НИЧЕГО НЕ ПИШЕМ. ЭТОТ ФАЙЛ БУДЕТ УДАЛЕН. ТАКОЙ ЖЕ ФАЙЛ НАХОДИТЬСЯ В ../freedman/core/function.php
+ */

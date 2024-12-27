@@ -58,13 +58,15 @@ $start = microtime(true);
 define('READFILE', true);
 include_once "config.php";
 
-define("ROOT", dirname(__DIR__));
-define("FREEDMAN", ROOT . "/freedman");
-define("HOME", ROOT . "/public_html");
-define("FREEDMANHTML", HOME . "/freedman");
-define("CSS", HOME . "/css" );
-require_once FREEDMAN . "/config.php";
-require_once FREEDMANHTML . "/functions.php";
+require dirname(__DIR__) . '/freedman/config.php';
+require CORE . '/helpers.php';
+require CORE . '/functions.php';
+// define("FREEDMAN", ROOT . "/freedman");
+// define("HOME", ROOT . "/public_html");
+// define("FREEDMANHTML", HOME . "/freedman");
+// define("CSS", HOME . "/css" );
+// require_once FREEDMAN . "/config.php";
+// require_once FREEDMANHTML . "/functions.php";
 
 //error_reporting(E_ALL);
 //ini_set('display_errors', 1);

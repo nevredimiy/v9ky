@@ -44,6 +44,6 @@
             </div>
 
         </div>
-        <div class="swiper-scrollbar"></div>
+        <div class="swiper-scrollbar-nav"></div>
     </div>
 </section>
