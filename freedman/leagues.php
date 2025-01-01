@@ -14,5 +14,5 @@
 */
 
 
-require_once 'views/ligi.tpl.php';
+require_once 'views/leagues.tpl.php';
 

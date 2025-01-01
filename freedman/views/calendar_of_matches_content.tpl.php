@@ -84,27 +84,76 @@
 
                             <div class="card-of-matches__controls">
                                 <?php $hrefAnons = (isset($match['anons']) && !empty(trim($match['anons']))) ? 'href="#"' : ''; ?>  
-                                <?php $href = $currentTur > $lastTur ? '' : "href='{$site_url}/{$tournament}/?tur={$currentTur}&foo=foo'" ?>
-                                <a data-anons="<?= $match['id'] ?>" data-tur="<?= $currentTur ?>" data-turnir="<?= $turnir ?>" class="card-of-matches__controls-link" <?= $hrefAnons ?> title="Анонс матчу">  
+                                <a 
+                                    data-anons="<?= $match['id'] ?>" 
+                                    data-tur="<?= $currentTur ?>" 
+                                    data-turnir="<?= $turnir ?>" 
+                                    class="card-of-matches__controls-link" 
+                                    <?= $hrefAnons ?> 
+                                    title="Анонс матчу"
+                                >  
                                     <img src="/css/components/card-of-matches/assets/images/anons-icon.png" alt="Анонс матчу" title="Анонс матчу">
                                 </a>
+                                
+                            <?php $href = $currentTur > $lastTur || $match['goals1'] == NULL ? '' : "href='{$site_url}/{$tournament}/?tur={$currentTur}&foo=foo'" ?>
                                 <a 
                                     data-match-stats="<?= $match['id'] ?>" 
                                     data-tur="<?= $currentTur ?>" 
                                     data-turnir="<?= $turnir ?>" 
                                     data-team1-id="<?= $match['team1_id'] ?>"
                                     data-team2-id="<?= $match['team2_id'] ?>"
-                                    <?= $href ?>class="card-of-matches__controls-link" title="Статистика матчу">
+                                    <?= $href ?>
+                                    class="card-of-matches__controls-link" title="Статистика матчу"
+                                >
                                         <img src="/css/components/card-of-matches/assets/images/stat-match-icon.png" alt="Статистика матчу" title="Статистика матчу">
                                 </a>
-                                <a data-preview="<?= $match['id'] ?>" data-tur="<?= $currentTur ?>" data-turnir="<?= $turnir ?>" class="card-of-matches__controls-link" href="#" title="Прев'ю матчу"><img src="/css/components/card-of-matches/assets/images/live-video-icon.png"
-                                        alt="Прев'ю матчу" title="Прев'ю матчу"></a>
-                                <a data-video="<?= $match['id'] ?>" data-tur="<?= $currentTur ?>" data-turnir="<?= $turnir ?>" class="card-of-matches__controls-link" href="#" title="Відео HD якості"><img src="/css/components/card-of-matches/assets/images/hd-icon.png"
-                                        alt="Відео HD якості" title="Відео HD якості"></a>
-                                <a data-kkd="<?= $match['id'] ?>" data-tur="<?= $currentTur ?>" data-turnir="<?= $turnir ?>" class="card-of-matches__controls-link" <?= $href ?> title="ККД Гравців"><img src="/css/components/card-of-matches/assets/images/ind-stat-icon.png"
-                                        alt="ККД Гравців" title="ККД Гравців"></a>
-                                <a data-photo="<?= $match['id'] ?>" data-tur="<?= $currentTur ?>" data-turnir="<?= $turnir ?>" class="card-of-matches__controls-link" href="#" title="Фото матчу"><img src="/css/components/card-of-matches/assets/images/photo-match-icon.png"
-                                        alt="Фото матчу" title="Фото матчу"></a>
+                                <?php $hrefVideo = $match['video'] != '' ? 'href="#"' : '' ?>
+                                <a 
+                                    data-preview="<?= $match['id'] ?>" 
+                                    data-tur="<?= $currentTur ?>" 
+                                    data-turnir="<?= $turnir ?>" 
+                                    class="card-of-matches__controls-link" 
+                                    <?= $hrefVideo ?>
+                                    title="Прев'ю матчу"
+                                >
+                                    <img src="/css/components/card-of-matches/assets/images/live-video-icon.png"
+                                        alt="Прев'ю матчу" title="Прев'ю матчу">
+                                </a>
+                                <?php $hrefHD = $match['video_hd'] != '' ? 'href="#"' : '' ?>
+                                <a 
+                                    data-video="<?= $match['id'] ?>" 
+                                    data-tur="<?= $currentTur ?>" 
+                                    data-turnir="<?= $turnir ?>" 
+                                    class="card-of-matches__controls-link" 
+                                    <?= $hrefHD ?>
+                                    title="Відео HD якості"
+                                >
+                                        <img src="/css/components/card-of-matches/assets/images/hd-icon.png"
+                                        alt="Відео HD якості" title="Відео HD якості">
+                                </a>
+                                <a 
+                                    data-kkd="<?= $match['id'] ?>" 
+                                    data-tur="<?= $currentTur ?>" 
+                                    data-turnir="<?= $turnir ?>" 
+                                    class="card-of-matches__controls-link" 
+                                    <?= $href ?> 
+                                    title="ККД Гравців"
+                                >
+                                    <img src="/css/components/card-of-matches/assets/images/ind-stat-icon.png"
+                                        alt="ККД Гравців" title="ККД Гравців">
+                                </a>
+
+                                <?php $hrefPhoto = is_dir(PHOTO . '/' . $match['id']) ? ' href="#" ' : '' ?>
+                                <a 
+                                    data-photo="<?= $match['id'] ?>" 
+                                    data-tur="<?= $currentTur ?>" 
+                                    data-turnir="<?= $turnir ?>" 
+                                    class="card-of-matches__controls-link" 
+                                    <?= $hrefPhoto ?>
+                                    title="Фото матчу"
+                                >
+                                        <img src="/css/components/card-of-matches/assets/images/photo-match-icon.png" alt="Фото матчу" title="Фото матчу">
+                                </a>
                             </div>
 
                             <div class="card-of-matches__status">МАТЧ ЗАВЕРШЕНО</div>

@@ -1,14 +1,26 @@
-.preview{
+.preview {
     display: flex;
     justify-content: center;
     gap: 20px;
+    flex-direction: column;
 }
 
-.preview .preview__item{
-    width: 350px;
-    height: 210px;
-    background-color: black;
-    border-radius: 10px;
+.preview .preview__item {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%;
+    /* Соотношение сторон 16:9 */
+    height: 0;
+    overflow: hidden;
+}
+
+.preview .preview__item iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
 }
 
 .my-youtube {
@@ -18,19 +30,37 @@
     height: 100%;
 }
 
-.my-youtube__background-button{
+.my-youtube__background-button {
     background-color: rgb(233, 47, 47);
     border-radius: 10px;
     width: 50px;
-    height: 35px;   
+    height: 35px;
     display: flex;
     justify-content: center;
-    align-items: center; 
+    align-items: center;
 }
 
-.my-youtube__play{
-    width: 15px; /* Ширина блока */
-    height: 15px; /* Высота блока */
-    background-color: #ffffff; /* Цвет заливки */
-    clip-path: polygon(0% 0%, 100% 50%, 0% 100%); /* Обрезка в форме треугольника */
+.my-youtube__play {
+    width: 15px;
+    /* Ширина блока */
+    height: 15px;
+    /* Высота блока */
+    background-color: #ffffff;
+    /* Цвет заливки */
+    clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
+    /* Обрезка в форме треугольника */
+}
+
+.preview .swiper-slide {
+    width: 100%;
+}
+
+.swiper-photo-pagination {
+    background-color: #979797;
+    padding: 5px 0;
+    border-radius: 10px;
+}
+
+.swiper-photo-pagination span {
+    margin: 0 15px;
 }

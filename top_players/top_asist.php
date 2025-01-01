@@ -9,7 +9,7 @@ include_once "run_line.php";
 // include_once "freedman/rating_players.php";
 
 // Подключаю свой файл-помощник
-include_once('freedman/helpers.php');
+// include_once('freedman/helpers.php');
 
 // Получаем количество сыграных туров в турнире. Это нужно для отображения в таблице знака вопроса для несыграных матчей. 
 $queryLastTur = $db->Execute(

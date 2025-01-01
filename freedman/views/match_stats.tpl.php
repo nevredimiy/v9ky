@@ -15,7 +15,9 @@
             </div>
             <div class="controls__teams">
                 <div class="controls__teams-content">
-                    <div data-team1-id="<?= $dataMatch['team1_id'] ?>" class="controls__logo logo-team1"><img src="<?= $team_logo_path ?>/<?= $dataMatch['team1_photo'] ?>"></div>
+                    <div data-team1-id="<?= $dataMatch['team1_id'] ?>" class="controls__logo logo-team1">
+                        <img src="<?= $team_logo_path ?><?= $dataMatch['team1_photo'] ?>">
+                    </div>
                     <div class="match-state state">
                      
                         <?php if($dataMatch['goals1'] != null) :?>
@@ -27,7 +29,9 @@
                         <?php endif ?>
                      
                     </div>
-                    <div data-team2-id="<?= $dataMatch['team2_id'] ?>" class="controls__logo logo-team2"><img src="<?= $team_logo_path ?>/<?= $dataMatch['team2_photo'] ?>"></div>
+                    <div data-team2-id="<?= $dataMatch['team2_id'] ?>" class="controls__logo logo-team2">
+                        <img src="<?= $team_logo_path ?><?= $dataMatch['team2_photo'] ?>">
+                    </div>
                 </div>
                 <?php if($dataMatch['goals1'] != null) :?>
                 <div class="state__text">Матч завершено</div>
@@ -45,36 +49,26 @@
                 <div class="tabs__block">
                     <table class="three-row">
                         <tbody>
+                            <?php foreach($matchReport as $event): ?>
                             <tr>
-                                <td></td>
-                                <td>19'</td>
-                                <td><img src="css/components/match-stats/assets/images/yellow-card-icon.svg" alt="">Мамедов Максим</td>
+                                <td>
+                                    <?php $player_name = $event['team_id'] == $dataMatch['team1_id'] ? "{$event['lastname']} {$event['firstname']}" : '' ?>
+                                    <?php if($player_name != ''): ?>
+                                        <?= $player_name ?>
+                                        <img src="<?= IMAGES . '/' . $eventType[$event['event_type']] ?>" alt="">
+                                    <?php endif ?>
+                                </td>
+                                <td><?= $event['event_time']?>'</td>
+                                <td>
+                                    <?php $player_name = $event['team_id'] == $dataMatch['team2_id'] ? "{$event['lastname']} {$event['firstname']}" : '' ?>
+                                    <?php if($player_name != ''): ?>
+                                        <img src="<?= IMAGES . '/' . $eventType[$event['event_type']] ?>" alt="">
+                                        <?= $player_name ?>
+                                    <?php endif ?>
+                                </td>
                             </tr>
-                            <tr>
-                                <td></td>
-                                <td>20'</td>
-                                <td><img width="24" height="24" src="css/components/match-stats/assets/images/red-football-icon.png" alt="">Бєляков Євген</td>
-                            </tr>
-                            <tr>
-                                <td><img width="24" height="24" src="css/components/match-stats/assets/images/boots-icon.svg" alt="">Овдієнко Павло</td>
-                                <td>25'</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td><img width="24" height="24" src="css/components/match-stats/assets/images/football-icon.png" alt="">Овдієнко Павло</td>
-                                <td>25'</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td><img width="24" height="24" src="css/components/team-page/assets/images/red-card-icon.png" alt="">Овдієнко Павло</td>
-                                <td>29'</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td><img width="24" height="24" src="css/components/match-stats/assets/images/cross-football-icon.png" alt="">Овдієнко Павло</td>
-                                <td>29'</td>
-                                <td></td>
-                            </tr>
+                            <?php endforeach ?>
+                            
                         </tbody>
                     </table>
                 </div>
@@ -88,12 +82,14 @@
                                 <td><?= $team1['nomer'] ?></td>
                             </tr>
                            <?php endforeach ?>
-                            <tr>
+                           <?php if(!empty($trainerAndManager1)): ?>
+                            <tr class="trainer">
                                 <td colspan="2">Тренер</td>
                             </tr>
                             <tr>
-                                <td colspan="2">Мамедов М.</td>
+                                <td colspan="2"><?= $trainerAndManager1[0]['lastname'] ?> <?= $trainerAndManager1[0]['firstname'] ?></td>
                             </tr>
+                            <?php endif ?>
                         </table>
                         <table class="table__team table__team2">
                             <?php foreach($team2Composition as $team2): ?>
@@ -102,12 +98,14 @@
                                 <td><?= $team2['lastname'] ?> <?= $team2['firstname'] ?></td>
                             </tr>
                             <?php endforeach ?>
-                            <tr>
+                            <?php if(!empty($trainerAndManager2)): ?>
+                            <tr class="trainer">
                                 <td colspan="2">Тренер</td>
                             </tr>
                             <tr>
-                                <td colspan="2">Лобановский М.</td>
+                                <td colspan="2"><?= $trainerAndManager2[0]['lastname'] ?> <?= $trainerAndManager2[0]['firstname'] ?></td>
                             </tr>
+                            <?php endif ?>
                         </table>
                         <?php else :?>
                             <div class="danger-info">Дані складу команд ще не внесені адміністратором</div>

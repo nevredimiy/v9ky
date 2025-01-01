@@ -58,18 +58,18 @@ $start = microtime(true);
 define('READFILE', true);
 include_once "config.php";
 
+// ----- Freedman -----
 require dirname(__DIR__) . '/freedman/config.php';
 require CORE . '/helpers.php';
 require CORE . '/functions.php';
-// define("FREEDMAN", ROOT . "/freedman");
-// define("HOME", ROOT . "/public_html");
-// define("FREEDMANHTML", HOME . "/freedman");
-// define("CSS", HOME . "/css" );
-// require_once FREEDMAN . "/config.php";
-// require_once FREEDMANHTML . "/functions.php";
+require CORE . '/classes/DbFreedman.php';
+$db_config = require FREEDMAN . '/db.php';
+$dbFreedman = DbFreedman::getInstance();
+$dbF = $dbFreedman->getConnection($db_config);
+// ----- END Freedman -----
 
-//error_reporting(E_ALL);
-//ini_set('display_errors', 1);
+// error_reporting(E_ALL);
+// ini_set('display_errors', 1);
 
 // Назначаем модуль и действие по умолчанию.
 $module = 'index';
@@ -77,7 +77,7 @@ $action = 'calendar';
 
 //турнир поумолчанию
 $recligi = $db->Execute("select name from v9ky_turnir where city=2 and active=1 ORDER BY priority ASC limit 1");
-$tournament = $recligi->fields[name];
+$tournament = $recligi->fields['name'];
 
 // Массив параметров из URI запроса.
 $params = array();
@@ -92,13 +92,48 @@ if ($_SERVER['REQUEST_URI'] != '/') {
 		// суперглобальных массивах $_GET и $_REQUEST.
 		$url_path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
+		if (strpos($url_path, '/admin') === 0) {  
+
+			error_reporting(E_ALL);
+			ini_set('display_errors', 1);
+			// Удаляем префикс /admin  
+			$admin_path = str_replace('/admin', '', $url_path);  
+			$admin_parts = explode('/', trim($admin_path, ' /'));  
+		
+			// Получаем модуль и действие для админских страниц  
+			$admin_module = $admin_parts[0];  
+			$admin_action = isset($admin_parts[1]) ? $admin_parts[1] : 'main'; // Действие по умолчанию  
+		
+			switch ($admin_module) {  
+				case "dashboard":  
+					$title = "Админская панель";   
+					require_once (ADMINCONTROLLERS ."/dashboard.php");  
+					break;  
+				case "login":  
+					$title = "Управление пользователями";   
+					require_once(ADMINCONTROLLERS ."/login.php");  
+					break;  
+				case "settings":  
+					$title = "Настройки";   
+					require_once("../freedman/admin/settings.php");  
+					break;  
+				// Добавьте другие админские модули по мере необходимости  
+				default:  
+					$title = "404 - Страница не найдена";   
+					require_once(ADMINVIEWS ."/errors/404.php");  
+					break;  
+			}  
+			exit; // Завершаем выполнение, если обработали админский запрос  
+		}
+		
 		// Разбиваем виртуальный URL по символу "/"
 		$uri_parts = explode('/', trim($url_path, ' /'));
-
+		
 		// Если количество частей не кратно 2, значит, в URL присутствует ошибка и такой URL
 		// обрабатывать не нужно - кидаем исключение, что бы назначить в блоке catch модуль и действие,
 		// отвечающие за показ 404 страницы.
         $tournament = array_shift($uri_parts); // Получили имя турнира
+		// dump($uri_parts);
 		$module = $uri_parts[0]; // Получили имя модуля
 		try {$action = array_shift($uri_parts);} catch (Exception $e) {}
 
@@ -167,6 +202,7 @@ switch($tournament) {
 			case "top_udar": $title="Топ-Захисник ліги"; require_once("top_players/top_udar.php"); break;
 			case "top_pas": $title="Топ-Захисник ліги"; require_once("top_players/top_pas.php"); break;
 			case "stadiums": $title="Стадіони"; require_once("freedman/stadiums.php"); break;
+			case "teams_of_league": $title="Команди ліги"; require_once(CONTROLLERS . "/teams_of_league.php"); break;
 			
 			case "violators": $title="Порушники ліги"; require_once("violators.php"); break;
             case "violators_new": $title="Порушники ліги"; require_once("violators_new.php"); break;

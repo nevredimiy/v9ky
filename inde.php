@@ -16,11 +16,9 @@ if(!$_GET['foo']) {
 } 
 
 if($_GET['foo']) {
-    include_once "freedman/head.php";
-    include_once "slider_spons.php";
-    include_once "freedman/menu.php";   
-    include_once "freedman/main.php";
-    include_once "freedman/footer.php";
+ 
+    include_once CONTROLLERS . "/main.php";
+
 
 }
 

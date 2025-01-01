@@ -284,7 +284,7 @@ if(isset($_GET['foo'])){
 // TODO: freedman  Получаем данные для карточек игроков - "Место в лиге" и топ-таблиц
         
 // Подключаю свой файл-помощник
-include_once('freedman/helpers.php');
+// include_once('freedman/helpers.php');
   
 // Получаем данные из БД. Статискика всех игроков учавствуюих в текущей лиге. Статистика вся, кроме забитых голов
 $queryStaticPlayers = $db->Execute( 

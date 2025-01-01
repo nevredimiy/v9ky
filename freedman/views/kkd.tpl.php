@@ -6,30 +6,41 @@
 		<div class="controls__head">
 			<div class="controls__head-title">ККД Гравців</div>
 			<div class="controls__head-info">
-				<div class="info">Прем'єр ліга</div>
-				<div class="info">5 тур</div>
-				<div class="info">Х Парк</div>
-				<div class="info">13 серпня (сб)</div>
-				<div class="info">16:00</div>
-			</div>
-			<div class="controls__teams">
-				<div class="controls__teams-content">
-					<div class="controls__logo logo-team1"><img src="css/components/match-stats/assets/images/team1.png"></div>
-					<div class="match-state state">
-						<div class="state__score">5</div>
-						<div class="state__score-middle">:</div>
-						<div class="state__score">0</div>
+                <div class="info"><?= $dataMatch['season'] ?></div>
+                <div class="info"><?= $dataMatch['tur'] ?> тур</div>
+                <div class="info"><?= $dataMatch['field_name'] ?></div>
+                <div class="info"><?= $dataMatch['match_day'] ?></div>
+                <div class="info"><?= $dataMatch['match_time'] ?></div>
+            </div>
+            <div class="controls__teams">
+                <div class="controls__teams-content">
+                    <div data-team1-id="<?= $dataMatch['team1_id'] ?>" class="controls__logo logo-team1">
+						<img src="<?= $team_logo_path ?><?= $dataMatch['team1_photo'] ?>">
 					</div>
-					<div class="controls__logo logo-team2"><img src="css/components/match-stats/assets/images/team2.png"></div>
-				</div>
-				<div class="state__text">
-					Матч завершено</div>
-			</div>
+                    <div class="match-state state">
+                     
+                        <?php if($dataMatch['goals1'] != null) :?>
+                        <div class="state__score"><?= $dataMatch['goals1'] ?></div>
+                        <div class="state__score-middle">:</div>
+                        <div class="state__score"><?= $dataMatch['goals2'] ?></div>
+                        <?php else: ?>
+                            <div class="state__score-middle grey-text">VS</div>
+                        <?php endif ?>
+                     
+                    </div>
+                    <div data-team2-id="<?= $dataMatch['team2_id'] ?>" class="controls__logo logo-team2">
+						<img src="<?= $team_logo_path ?><?= $dataMatch['team2_photo'] ?>">
+					</div>
+                </div>
+                <?php if($dataMatch['goals1'] != null) :?>
+                <div class="state__text">Матч завершено</div>
+                <?php endif ?>
+            </div>
 		</div>
-
+		<?php if(!empty($teamCompositionAndStats1)) : ?>
 		<div class="kkd__tables">
 			<table class="kkd__table team1">
-				<div class="kkd__tables-head">FC Sunrise</div>
+				<div class="kkd__tables-head"><?= $dataMatch['team1_name'] ?></div>
 				<tr>
 					<td></td>
 					<td>15</td>
@@ -68,66 +79,31 @@
 					<td>С</td>
 					<td>Т</td>
 				</tr>
+				<?php foreach($teamCompositionAndStats1 as $player) :?>
 				<tr>
-					<td>Мамедов М.</td>
-					<td>0</td>
-					<td>1</td>
-					<td>1</td>
-					<td>50</td>
-					<td>5</td>
-					<td>0</td>
-					<td>2</td>
-					<td>0</td>
-					<td>0</td>
-					<td>0</td>
-					<td>10</td>
-					<td>3</td>
-					<td>6</td>
-					<td>0</td>
-					<td>0</td>
-					<td>258</td>
+					<td><?= $player['lastname'] ?> <?= $player['firstname'] ?></td>
+					<td><?= $player['goals_scored'] ?></td>
+					<td><?= $player['asist'] ?></td>
+					<td><?= $player['build_up'] ?></td>
+					<td><?= $player['success_pass'] ?></td>
+					<td><?= $player['bad_pass'] ?></td>
+					<td><?= $player['loss_ball'] ?></td>
+					<td><?= $player['shot_on'] ?></td>
+					<td><?= $player['shot_off'] ?></td>
+					<td><?= $player['successfull_dribble'] ?></td>
+					<td><?= $player['failed_dribble'] ?></td>
+					<td><?= $player['successful_tackle'] ?></td>
+					<td><?= $player['failed_tackle'] ?></td>
+					<td><?= $player['success_block'] ?></td>
+					<td><?= $player['success_save'] ?></td>
+					<td><?= $player['failed_save'] ?></td>
+					<td><?= $player['total'] ?></td>
 				</tr>
-				<tr>
-					<td>Мамедов М.</td>
-					<td>0</td>
-					<td>1</td>
-					<td>1</td>
-					<td>50</td>
-					<td>5</td>
-					<td>0</td>
-					<td>2</td>
-					<td>0</td>
-					<td>0</td>
-					<td>0</td>
-					<td>10</td>
-					<td>3</td>
-					<td>6</td>
-					<td>0</td>
-					<td>0</td>
-					<td>258</td>
-				</tr>
-				<tr>
-					<td>Мамедов М.</td>
-					<td>0</td>
-					<td>1</td>
-					<td>1</td>
-					<td>50</td>
-					<td>5</td>
-					<td>0</td>
-					<td>2</td>
-					<td>0</td>
-					<td>0</td>
-					<td>0</td>
-					<td>10</td>
-					<td>3</td>
-					<td>6</td>
-					<td>0</td>
-					<td>0</td>
-					<td>258</td>
-				</tr>
+				<?php endforeach ?>
+				
 			</table>
 			<table class="kkd__table team2">
-				<div class="kkd__tables-head">Brugge</div>
+				<div class="kkd__tables-head"><?= $dataMatch['team2_name'] ?></div>
 				<tr>
 					<td></td>
 					<td>15</td>
@@ -166,65 +142,32 @@
 					<td>С</td>
 					<td>Т</td>
 				</tr>
+				<?php foreach($teamCompositionAndStats2 as $player) :?>
 				<tr>
-					<td>Мамедов М.</td>
-					<td>0</td>
-					<td>1</td>
-					<td>1</td>
-					<td>50</td>
-					<td>5</td>
-					<td>0</td>
-					<td>2</td>
-					<td>0</td>
-					<td>0</td>
-					<td>0</td>
-					<td>10</td>
-					<td>3</td>
-					<td>6</td>
-					<td>0</td>
-					<td>0</td>
-					<td>258</td>
+					<td><?= $player['lastname'] ?> <?= $player['firstname'] ?></td>
+					<td><?= $player['goals_scored'] ?></td>
+					<td><?= $player['asist'] ?></td>
+					<td><?= $player['build_up'] ?></td>
+					<td><?= $player['success_pass'] ?></td>
+					<td><?= $player['bad_pass'] ?></td>
+					<td><?= $player['loss_ball'] ?></td>
+					<td><?= $player['shot_on'] ?></td>
+					<td><?= $player['shot_off'] ?></td>
+					<td><?= $player['successfull_dribble'] ?></td>
+					<td><?= $player['failed_dribble'] ?></td>
+					<td><?= $player['successful_tackle'] ?></td>
+					<td><?= $player['failed_tackle'] ?></td>
+					<td><?= $player['success_block'] ?></td>
+					<td><?= $player['success_save'] ?></td>
+					<td><?= $player['failed_save'] ?></td>
+					<td><?= $player['total'] ?></td>
 				</tr>
-				<tr>
-					<td>Мамедов М.</td>
-					<td>0</td>
-					<td>1</td>
-					<td>1</td>
-					<td>50</td>
-					<td>5</td>
-					<td>0</td>
-					<td>2</td>
-					<td>0</td>
-					<td>0</td>
-					<td>0</td>
-					<td>10</td>
-					<td>3</td>
-					<td>6</td>
-					<td>0</td>
-					<td>0</td>
-					<td>258</td>
-				</tr>
-				<tr>
-					<td>Мамедов М.</td>
-					<td>0</td>
-					<td>1</td>
-					<td>1</td>
-					<td>50</td>
-					<td>5</td>
-					<td>0</td>
-					<td>2</td>
-					<td>0</td>
-					<td>0</td>
-					<td>0</td>
-					<td>10</td>
-					<td>3</td>
-					<td>6</td>
-					<td>0</td>
-					<td>0</td>
-					<td>258</td>
-				</tr>
+				<?php endforeach ?>
 			</table>
 		</div>
+		<?php else: ?>
+			<div class="danger-info">Дані статистики гравців ще не внесені адміністратором. Зайдіть пізніше</div>
+		<?php endif ?>
 		<div class="kkd__info">
 			<ul class="kkd__list">
 				<li class="kkd__item"><span class="text-green">Г</span> - Гол</li>

@@ -4,10 +4,8 @@
     padding: 15px;
     border-radius: 10px;
     color: #4582ba;
-    margin-bottom: 15px;
     font-size: 10px;
     font-weight: 600;
-
 }
 
 .kkd__table {
@@ -17,6 +15,10 @@
     text-transform: uppercase;
     margin-bottom: 20px;
     padding: 15px;
+}
+
+.kkd__table tr:nth-child(2) {
+    border-bottom: 1px solid #000000;
 }
 
 .kkd__table tr td {

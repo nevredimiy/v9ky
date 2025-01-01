@@ -2,6 +2,7 @@
 $(document).ready(function () {
 
     $('.calendar-of-matches__grid-container').on('click', '[data-turid]', function (e) {
+
         e.preventDefault();
 
         var newUrl = $(this).attr('href'); // Получаем URL из атрибута href  
@@ -16,7 +17,7 @@ $(document).ready(function () {
         if (tur) {
             $.ajax({
                 type: "post",
-                url: "../freedman/actions/actionCalendar.php",
+                url: "../freedman/actions/actions.php",
                 data: JSON.stringify({ tur: tur, turnir: turnir, lasttur: lastTur, action: 'calendar_of_matches' }),
                 success: function (response) {
                     $(".calendar-of-matches__grid-container").html(response);

@@ -5,7 +5,7 @@
                 <div class="navigation__item"><a href="<?=$site_url?>/?foo=foo">5x5</a></div>
             </div>
             <div class="swiper-slide swiper-slide-nav">
-                <div class="swiper-slide navigation__item"><a href="<?=$site_url?>/<?=$tournament ?>/teams/">команди</a>
+                <div class="swiper-slide navigation__item"><a href="<?=$site_url?>/<?=$tournament ?>/teams_of_league/">команди</a>
                 </div>
             </div>
             <div class="swiper-slide swiper-slide-nav">
